@@ -1,9 +1,10 @@
-name: Deploy website
+name: Deploy EEMA Fashion website
 
 on:
   push:
     branches:
       - initial-dev
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,23 +14,21 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload website
+      - name: Upload website artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./eema-fashion-website
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
