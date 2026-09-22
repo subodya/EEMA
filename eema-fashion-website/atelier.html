@@ -642,6 +642,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const siteHeader = document.querySelector('header')?.parentElement;
   const desktopActions = document.getElementById('nav-search-toggle')?.parentElement;
   if (siteHeader && desktopActions && !document.getElementById('mobile-menu-toggle')) {
+    const facebookAction = desktopActions.querySelector('a[aria-label="Follow EEMA on Facebook"]');
+    const whatsappAction = desktopActions.querySelector('a[href*="wa.me"]');
+    if (facebookAction && whatsappAction) {
+      desktopActions.append(whatsappAction, facebookAction);
+    }
     desktopActions.classList.add('hidden', 'xl:flex');
     const mobileToggle = document.createElement('button');
     mobileToggle.id = 'mobile-menu-toggle';
