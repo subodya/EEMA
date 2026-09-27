@@ -1,0 +1,724 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Custom Atelier — Made to Measure | EEMA Fashion</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+  @media (max-width: 767px) {
+    body {
+      min-width: 0;
+    }
+    .max-w-screen-xl,
+    .max-w-7xl {
+      max-width: 100%;
+    }
+    main {
+      padding-top: 5rem;
+    }
+    .font-display-hero,
+    .font-headline-lg,
+    .font-headline-md,
+    .font-headline-sm,
+    .font-body-lg,
+    .font-body-md,
+    .font-body-sm,
+    .font-price-numeral,
+    .font-label-caps {
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    [class*="text-display-hero"],
+    [class*="text-headline-lg"],
+    [class*="text-headline-md"],
+    [class*="text-headline-sm"],
+    [class*="text-body-lg"],
+    [class*="text-body-md"],
+    [class*="text-body-sm"],
+    [class*="text-label-caps"] {
+      letter-spacing: 0.01em;
+    }
+    [class*="hero-tab-btn"],
+    [class*="cat-pill"],
+    [class*="col-pill"] {
+      white-space: nowrap;
+    }
+    .grid,
+    .flex {
+      min-width: 0;
+    }
+    .md\:grid-cols-4,
+    .md\:grid-cols-3,
+    .lg\:grid-cols-12,
+    .lg\:grid-cols-4,
+    .sm\:grid-cols-2,
+    .sm\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"error":"#ba1a1a","surface-variant":"#e4e2de","surface-container-low":"#f5f3ef","on-primary-fixed-variant":"#8d004e","on-primary":"#ffffff","inverse-on-surface":"#f2f0ed","surface-container-lowest":"#ffffff","background":"#fbf9f5","on-error":"#ffffff","primary-container":"#b8236b","linen-elevated":"#F5F1EA","surface-container":"#efeeea","berry-deep":"#8C154E","secondary-fixed-dim":"#c8c6c5","on-tertiary":"#ffffff","secondary":"#5f5e5e","inverse-primary":"#ffb0ca","surface-container-highest":"#e4e2de","outline-variant":"#debec7","on-secondary-fixed-variant":"#474746","surface-dim":"#dbdad6","on-tertiary-fixed-variant":"#534437","primary-fixed":"#ffd9e3","on-secondary":"#ffffff","linen-stone":"#EAE4DC","on-surface":"#1b1c1a","linen-canvas":"#FBF9F5","primary-fixed-dim":"#ffb0ca","secondary-container":"#e2dfde","surface":"#fbf9f5","berry-soft":"#F8E9F0","surface-tint":"#b21d66","secondary-fixed":"#e5e2e1","tertiary-container":"#716052","on-tertiary-container":"#f3dcca","on-primary-container":"#ffd5e1","primary":"#960052","on-secondary-fixed":"#1c1b1b","outline":"#8b7078","on-primary-fixed":"#3e001f","charcoal-body":"#333333","error-container":"#ffdad6","tertiary-fixed-dim":"#d8c3b2","noir-text":"#1A1A1A","tertiary-fixed":"#f5decd","surface-container-high":"#eae8e4","on-background":"#1b1c1a","surface-bright":"#fbf9f5","on-error-container":"#93000a","whatsapp-forest":"#1E5E3A","inverse-surface":"#30312e","on-tertiary-fixed":"#25190f","on-surface-variant":"#574147","on-secondary-container":"#636262","tertiary":"#58493b"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","space-md":"1rem","margin-mobile":"1.25rem","margin":"3.5rem","space-3xl":"6rem","space-2xl":"4rem","space-xs":"0.25rem","space-lg":"1.5rem","gutter-mobile":"0.75rem","gutter":"1.5rem","space-xl":"2.5rem"},"fontFamily":{"body-sm":["Inter"],"headline-lg-mobile":["Playfair Display"],"price-numeral":["Inter"],"display-hero":["Playfair Display"],"headline-sm":["Playfair Display"],"label-caps":["Inter"],"body-md":["Inter"],"headline-lg":["Playfair Display"],"headline-md":["Playfair Display"],"display-hero-mobile":["Playfair Display"],"body-lg":["Inter"]},"fontSize":{"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"400"}],"price-numeral":["13px",{"lineHeight":"18px","letterSpacing":"0.05em","fontWeight":"500"}],"display-hero":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"500"}],"label-caps":["11px",{"lineHeight":"16px","letterSpacing":"0.15em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"headline-lg":["38px",{"lineHeight":"46px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"500"}],"display-hero-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","letterSpacing":"0.01em","fontWeight":"300"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-berry-soft selection:text-berry-deep"><div class="sticky top-0 left-0 w-full z-50 bg-[#fbf9f5]/85 backdrop-blur-md transition-all duration-300 border-b border-stone-200/50 shadow-sm"><header class="w-full max-w-screen-xl mx-auto h-20 px-margin-mobile md:px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md py-2 shrink-0"><img alt="EEMA Fashion Logo" class="h-10 w-10 object-contain rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYtSVvsELpfWpCl-ox_xuEPRakHpJZtWP2bFbJ5-Qled1n9oWPX60hP7Kf0zMrr54iaVo5z2mdPZAQjBQaGzIfZgzfQqXG3x1CXtHBai61InVWSKI2q5SKCsc3FUMIlbO7Id06WaF0pP2Z3LQbRYxh2VmolHzw2j_8jlFRq0gaQHWaRGPRmXyeLLBXA8VmJmSPsCyXthedG8ApKaujrF4eXIHHP_ARrQkxRAjmiX84v4J8_A3i7MxONXkWGMngBthZ0Vo"><a class="flex flex-col text-left group" data-path="home" href="index.html"><span class="font-headline-sm text-headline-sm text-noir-text uppercase tracking-widest leading-none group-hover:text-primary transition-colors">EEMA FASHION</span><span class="font-label-caps text-[9px] uppercase tracking-[0.2em] text-on-surface-variant mt-1 leading-none">Colombo • Sri Lanka</span></a></div><nav class="hidden xl:flex items-center gap-8 font-label-caps text-label-caps tracking-wider"><a class="group relative py-2 text-on-surface-variant hover:text-noir-text transition-colors tracking-wider" data-path="home" href="index.html">
+  <span class="">HOME</span>
+  <span class="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+</a>
+<a class="group relative py-2 text-on-surface-variant hover:text-noir-text transition-colors tracking-wider" data-path="collections-and-lookbook" href="lookbook.html">
+  <span class="">LOOKBOOK &amp; CAPSULES</span>
+  <span class="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+</a>
+<a aria-current="page" class="group relative py-2 text-noir-text font-medium transition-colors tracking-wider" data-path="custom-atelier" href="atelier.html">
+  <span class="">CUSTOM ATELIER</span>
+  <span class="absolute bottom-0 left-0 w-full h-[2px] bg-primary transition-all duration-300"></span>
+</a>
+<a class="group relative py-2 text-on-surface-variant hover:text-noir-text transition-colors tracking-wider" data-path="artisanal-craft" href="index.html#heritage-story">
+  <span class="">ARTISANAL CRAFT</span>
+  <span class="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+</a>
+<a class="group relative py-2 text-on-surface-variant hover:text-noir-text transition-colors tracking-wider" data-path="our-story" href="our-story.html">
+  <span class="">HOW TO ORDER</span>
+  <span class="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+</a></nav><div class="flex items-center gap-space-sm shrink-0"><button id="nav-search-toggle" type="button" aria-label="Search Lookbook" class="w-9 h-9 flex items-center justify-center text-noir-text hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">search</span></button><a aria-label="Follow EEMA on Facebook" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#f9dfe9] text-[#b21d66] hover:bg-primary hover:text-white transition-colors" href="https://www.facebook.com/people/Eema-Fashion/61553131572724/" rel="noopener noreferrer" target="_blank"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V7.2c0-.9.3-1.6 1.7-1.6H16.8V2.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.3v2.3H8v3.2h2.4v8h3.1Z"/></svg></a><a class="inline-flex items-center justify-center px-4 py-2 bg-whatsapp-forest text-surface-container-lowest font-label-caps text-label-caps tracking-wider uppercase rounded-full hover:bg-noir-text transition-colors gap-2 shadow-sm" href="https://wa.me/94779052928?text=Hello%20EEMA%20Fashion%2C%20I%20would%20like%20to%20inquire%20about%20your%20bespoke%20collection" rel="noopener noreferrer" target="_blank"><svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg><span class="hidden sm:inline">Order via WhatsApp</span></a></div></header><div id="nav-search-panel" class="hidden w-full border-t border-stone-200/80 bg-[#fbf9f5]"><form id="nav-search-form" class="mx-auto flex max-w-screen-xl items-center gap-3 px-margin-mobile py-3 md:px-margin"><label class="sr-only" for="nav-search-input">Search the collection</label><span class="material-symbols-outlined text-[20px] text-secondary">search</span><input id="nav-search-input" type="search" placeholder="Search the collection..." class="w-full border-0 bg-transparent px-0 py-2 text-body-md text-noir-text placeholder:text-secondary focus:outline-none" /><button type="submit" class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary hover:text-noir-text">Search</button></form></div></div><main class="w-full bg-surface"><div class="flex flex-col w-full">
+<!-- EDITORIAL HERO / ATELIER HEADER -->
+<section class="w-full px-margin-mobile md:px-margin pt-space-md pb-space-2xl bg-surface">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-end pb-space-xl">
+<div class="lg:col-span-8 space-y-space-md">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-widest text-primary">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+<span class="">Artisanal Colombo Workshop &amp; Made-to-Measure</span>
+</div>
+<h1 class="font-display-hero text-headline-lg-mobile md:text-display-hero text-noir-text leading-tight">
+            The Bespoke Atelier — <br class="hidden sm:inline">
+<span class="italic font-normal">Clothing Designed Around You.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+            Pure Sri Lankan linen and traditional artisan-crafted batik, shaped meticulously to your individual proportions. Enjoy personalized necklines, tailored torso drops, and bespoke palettes crafted one piece at a time.
+          </p>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-end items-start lg:items-end space-y-space-xs">
+<div class="flex items-center gap-2 px-space-md py-space-sm bg-linen-elevated text-noir-text">
+<span class="material-symbols-outlined text-[18px] text-whatsapp-forest">timer</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Tailoring Turnaround: 5–7 Working Days</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Worldwide &amp; Islandwide express atelier dispatch</p>
+</div>
+</div>
+<!-- EDITORIAL TRIPTYCH MOSAIC -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter pt-space-xs">
+<div class="md:col-span-7 relative group overflow-hidden bg-linen-stone aspect-[4/5] sm:aspect-[16/11] lg:aspect-[16/10]">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="South Asian woman with elegant short pixie hair wearing an artisanal coral pink linen flutter sleeve cropped top touching a rustic stone cottage wall in soft natural morning sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlkprxWGMJTJUeL8QYFg2Jx2x8UM6y3G4icMXiZJnFNOh2TUb24b5cOSkIXj8WGxv4GrIC-DsFg309wzFcdXxRkJozt58YFh_KRkPSuxvSAdw5idUeuxZoLr3CfkpfTskwSjVhxKZHhMLYrP7Q0sKb0MPBODQSDr3Ze1uS4TH6XWUxquxLkp4q_7X2L-tPV88s6WrgZJeZVS4JAAg3nd32qiPnbPjE2viUKp7VtLHqLgzjVB_O3p6nYA">
+
+</div>
+<div class="md:col-span-5 grid grid-cols-2 gap-gutter">
+<div class="relative group overflow-hidden bg-linen-elevated aspect-[3/4] flex flex-col justify-between">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial close up front angle of a woman in an unbleached crisp white handloom linen top showcasing delicate ladder-lace cutouts along the shoulders and a refined notched neckline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsvJKTvxB4QZYv5oQZGNuZODJ3W_tHO23Gfqs-MjYCxfaI9kntO6qOIyBbjil91emRCiUEOXWWxY4nBVscrI-F36_yvpBRsDfP_bqrvqbT4ueGmiCRok0muaRcuAhErHZhFUvyxuH5JNa352OLpJCHN1b3G51UtyoSXo4F_qe8Oi7jYSzAdFbjFyEG2WqBXMNkFxDY9zGHhGUdLoiIXKk6SLgqG5G_rlZ9YL4WgyLiWriKZymME1ZsWQ">
+
+</div>
+<div class="relative group overflow-hidden bg-linen-elevated aspect-[3/4] flex flex-col justify-between">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Back perspective of a tailored white linen summer top featuring an exquisite keyhole back button closure, ruffled cap sleeves, and structured artisanal darts." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAJF-GnWccWVqRQyyCJZC-2Y3XByWKJw7ZklbEs6qNIT6GWxzpYOxnSeRgwdNMHKaSA3JA-WeF8kYS_1lgw61WfcV0P1zhRVYiWUUi_tELwqxr2Gm6CHXJ3IwVe3nV82xWpsCaFDt1oiGIGQCh_tNvfqniv0lsg36A3cpn5exksvv6o25N15zzmtsAN0BVWr4NENQ5q2iZmNyKo4cGgRso5HwvX_aFFUMewRne5kCDkUNY7cWRdH0Qig">
+
+</div>
+
+</div>
+</div>
+</div>
+</section>
+<!-- ATELIER VALUE PILLARS -->
+<section class="w-full bg-linen-elevated py-space-2xl px-margin-mobile md:px-margin">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="space-y-space-xs p-space-md bg-surface-container-lowest shadow-sm">
+<span class="font-price-numeral text-label-caps text-primary">01</span>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Precision Tailoring</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bespoke torso drops, high-waist rises, and custom bust allowances crafted for real bodies.</p>
+</div>
+<div class="space-y-space-xs p-space-md bg-surface-container-lowest shadow-sm">
+<span class="font-price-numeral text-label-caps text-primary">02</span>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Custom Necklines</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Choose keyhole buttons, subtle V-splits, boat necks, or ladder-stitch accents per your taste.</p>
+</div>
+<div class="space-y-space-xs p-space-md bg-surface-container-lowest shadow-sm">
+<span class="font-price-numeral text-label-caps text-primary">03</span>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Artisanal Batik</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Integrate wax-resist traditional motifs hand-dyed by master Sri Lankan artisan families.</p>
+</div>
+<div class="space-y-space-xs p-space-md bg-surface-container-lowest shadow-sm">
+<span class="font-price-numeral text-label-caps text-primary">04</span>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">WhatsApp Stylist</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Direct 1-on-1 photo guidance, swatch confirmations, and fitting advice prior to stitch work.</p>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE BESPOKE CONFIGURATOR / ORDER INQUIRY GENERATOR -->
+<section class="w-full px-margin-mobile md:px-margin py-space-3xl bg-surface">
+<div class="max-w-7xl mx-auto">
+<div class="mb-space-2xl space-y-space-xs text-center max-w-2xl mx-auto">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Made to Measure Studio</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-noir-text">Design Your Bespoke Silhouette</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Complete the four editorial stages below to compile a formatted inquiry ticket ready for immediate consultation with our master patternmaker on WhatsApp.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- STEPS CONTAINER -->
+<div class="lg:col-span-8 space-y-space-xl">
+<!-- STEP 1: SILHOUETTES -->
+<div class="bg-surface-container-lowest p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 h-6 bg-noir-text text-surface-container-lowest flex items-center justify-center font-label-caps text-[11px]">1</span>
+<h3 class="font-headline-sm text-headline-sm text-noir-text">Select Garment Archetype</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Step 1 of 4</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-space-sm" id="silhouette-grid">
+<button class="silhouette-btn active p-space-md text-left bg-linen-elevated hover:bg-surface-container-high transition-colors" onclick="selectSilhouette(this, 'Flutter Sleeve Ruffle Crop Top')" type="button">
+<span class="material-symbols-outlined text-[20px] text-primary">dry_cleaning</span>
+<p class="font-headline-sm text-[16px] text-noir-text mt-2">Flutter Sleeve Top</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Ruffle shoulders &amp; back keyhole</p>
+</button>
+<button class="silhouette-btn p-space-md text-left bg-surface-container-low hover:bg-surface-container-high transition-colors" onclick="selectSilhouette(this, 'Wide-Leg Tailored Linen Trouser')" type="button">
+<span class="material-symbols-outlined text-[20px] text-noir-text">apparel</span>
+<p class="font-headline-sm text-[16px] text-noir-text mt-2">Wide-Leg Trouser</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Elastic back waist with side pockets</p>
+</button>
+<button class="silhouette-btn p-space-md text-left bg-surface-container-low hover:bg-surface-container-high transition-colors" onclick="selectSilhouette(this, 'Full Atelier Co-Ord Set')" type="button">
+<span class="material-symbols-outlined text-[20px] text-noir-text">styler</span>
+<p class="font-headline-sm text-[16px] text-noir-text mt-2">Atelier Co-Ord Set</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Matching tailored crop &amp; bottoms</p>
+</button>
+<button class="silhouette-btn p-space-md text-left bg-surface-container-low hover:bg-surface-container-high transition-colors" onclick="selectSilhouette(this, 'Artisanal Batik Kaftan Dress')" type="button">
+<span class="material-symbols-outlined text-[20px] text-noir-text">woman</span>
+<p class="font-headline-sm text-[16px] text-noir-text mt-2">Batik Kaftan Dress</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Floor-length side slit silhouette</p>
+</button>
+<button class="silhouette-btn p-space-md text-left bg-surface-container-low hover:bg-surface-container-high transition-colors" onclick="selectSilhouette(this, 'Ladder-Lace Split Blouse')" type="button">
+<span class="material-symbols-outlined text-[20px] text-noir-text">checkroom</span>
+<p class="font-headline-sm text-[16px] text-noir-text mt-2">Ladder-Lace Blouse</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">V-neck front slit &amp; cutwork lace</p>
+</button>
+<button class="silhouette-btn p-space-md text-left bg-surface-container-low hover:bg-surface-container-high transition-colors" onclick="selectSilhouette(this, 'Bespoke Concept Request')" type="button">
+<span class="material-symbols-outlined text-[20px] text-noir-text">design_services</span>
+<p class="font-headline-sm text-[16px] text-noir-text mt-2">Fully Bespoke Item</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Bring your moodboard &amp; sketches</p>
+</button>
+</div>
+</div>
+<!-- STEP 2: FABRIC & SHADE -->
+<div class="bg-surface-container-lowest p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 h-6 bg-noir-text text-surface-container-lowest flex items-center justify-center font-label-caps text-[11px]">2</span>
+<h3 class="font-headline-sm text-headline-sm text-noir-text">Select Linen Weave &amp; Swatch Tone</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Step 2 of 4</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm" id="swatch-grid">
+<button class="swatch-btn active p-space-sm bg-berry-soft text-left transition-colors" onclick="selectFabric(this, 'Washed Coral Rose (Pure Flax)')" type="button">
+<div class="h-10 w-full bg-[#E58C8A] mb-2"></div>
+<p class="font-headline-sm text-[14px] text-noir-text">Coral Rose</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Midweight 180 GSM</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Raw Ecru / Unbleached Linen')" type="button">
+<div class="h-10 w-full bg-[#EFECE6] mb-2"></div>
+<p class="font-headline-sm text-[14px] text-noir-text">Raw Ecru</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Natural texture</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Crisp Pure White Linen')" type="button">
+<div class="h-10 w-full bg-[#FAF9F5] shadow-inner mb-2"></div>
+<p class="font-headline-sm text-[14px] text-noir-text">Pure White</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Airy fine-gauge flax</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Deep Ocean Navy Linen')" type="button">
+<div class="h-10 w-full bg-[#1F2C39] mb-2"></div>
+<p class="font-headline-sm text-[14px] text-noir-text">Ocean Navy</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Yarn-dyed saturated</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Olive Ceylon Tea Leaf')" type="button">
+<div class="h-10 w-full bg-[#626852] mb-2"></div>
+<p class="font-headline-sm text-[14px] text-noir-text">Ceylon Olive</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Earthy botanical wash</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Artisanal Hand-Waxed Batik (Tropical Wave)')" type="button">
+<div class="h-10 w-full bg-[#3B2C35] mb-2 flex items-center justify-center">
+<span class="font-label-caps text-[9px] text-[#F8E9F0] uppercase tracking-widest">Batik Silk-Linen</span>
+</div>
+<p class="font-headline-sm text-[14px] text-noir-text">Batik Wave</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Single-batch motif</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Handcrafted Batik (Crimson Flora)')" type="button">
+<div class="h-10 w-full bg-primary mb-2 flex items-center justify-center">
+<span class="font-label-caps text-[9px] text-on-primary uppercase tracking-widest">Atelier Batik</span>
+</div>
+<p class="font-headline-sm text-[14px] text-noir-text">Crimson Flora</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Wax cracked motif</p>
+</button>
+<button class="swatch-btn p-space-sm bg-surface-container-low text-left transition-colors" onclick="selectFabric(this, 'Stylist Swatch Box Consultation')" type="button">
+<div class="h-10 w-full bg-surface-container-highest flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-[18px] text-noir-text">palette</span>
+</div>
+<p class="font-headline-sm text-[14px] text-noir-text">Custom Palette</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">WhatsApp Swatch Kit</p>
+</button>
+</div>
+</div>
+<!-- STEP 3: MEASUREMENTS & CUSTOM DETAILS -->
+<div class="bg-surface-container-lowest p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 h-6 bg-noir-text text-surface-container-lowest flex items-center justify-center font-label-caps text-[11px]">3</span>
+<h3 class="font-headline-sm text-headline-sm text-noir-text">Measurements &amp; Silhouette Adjustments</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Step 3 of 4</span>
+</div>
+<!-- ILLUSTRATED MEASUREMENT ANATOMY (INLINE SVG) -->
+<div class="p-space-md bg-linen-elevated grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-5 flex justify-center">
+<svg aria-label="Measurement anatomical guide" class="w-48 h-auto text-noir-text" viewBox="0 0 240 280">
+<!-- Torso Wireframe -->
+<path class="opacity-40" d="M70,40 Q120,48 170,40 L195,85 L170,95 L165,140 Q150,165 160,240 L80,240 Q90,165 75,140 L70,95 L45,85 Z" fill="none" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1.5"></path>
+<!-- Shoulders -->
+<line stroke="#8C154E" stroke-width="2" x1="70" x2="170" y1="40" y2="40"></line>
+<circle cx="70" cy="40" fill="#8C154E" r="3"></circle>
+<circle cx="170" cy="40" fill="#8C154E" r="3"></circle>
+<text fill="#8C154E" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle" x="120" y="32">A. SHOULDERS</text>
+<!-- Bust line -->
+<line stroke="#1A1A1A" stroke-width="2" x1="60" x2="180" y1="100" y2="100"></line>
+<text fill="#1A1A1A" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle" x="120" y="94">B. BUST LINE</text>
+<!-- Waist line -->
+<line stroke="#1A1A1A" stroke-width="2" x1="72" x2="168" y1="150" y2="150"></line>
+<text fill="#1A1A1A" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle" x="120" y="144">C. NATURAL WAIST</text>
+<!-- Length drop line -->
+<line stroke="#1E5E3A" stroke-dasharray="3 3" stroke-width="1.5" x1="120" x2="120" y1="45" y2="235"></line>
+<text fill="#1E5E3A" font-family="Inter" font-size="9" font-weight="600" x="135" y="195">D. DESIRED LENGTH</text>
+</svg>
+</div>
+<div class="md:col-span-7 space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<p class="font-headline-sm text-[16px] text-noir-text">How We Shape to Your Form</p>
+<p class="">Provide your approximate figures in inches or centimeters below. If you are uncertain, you can also select your standard ready-to-wear size, and our atelier concierge will guide your tape measurements over WhatsApp.</p>
+<div class="flex items-center gap-2 pt-2 text-whatsapp-forest font-label-caps text-[10px] tracking-widest uppercase">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span class="">Free Fitting Alteration Guarantee</span>
+</div>
+</div>
+</div>
+<!-- MEASUREMENT INPUTS -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-space-xs">
+<div class="space-y-1">
+<label class="font-label-caps text-[10px] uppercase tracking-widest text-noir-text block">Bust (Inches)</label>
+<input class="w-full bg-surface-container px-space-sm py-2 text-noir-text font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-1 focus:ring-noir-text" id="input-bust" oninput="updateSummary()" placeholder="e.g. 34 in" type="text">
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-[10px] uppercase tracking-widest text-noir-text block">Waist (Inches)</label>
+<input class="w-full bg-surface-container px-space-sm py-2 text-noir-text font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-1 focus:ring-noir-text" id="input-waist" oninput="updateSummary()" placeholder="e.g. 28 in" type="text">
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-[10px] uppercase tracking-widest text-noir-text block">Hips (Inches)</label>
+<input class="w-full bg-surface-container px-space-sm py-2 text-noir-text font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-1 focus:ring-noir-text" id="input-hips" oninput="updateSummary()" placeholder="e.g. 38 in" type="text">
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-[10px] uppercase tracking-widest text-noir-text block">Desired Length</label>
+<input class="w-full bg-surface-container px-space-sm py-2 text-noir-text font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-1 focus:ring-noir-text" id="input-length" oninput="updateSummary()" placeholder="e.g. 19 in (Crop)" type="text">
+</div>
+</div>
+<!-- CUSTOM ACCENT CHOICES -->
+<div class="pt-space-sm space-y-space-xs">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-noir-text block">Artisanal Accents &amp; Adjustments</label>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<label class="flex items-center gap-2 p-space-sm bg-surface-container-low cursor-pointer">
+<input checked="" class="accent-primary" id="accent-ruffle" onchange="updateSummary()" type="checkbox">
+<span class="font-body-sm text-[12px] text-noir-text">Flutter Cap Ruffles</span>
+</label>
+<label class="flex items-center gap-2 p-space-sm bg-surface-container-low cursor-pointer">
+<input checked="" class="accent-primary" id="accent-ladder" onchange="updateSummary()" type="checkbox">
+<span class="font-body-sm text-[12px] text-noir-text">Ladder-Lace Cutwork Inset</span>
+</label>
+<label class="flex items-center gap-2 p-space-sm bg-surface-container-low cursor-pointer">
+<input checked="" class="accent-primary" id="accent-keyhole" onchange="updateSummary()" type="checkbox">
+<span class="font-body-sm text-[12px] text-noir-text">Keyhole Back &amp; Shell Button</span>
+</label>
+</div>
+</div>
+<div class="space-y-1 pt-space-xs">
+<label class="font-label-caps text-[10px] uppercase tracking-widest text-noir-text block">Special Notes / Desired Fit (Relaxed, Tailored, Modest Drop)</label>
+<textarea class="w-full bg-surface-container p-space-sm text-noir-text font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-1 focus:ring-noir-text" id="input-notes" oninput="updateSummary()" placeholder="e.g. Slightly higher front neckline, prefer 2 inches extra length for tucked styling." rows="2"></textarea>
+</div>
+</div>
+</div>
+<!-- STICKY SUMMARY TICKET / DIRECT WHATSAPP ACTION (STEP 4) -->
+<div class="lg:col-span-4 sticky top-32 space-y-space-md">
+<div class="bg-linen-elevated p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Bespoke Ticket</span>
+
+</div>
+<h4 class="font-headline-sm text-headline-sm text-noir-text pb-space-sm">Your Custom Atelier Order</h4>
+<div class="space-y-space-xs font-body-sm text-body-sm py-space-sm">
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Garment:</span>
+<span class="font-medium text-noir-text text-right" id="summary-silhouette">Flutter Sleeve Ruffle Crop Top</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Fabric &amp; Tone:</span>
+<span class="font-medium text-noir-text text-right" id="summary-fabric">Washed Coral Rose (Pure Flax)</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Specs:</span>
+<span class="font-medium text-noir-text text-right" id="summary-specs">Bust: 34", Waist: 28"</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Accents:</span>
+<span class="font-medium text-noir-text text-right text-[11px]" id="summary-accents">Flutter, Ladder Lace, Keyhole</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Production Time:</span>
+<span class="font-medium text-noir-text">5–7 Working Days</span>
+</div>
+</div>
+<div class="pt-space-md space-y-space-sm">
+<a class="w-full py-3.5 bg-noir-text text-surface-container-lowest font-label-caps text-label-caps tracking-widest uppercase hover:bg-whatsapp-forest transition-colors flex items-center justify-center gap-2" href="https://wa.me/94779052928?text=Hello%20EEMA%20Fashion%2C%20I%20would%20like%20to%20place%20a%20Custom%20Atelier%20Inquiry%3A%0A%0A-Silhouette%3A%20Flutter%20Sleeve%20Ruffle%20Crop%20Top%0A-Fabric%3A%20Washed%20Coral%20Rose%0A-Measurements%3A%20Bust%2034%2C%20Waist%2028%2C%20Hips%2038%0A-Accents%3A%20Ruffle%20Sleeves%2C%20Ladder%20Lace%0A-Delivery%3A%20Please%20confirm%20timeline" id="whatsapp-order-link" rel="noopener noreferrer" target="_blank"><svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.15c-1.49 0-2.94-.4-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.182 8.182 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29z"></path></svg><span class="">Send Custom Ticket via WhatsApp</span></a>
+<a class="w-full py-2.5 bg-surface-container-lowest text-noir-text font-label-caps text-label-caps tracking-widest uppercase hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2" href="https://wa.me/94779052928?text=Hello%20EEMA%20Atelier%2C%20can%20I%20request%20fabric%20swatches%20for%20a%20made%20to%20measure%20project%3F" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">4k</span>
+<span class="">Request Linen Swatch Preview</span>
+</a>
+</div>
+<div class="mt-space-md p-space-sm bg-surface-container-lowest text-center">
+<p class="font-label-caps text-[9px] uppercase tracking-widest text-on-surface-variant">Atelier Concierge Hotline</p>
+<p class="font-price-numeral text-price-numeral text-noir-text">+94 77 905 2928</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BESPOKE PORTFOLIO & CRAFTSMANSHIP DETAILS -->
+<section class="w-full px-margin-mobile md:px-margin py-space-3xl bg-linen-canvas">
+<div class="max-w-7xl mx-auto space-y-space-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Master Tailor Portfolio</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-noir-text mt-1">Artisanal Details &amp; Seam Craft</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          Each bespoke piece undergoes over eight hours of hand-drafting, pre-shrink cold laundering, and French seam finishing in our Colombo atelier.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- DETAIL 1 -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm space-y-space-sm group">
+<div class="aspect-[4/5] overflow-hidden bg-linen-stone relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Macro detail of hand-carved natural mother-of-pearl buttons and a delicate teardrop keyhole back closure on an ecru woven linen summer blouse." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1mUHbUEvyjAapJNJY9YRy9UplqtHotf11Tuj0u9B68khaigqHYL4_DTru15UYrz-pysxIbcNVz7lQEzk4-shtEe2OIuKPkPteoCduCYKozteqgsJRq-_oud-dJMGPC8jZ7UO5fNFkvtMxeWk8S36korhOsIWw0d7-pLS9pkNySRooNUt-RFU_zzEA747o24u5RBNenzyy_e3UmR1J28o5UgzXVtmccuZI6uH0lL53-sf2_n7zcVG5WA">
+
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Keyhole Back &amp; Shell Fastenings</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Reinforced loop with hand-dyed natural shell fasteners for seamless slip-on wear.</p>
+</div>
+</div>
+<!-- DETAIL 2 -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm space-y-space-sm group">
+<div class="aspect-[4/5] overflow-hidden bg-linen-stone relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="High-fashion macro view of delicate open ladder-lace cutwork trim embedded along the shoulder yoke of a pure white breathable linen flutter-sleeve top." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDReyFQzMNfETgQPhK8ER3gJ7sYvl6GnCILK2c8FGJoL78Cc1GHWJQjRcHQsDNrd0h2tnE2i7hMfd_dqgPckdN4GH-5POgBlSYI-NPojjF6eSv1TlrWw7vcg7LauU4hnVWDa58si5d7Pl7xEJNmhCi5HcBHPt0rgdfch_HcvncfKCULoJVHRcNs-fOPW4oa2v1b3Q-sEMri1InNFm079cqr99DYWebBEQzXLeNloEFy27i8lZfl5U_HHw">
+
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Ladder-Lace Open Insets</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Air-permeable open lace inserted along the raglan yoke lines for natural breeze flow.</p>
+</div>
+</div>
+<!-- DETAIL 3 -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm space-y-space-sm group">
+<div class="aspect-[4/5] overflow-hidden bg-linen-stone relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Artisanal detail of a pleated flutter sleeve in washed coral rose linen showing blind hem stitching and gentle fluid drape on a mannequin." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmJN8YnPjTKrBp2Yi2BWLIjTMdIDQoAbAnUufML4p3AJIoIvCcnNeQf7cberzaBR43Pjc6h9xcnRz3GzrraSdHo31hUjXdcLOJ-PpCNDVqVTQY5R6NZ1zrtIGn5wk4H5CyqFWL85N6quVn__W6trTNtmQZ3VfygCehxuU7hRMq9wpKWnfIPhjtV2iiBlkWz0hzSyIaKRf0214YKrmWesIDJyE7Wx6wy4nksKKkQ1283JPGXHKBAkMbTg">
+
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Fluid Flutter Sleeve Architecture</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Constructed with double-faced curved flounce that holds gentle volume without synthetic interfacing.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CLIENT ATELIER TESTIMONIAL & BESPOKE PROCESS -->
+<section class="w-full bg-noir-text text-surface-container-lowest py-space-3xl px-margin-mobile md:px-margin">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<div class="lg:col-span-5 space-y-space-md">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed">Personalized Fitting Experience</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-surface-container-lowest">
+          "The cut feels like a quiet second skin."
+        </h2>
+<p class="font-body-lg text-body-lg text-surface-container-high font-light leading-relaxed">
+          "Ordering from London was effortless through WhatsApp. EEMA accommodated my taller torso length and narrower shoulders with absolute precision. The coral linen has an unmatched tactile coolness."
+        </p>
+<div class="pt-space-xs">
+<p class="font-label-caps text-label-caps uppercase tracking-widest text-surface-container-lowest">— Dr. Amanda Jayawardena</p>
+<p class="font-body-sm text-[12px] text-surface-container-high">London, United Kingdom • Bespoke Co-ord Patron</p>
+</div>
+</div>
+<div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="p-space-md bg-inverse-surface space-y-2">
+<span class="material-symbols-outlined text-primary-fixed text-[24px]">straighten</span>
+<h4 class="font-headline-sm text-[18px] text-surface-container-lowest">1. Direct Measurement Review</h4>
+<p class="font-body-sm text-body-sm text-surface-container-high">Send tape measurements or photos wearing your favorite fitting top; our master cutter inspects before the scissors touch linen.</p>
+</div>
+<div class="p-space-md bg-inverse-surface space-y-2">
+<span class="material-symbols-outlined text-primary-fixed text-[24px]">brush</span>
+<h4 class="font-headline-sm text-[18px] text-surface-container-lowest">2. Single-Batch Dyeing</h4>
+<p class="font-body-sm text-body-sm text-surface-container-high">Linens are hand-washed in mineral-rich soft water with botanical dyes to avoid industrial chemical residues.</p>
+</div>
+<div class="p-space-md bg-inverse-surface space-y-2">
+<span class="material-symbols-outlined text-primary-fixed text-[24px]">cut</span>
+<h4 class="font-headline-sm text-[18px] text-surface-container-lowest">3. Hand Cut &amp; French Seamed</h4>
+<p class="font-body-sm text-body-sm text-surface-container-high">Raw interior seams are bound in self-fabric or French seamed so that the interior is as immaculate as the exterior.</p>
+</div>
+<div class="p-space-md bg-inverse-surface space-y-2">
+<span class="material-symbols-outlined text-primary-fixed text-[24px]">local_shipping</span>
+<h4 class="font-headline-sm text-[18px] text-surface-container-lowest">4. Pressing &amp; Dispatch</h4>
+<p class="font-body-sm text-body-sm text-surface-container-high">Steam-finished with organic herbal lavender water, wrapped in cotton muslin, and delivered to your doorstep.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- BESPOKE ATELIER FAQ -->
+<section class="w-full px-margin-mobile md:px-margin py-space-3xl bg-surface">
+<div class="max-w-4xl mx-auto space-y-space-xl">
+<div class="text-center space-y-space-xs">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Made to Measure Guidance</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-noir-text">Frequently Asked Questions</h2>
+</div>
+<div class="space-y-space-sm" id="accordion-group">
+<!-- FAQ 1 -->
+<div class="p-space-md bg-surface-container-lowest shadow-sm cursor-pointer" onclick="toggleFaq(this)">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-[18px] text-noir-text">What is the turnaround time for custom atelier orders?</h4>
+<span class="material-symbols-outlined text-noir-text transition-transform duration-300 faq-icon">expand_more</span>
+</div>
+<div class="faq-content hidden pt-space-sm text-on-surface-variant font-body-md text-body-md">
+            Our standard bespoke production time is 5 to 7 working days from the moment your measurements and fabric selections are confirmed with our concierge. Rush orders (within 3 business days) can be accommodated depending on atelier queue.
+          </div>
+</div>
+<!-- FAQ 2 -->
+<div class="p-space-md bg-surface-container-lowest shadow-sm cursor-pointer" onclick="toggleFaq(this)">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-[18px] text-noir-text">Can I request physical fabric swatches before committing?</h4>
+<span class="material-symbols-outlined text-noir-text transition-transform duration-300 faq-icon">expand_more</span>
+</div>
+<div class="faq-content hidden pt-space-sm text-on-surface-variant font-body-md text-body-md">
+            Yes. We can courier a curated Linen &amp; Batik swatch card directly to your address within Sri Lanka, or provide high-definition calibrated natural daylight video swatches via WhatsApp for international patrons.
+          </div>
+</div>
+<!-- FAQ 3 -->
+<div class="p-space-md bg-surface-container-lowest shadow-sm cursor-pointer" onclick="toggleFaq(this)">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-[18px] text-noir-text">What if the custom garment does not fit perfectly?</h4>
+<span class="material-symbols-outlined text-noir-text transition-transform duration-300 faq-icon">expand_more</span>
+</div>
+<div class="faq-content hidden pt-space-sm text-on-surface-variant font-body-md text-body-md">
+            We provide a complimentary alteration guarantee. If a custom garment needs fine-tuning upon arrival, our Colombo studio will alter it at zero cost. For international clients, we credit local tailoring adjustments or provide a replacement fitting.
+          </div>
+</div>
+<!-- FAQ 4 -->
+<div class="p-space-md bg-surface-container-lowest shadow-sm cursor-pointer" onclick="toggleFaq(this)">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-[18px] text-noir-text">Do you ship international bespoke orders?</h4>
+<span class="material-symbols-outlined text-noir-text transition-transform duration-300 faq-icon">expand_more</span>
+</div>
+<div class="faq-content hidden pt-space-sm text-on-surface-variant font-body-md text-body-md">
+            Yes, we partner with DHL Express and Aramex. Custom garments are delivered to the UK, Europe, Australia, UAE, Singapore, and North America in 3–5 business days post-completion.
+          </div>
+</div>
+</div>
+<!-- DIRECT HELP FOOTNOTE -->
+<div class="p-space-lg bg-linen-elevated flex flex-col sm:flex-row items-center justify-between gap-space-md text-center sm:text-left">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-noir-text">Have a specific design sketch or heirloom batik piece?</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">We frequently craft bespoke garments utilizing patron-supplied heritage silks or personal inspirations.</p>
+</div>
+<a class="px-space-md py-3 bg-noir-text text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary transition-colors shrink-0" href="https://wa.me/94779052928?text=Hello%20EEMA%2C%20I%20have%20a%20bespoke%20design%20sketch%20I%20would%20like%20to%20consult%20on" rel="noopener noreferrer" target="_blank">
+          Discuss Custom Concept
+        </a>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE VANILLA SCRIPT FOR LIVE BESPOKE TICKET BUILDING -->
+<script>
+    let bespokeState = {
+      silhouette: 'Flutter Sleeve Ruffle Crop Top',
+      fabric: 'Washed Coral Rose (Pure Flax)',
+      bust: '34 in',
+      waist: '28 in',
+      hips: '38 in',
+      length: '19 in (Crop)',
+      accents: ['Flutter Cap Ruffles', 'Ladder-Lace Cutwork Inset', 'Keyhole Back & Shell Button'],
+      notes: ''
+    };
+
+    function selectSilhouette(btn, name) {
+      document.querySelectorAll('#silhouette-grid .silhouette-btn').forEach(el => {
+        el.classList.remove('bg-linen-elevated', 'active');
+        el.classList.add('bg-surface-container-low');
+      });
+      btn.classList.add('bg-linen-elevated', 'active');
+      btn.classList.remove('bg-surface-container-low');
+      bespokeState.silhouette = name;
+      updateSummary();
+    }
+
+    function selectFabric(btn, fabricName) {
+      document.querySelectorAll('#swatch-grid .swatch-btn').forEach(el => {
+        el.classList.remove('bg-berry-soft', 'active');
+        el.classList.add('bg-surface-container-low');
+      });
+      btn.classList.add('bg-berry-soft', 'active');
+      btn.classList.remove('bg-surface-container-low');
+      bespokeState.fabric = fabricName;
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const bust = document.getElementById('input-bust').value.trim() || '34 in';
+      const waist = document.getElementById('input-waist').value.trim() || '28 in';
+      const hips = document.getElementById('input-hips').value.trim() || '38 in';
+      const length = document.getElementById('input-length').value.trim() || 'Custom';
+      const notes = document.getElementById('input-notes').value.trim();
+
+      bespokeState.bust = bust;
+      bespokeState.waist = waist;
+      bespokeState.hips = hips;
+      bespokeState.length = length;
+      bespokeState.notes = notes;
+
+      const accents = [];
+      if (document.getElementById('accent-ruffle').checked) accents.push('Flutter Ruffles');
+      if (document.getElementById('accent-ladder').checked) accents.push('Ladder Lace');
+      if (document.getElementById('accent-keyhole').checked) accents.push('Keyhole Back');
+      bespokeState.accents = accents;
+
+      document.getElementById('summary-silhouette').textContent = bespokeState.silhouette;
+      document.getElementById('summary-fabric').textContent = bespokeState.fabric;
+      document.getElementById('summary-specs').textContent = `Bust: ${bust}, Waist: ${waist}, Len: ${length}`;
+      document.getElementById('summary-accents').textContent = accents.length > 0 ? accents.join(', ') : 'None';
+
+      // Build pre-populated WhatsApp message
+      const textMsg = `Hello EEMA Fashion Atelier,%0A%0AI would like to submit a Custom Made-to-Measure order inquiry:%0A%0A` +
+        `• Garment Archetype: ${encodeURIComponent(bespokeState.silhouette)}%0A` +
+        `• Fabric & Tone: ${encodeURIComponent(bespokeState.fabric)}%0A` +
+        `• Bust: ${encodeURIComponent(bust)}%0A` +
+        `• Waist: ${encodeURIComponent(waist)}%0A` +
+        `• Hips: ${encodeURIComponent(hips)}%0A` +
+        `• Length: ${encodeURIComponent(length)}%0A` +
+        `• Accents: ${encodeURIComponent(accents.join(', '))}%0A` +
+        (notes ? `• Special Notes: ${encodeURIComponent(notes)}%0A` : '') +
+        `%0APlease confirm tailoring timeline and invoice.`;
+
+      document.getElementById('whatsapp-order-link').href = `https://wa.me/94779052928?text=${textMsg}`;
+    }
+
+    function toggleFaq(card) {
+      const content = card.querySelector('.faq-content');
+      const icon = card.querySelector('.faq-icon');
+      const isHidden = content.classList.contains('hidden');
+
+      // Close other FAQs
+      document.querySelectorAll('#accordion-group .faq-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('#accordion-group .faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+
+      if (isHidden) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+  </script>
+</div></main><aside class="fixed bottom-6 right-6 z-40 flex items-center gap-2"><a class="group flex items-center bg-noir-text text-surface-container-lowest pl-4 pr-3 py-3 shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:bg-whatsapp-forest transition-all" href="https://wa.me/94779052928?text=Hello%20EEMA%20Atelier%2C%20I%20would%20like%20to%20consult%20with%20a%20stylist" rel="noopener noreferrer" target="_blank"><span class="font-label-caps text-label-caps tracking-widest uppercase text-surface-container-lowest mr-3">Chat with our Stylist</span><span class="w-7 h-7 bg-whatsapp-forest group-hover:bg-noir-text flex items-center justify-center transition-colors shrink-0"><svg class="w-4 h-4 fill-surface-container-lowest" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.15c-1.49 0-2.94-.4-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.182 8.182 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29z"></path></svg></span></a></aside><footer class="w-full bg-linen-elevated pt-space-3xl pb-space-xl"><div class="w-full px-margin-mobile md:px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-gutter pb-space-2xl"><div class="lg:col-span-4 flex flex-col justify-between pr-0 lg:pr-space-xl"><div class="space-y-space-md"><div class="font-headline-md text-headline-md text-noir-text uppercase tracking-wider">EEMA FASHION</div><p class="font-body-md text-body-md text-on-surface-variant max-w-sm">An artisanal Sri Lankan fashion atelier crafting bespoke pure handloom linens, sustainable resort-wear, and hand-painted batik expressions. Tailored in Colombo for global and domestic patrons.</p><div class="flex items-center gap-2 pt-space-xs"><span class="material-symbols-outlined text-whatsapp-forest text-[18px]">verified</span><span class="font-label-caps text-label-caps uppercase tracking-widest text-noir-text">Colombo Atelier • Islandwide &amp; Worldwide Delivery</span></div></div><div class="pt-space-lg"><div class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant mb-space-xs">Direct Concierge Desk</div><div class="font-headline-sm text-headline-sm text-noir-text">+94 77 905 2928</div></div></div><div class="lg:col-span-2 space-y-space-md"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-noir-text">Collections</h4><ul class="space-y-space-sm font-body-md text-body-md text-on-surface-variant"><li class=""><a class="hover:text-noir-text transition-colors" data-path="collections-and-lookbook" href="lookbook.html">Pure Linen Edition</a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="collections-and-lookbook" href="lookbook.html">Artisanal Batik Edit</a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="custom-atelier" href="atelier.html">Made to Measure</a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="collections-and-lookbook" href="lookbook.html">Casual Essentials</a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="collections-and-lookbook" href="lookbook.html">Resort Silhouettes</a></li></ul></div><div class="lg:col-span-3 space-y-space-md"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-noir-text">Customer Care &amp; Atelier</h4><ul class="space-y-space-sm font-body-md text-body-md text-on-surface-variant"><li class=""><a class="hover:text-noir-text transition-colors" href="https://wa.me/94779052928" rel="noopener noreferrer" target="_blank"><svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.15c-1.49 0-2.94-.4-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.182 8.182 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29z"></path></svg><span class="">WhatsApp Studio</span></a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="custom-atelier" href="atelier.html">Sizing &amp; Custom Measurements</a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="our-story" href="our-story.html">Linen &amp; Batik Fabric Care</a></li><li class=""><a class="hover:text-noir-text transition-colors" data-path="inquire-and-contact" href="our-story.html#how-to-order">Delivery &amp; Tailoring Timeline</a></li><li class=""><a class="hover:text-noir-text transition-colors" href="https://www.facebook.com/people/Eema-Fashion/61553131572724/" rel="noopener noreferrer" target="_blank"><svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg><span class="">Facebook Profile</span></a></li></ul></div><div class="lg:col-span-3 space-y-space-md"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-noir-text">Lookbook Releases</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Subscribe for private salon previews, seasonal batik capsules, and invitation-only bespoke releases.</p><form class="space-y-space-xs" onsubmit="event.preventDefault();"><div class="flex flex-col gap-2"><input class="w-full bg-surface-container-lowest px-space-md py-3 text-noir-text font-body-sm text-body-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-1 focus:ring-noir-text" placeholder="Your email address" type="email"><button class="w-full bg-noir-text text-surface-container-lowest py-2.5 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary transition-colors" type="submit">Request Invitation</button></div></form><div class="flex items-center gap-space-md pt-2"><a class="flex items-center gap-1 font-label-caps text-label-caps uppercase tracking-widest text-whatsapp-forest hover:underline" href="https://wa.me/94779052928" rel="noopener noreferrer" target="_blank"><svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.15c-1.49 0-2.94-.4-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.182 8.182 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29z"></path></svg><span class="">WhatsApp Studio</span></a><span class="text-on-surface-variant opacity-40">•</span><a class="flex items-center gap-1 font-label-caps text-label-caps uppercase tracking-widest text-noir-text hover:text-primary" href="https://www.facebook.com/people/Eema-Fashion/61553131572724/" rel="noopener noreferrer" target="_blank"><svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg><span class="">Facebook Profile</span></a></div></div></div><div class="pt-space-xl flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex flex-wrap items-center gap-space-md"><span class="">© 2026 EEMA Fashion. All rights reserved.</span><span class="hidden md:inline text-linen-stone">|</span><span class="">Curated Showcase &amp; Bespoke Order Catalog.</span></div><div class="flex items-center gap-space-lg font-label-caps text-label-caps uppercase tracking-widest"><a class="hover:text-noir-text transition-colors" data-path="inquire-and-contact" href="our-story.html#how-to-order">Privacy Policy</a><a class="hover:text-noir-text transition-colors" data-path="inquire-and-contact" href="our-story.html#how-to-order">Order Terms</a><a class="hover:text-noir-text transition-colors" data-path="custom-atelier" href="atelier.html">Bespoke Agreement</a></div></div></div></footer>
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-path="artisanal-craft"]').forEach((link) => link.remove());
+  const storyLink = document.querySelector('[data-path="our-story"] span');
+  if (storyLink) storyLink.textContent = 'OUR STORY';
+  const siteHeader = document.querySelector('header')?.parentElement;
+  const desktopActions = document.getElementById('nav-search-toggle')?.parentElement;
+  if (siteHeader && desktopActions && !document.getElementById('mobile-menu-toggle')) {
+    const facebookAction = desktopActions.querySelector('a[aria-label="Follow EEMA on Facebook"]');
+    const whatsappAction = desktopActions.querySelector('a[href*="wa.me"]');
+    if (facebookAction && whatsappAction) {
+      desktopActions.append(whatsappAction, facebookAction);
+    }
+    if (facebookAction) {
+      facebookAction.className = 'w-9 h-9 flex items-center justify-center rounded-full bg-[#f9dfe9] text-[#b21d66] hover:bg-primary hover:text-white transition-colors';
+      const facebookIcon = facebookAction.querySelector('svg');
+      if (facebookIcon) {
+        facebookIcon.className = 'w-4 h-4 fill-current';
+      }
+    }
+    desktopActions.classList.add('hidden', 'xl:flex');
+    const mobileToggle = document.createElement('button');
+    mobileToggle.id = 'mobile-menu-toggle';
+    mobileToggle.type = 'button';
+    mobileToggle.className = 'xl:hidden flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-surface shadow-sm transition hover:border-primary hover:text-primary';
+    mobileToggle.setAttribute('aria-label', 'Toggle navigation menu');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    mobileToggle.innerHTML = '<span class="relative block h-4 w-5"><span class="absolute left-0 top-0 block h-0.5 w-5 rounded-full bg-noir-text"></span><span class="absolute left-0 top-1.5 block h-0.5 w-5 rounded-full bg-noir-text"></span><span class="absolute left-0 bottom-0 block h-0.5 w-5 rounded-full bg-noir-text"></span></span>';
+    desktopActions.before(mobileToggle);
+    const drawer = document.createElement('div');
+    drawer.id = 'mobile-menu-drawer';
+    drawer.className = 'hidden border-t border-stone-200/80 bg-[#fbf9f5] px-margin-mobile py-4 xl:hidden';
+    drawer.innerHTML = '<nav class="flex flex-col gap-3 font-label-caps text-label-caps uppercase tracking-wider"><a href="index.html">Home</a><a href="lookbook.html">Lookbook &amp; Capsules</a><a href="atelier.html">Custom Atelier</a><a href="our-story.html">Our Story</a></nav>';
+    siteHeader.append(drawer);
+    mobileToggle.addEventListener('click', () => {
+      const open = drawer.classList.contains('hidden');
+      drawer.classList.toggle('hidden', !open);
+      mobileToggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+  const toggle = document.getElementById('nav-search-toggle');
+  const panel = document.getElementById('nav-search-panel');
+  const form = document.getElementById('nav-search-form');
+  const input = document.getElementById('nav-search-input');
+  const isLookbook = /lookbook\.html/i.test(window.location.pathname);
+
+  if (toggle && panel) {
+    toggle.addEventListener('click', () => {
+      const shouldOpen = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !shouldOpen);
+      if (shouldOpen && input) input.focus();
+    });
+  }
+
+  if (form && input) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const query = (input.value || '').trim();
+      if (isLookbook) {
+        const cards = document.querySelectorAll('.fashion-card');
+        const term = query.toLowerCase();
+        cards.forEach((card) => {
+          const text = (card.textContent || '').toLowerCase();
+          card.style.display = (!term || text.includes(term)) ? 'flex' : 'none';
+        });
+        if (panel) panel.classList.add('hidden');
+        return;
+      }
+      window.location.href = query ? 'lookbook.html?search=' + encodeURIComponent(query) : 'lookbook.html';
+    });
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = params.get('search');
+  if (isLookbook && input && initialQuery) {
+    input.value = initialQuery;
+    const cards = document.querySelectorAll('.fashion-card');
+    const term = initialQuery.toLowerCase();
+    cards.forEach((card) => {
+      const text = (card.textContent || '').toLowerCase();
+      card.style.display = (!term || text.includes(term)) ? 'flex' : 'none';
+    });
+    if (panel) panel.classList.remove('hidden');
+  }
+});
+</script>
+
+</body></html>
