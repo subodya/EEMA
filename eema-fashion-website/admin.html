@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Studio | EEMA Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300..500,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: {
+    'linen-canvas': '#FBF9F5', 'linen-elevated': '#F5F1EA', 'linen-stone': '#EAE4DC',
+    'noir-text': '#1A1A1A', 'charcoal-body': '#333333', 'secondary': '#5f5e5e',
+    'primary': '#960052', 'primary-container': '#b8236b', 'berry-deep': '#8C154E', 'berry-soft': '#F8E9F0',
+    'whatsapp-forest': '#1E5E3A', 'error': '#ba1a1a', 'error-container': '#ffdad6'
+  },
+  fontFamily: { serif: ['"Playfair Display"', 'Georgia', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] }
+} } };
+</script>
+<style>
+  body { font-family: Inter, system-ui, sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400; font-size: 20px; line-height: 1; }
+  .label-caps { font-size: 11px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+  .field { width: 100%; background: #fff; border: 1px solid #EAE4DC; padding: .7rem .85rem; font-size: 14px; color: #1A1A1A; outline: none; transition: border-color .15s; border-radius: 0; }
+  .field:focus { border-color: #1A1A1A; }
+  .field.is-invalid { border-color: #ba1a1a; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .7rem 1.2rem; font-size: 11px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary { background: #1A1A1A; color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: #8C154E; }
+  .btn-ghost { border: 1px solid #EAE4DC; background: #fff; color: #1A1A1A; }
+  .btn-ghost:hover:not(:disabled) { border-color: #1A1A1A; }
+  .btn-danger { background: #ba1a1a; color: #fff; }
+  .icon-btn { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; color: #5f5e5e; transition: background .15s, color .15s; }
+  .icon-btn:hover { background: #F5F1EA; color: #1A1A1A; }
+  /* square toggle switch — zero-radius to match the brand */
+  .switch { position: relative; width: 38px; height: 22px; background: #EAE4DC; transition: background .2s; flex-shrink: 0; cursor: pointer; }
+  .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: #fff; transition: transform .2s; box-shadow: 0 1px 2px rgba(0,0,0,.15); }
+  .switch[aria-checked="true"] { background: #1E5E3A; }
+  .switch[aria-checked="true"]::after { transform: translateX(16px); }
+  .chip { padding: .4rem .75rem; font-size: 12px; border: 1px solid #EAE4DC; background: #fff; color: #5f5e5e; transition: all .15s; }
+  .chip:hover { color: #1A1A1A; border-color: #c9c0b4; }
+  .chip[aria-pressed="true"] { background: #1A1A1A; border-color: #1A1A1A; color: #fff; }
+  .seg { display: flex; flex-wrap: wrap; border: 1px solid #EAE4DC; background: #fff; }
+  .seg button { flex: 1 1 auto; padding: .7rem 1rem; font-size: 13px; color: #5f5e5e; border-right: 1px solid #EAE4DC; transition: all .15s; }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: #1A1A1A; color: #fff; }
+  .drawer-panel { transform: translateX(100%); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+  .drawer.open .drawer-panel { transform: none; }
+  .drawer .drawer-backdrop { opacity: 0; transition: opacity .3s; }
+  .drawer.open .drawer-backdrop { opacity: 1; }
+  .photo.dragging { opacity: .4; }
+  .photo.drop-target { outline: 2px solid #8C154E; outline-offset: 2px; }
+  .dropzone.drag-over { border-color: #8C154E; background: #F8E9F0; }
+  .shimmer { background: linear-gradient(90deg, #EAE4DC 0%, #8C154E 50%, #EAE4DC 100%); background-size: 200% 100%; animation: shimmer 1.2s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .spin { animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .toast { animation: toast-in .25s ease-out; }
+  @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } }
+  /* ---------- Product list: cards on phones/tablets, table on desktop ---------- */
+  .plist-head { display: none; }
+  #product-list { display: grid; gap: 12px; }
+  .product-row {
+    display: grid; grid-template-columns: 84px 1fr; grid-template-areas: "thumb info" "actions actions";
+    gap: 12px 14px; padding: 14px; background: #fff; border: 1px solid #EAE4DC; transition: background .15s;
+  }
+  .product-row.is-hidden .pr-thumb, .product-row.is-hidden .pr-info { opacity: .6; }
+  .pr-thumb { grid-area: thumb; width: 84px; aspect-ratio: 3 / 4; display: flex; align-items: center; justify-content: center; }
+  .pr-info { grid-area: info; align-self: center; }
+  .pr-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
+  .pr-note { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 2px; }
+  .pr-cat, .pr-price { display: none; }
+  .pr-actions { grid-area: actions; display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #EAE4DC; padding-top: 10px; }
+  @media (min-width: 640px) and (max-width: 1023px) {
+    #product-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1024px) {
+    .plist { background: #fff; border: 1px solid #EAE4DC; }
+    .plist-head, .product-row { grid-template-columns: 64px minmax(0, 1fr) 110px 100px 250px; }
+    .plist-head { display: grid; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #EAE4DC; }
+    #product-list { gap: 0; }
+    .product-row { grid-template-areas: none; gap: 16px; align-items: center; padding: 12px 16px; border: 0; border-bottom: 1px solid #EAE4DC; }
+    .product-row:last-child { border-bottom: 0; }
+    .product-row:hover { background: #FBF9F5; }
+    .pr-thumb, .pr-info, .pr-actions { grid-area: auto; }
+    .pr-thumb { width: 64px; }
+    .pr-name, .pr-note { -webkit-line-clamp: 1; }
+    .product-row .pr-meta, .product-row .pr-live-label { display: none; }
+    .pr-cat, .pr-price { display: block; }
+    .pr-actions { border-top: 0; padding-top: 0; }
+  }
+
+  /* ---------- Floating add button (phones & tablets) ---------- */
+  .fab { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: calc(20px + env(safe-area-inset-bottom)); z-index: 35;
+    width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: #1A1A1A; color: #fff;
+    box-shadow: 0 6px 20px rgba(26, 26, 26, .25); transition: background .15s, transform .15s; }
+  .fab .material-symbols-outlined { font-size: 30px; }
+  .fab:active { transform: scale(.95); background: #8C154E; }
+  @media (max-width: 1023px) { #toasts { bottom: calc(96px + env(safe-area-inset-bottom)); } #panel-products { padding-bottom: 72px; } }
+
+  /* ---------- Photo tiles: controls always visible on touch, hover-reveal with a mouse ---------- */
+  .photo-controls { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) {
+    .photo .photo-controls { opacity: 0; transition: opacity .15s; }
+    .photo:hover .photo-controls, .photo:focus-within .photo-controls { opacity: 1; }
+  }
+
+  /* ---------- Touch devices (tablets & phones): bigger targets, no iOS zoom on focus ---------- */
+  @media (pointer: coarse) {
+    .field, select.field, textarea.field { font-size: 16px; }
+    .icon-btn { width: 44px; height: 44px; }
+    .switch { width: 46px; height: 28px; }
+    .switch::after { width: 22px; height: 22px; }
+    .switch[aria-checked="true"]::after { transform: translateX(18px); }
+    .chip { min-height: 40px; padding: .5rem .9rem; font-size: 13px; }
+    .seg button { min-height: 48px; }
+    .btn { min-height: 46px; }
+    .cat-move { width: 40px !important; height: 32px !important; }
+    .photo-btn { width: 36px !important; height: 36px !important; }
+  }
+
+  /* drawer + app respect notches / home indicator */
+  .drawer-footer { padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
+  .app-header { padding-top: env(safe-area-inset-top); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body class="bg-linen-canvas text-noir-text antialiased min-h-screen">
+
+<!-- ============ LOADING ============ -->
+<div id="view-loading" class="min-h-screen flex items-center justify-center">
+  <span class="material-symbols-outlined spin text-secondary">progress_activity</span>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div id="view-login" hidden class="min-h-screen flex items-center justify-center px-5 py-12">
+  <div class="w-full max-w-sm">
+    <div class="text-center mb-8">
+      <div class="font-serif text-3xl tracking-[0.2em]">EEMA</div>
+      <div class="label-caps text-secondary mt-2">Atelier Studio</div>
+    </div>
+    <form id="login-form" class="bg-white border border-linen-stone p-7 space-y-5" novalidate>
+      <div>
+        <h1 class="font-serif text-2xl">Welcome back</h1>
+        <p class="text-sm text-secondary mt-1">Sign in to manage your collection.</p>
+      </div>
+      <div id="config-warning" hidden class="text-sm bg-berry-soft text-berry-deep p-3 border border-primary-container/30">
+        Supabase isn't connected yet. Add your project URL and anon key in <code>js/supabase-config.js</code>.
+      </div>
+      <label class="block">
+        <span class="label-caps text-secondary block mb-2">Email</span>
+        <input id="login-email" type="email" autocomplete="username" required class="field" placeholder="you@eemafashion.com">
+      </label>
+      <label class="block">
+        <span class="label-caps text-secondary block mb-2">Password</span>
+        <div class="relative">
+          <input id="login-password" type="password" autocomplete="current-password" required class="field pr-11" placeholder="••••••••">
+          <button type="button" id="toggle-password" class="icon-btn absolute right-1 top-1/2 -translate-y-1/2" aria-label="Show password"><span class="material-symbols-outlined">visibility</span></button>
+        </div>
+      </label>
+      <p id="login-notice" hidden class="text-sm bg-linen-elevated text-charcoal-body p-3 flex gap-2 items-start"><span class="material-symbols-outlined text-[18px] text-primary">lock_clock</span><span id="login-notice-text"></span></p>
+      <p id="login-error" hidden class="text-sm text-error"></p>
+      <button type="submit" id="login-submit" class="btn btn-primary w-full py-3.5">Sign in</button>
+    </form>
+    <p class="text-center text-xs text-secondary mt-6"><a href="index.html" class="hover:text-noir-text">← Back to website</a></p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="view-app" hidden>
+  <header class="app-header sticky top-0 z-30 bg-linen-canvas/90 backdrop-blur border-b border-linen-stone">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 sm:gap-8">
+      <a href="index.html" target="_blank" class="flex items-baseline gap-2 shrink-0" title="Open website">
+        <span class="font-serif text-xl tracking-[0.18em]">EEMA</span>
+        <span class="label-caps text-primary hidden sm:inline">Studio</span>
+      </a>
+      <nav class="flex items-center gap-1 h-full" role="tablist">
+        <button class="tab h-full px-3 sm:px-4 text-sm border-b-2 border-noir-text text-noir-text" data-tab="products" role="tab">Products</button>
+        <button class="tab h-full px-3 sm:px-4 text-sm border-b-2 border-transparent text-secondary hover:text-noir-text" data-tab="categories" role="tab">Categories</button>
+      </nav>
+      <div class="ml-auto flex items-center gap-2">
+        <span id="user-email" class="text-xs text-secondary hidden md:inline"></span>
+        <a href="lookbook.html" target="_blank" class="icon-btn" title="View live lookbook"><span class="material-symbols-outlined">open_in_new</span></a>
+        <button id="sign-out" class="icon-btn" title="Sign out"><span class="material-symbols-outlined">logout</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+
+    <!-- ---------- PRODUCTS ---------- -->
+    <section id="panel-products">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <div>
+          <h1 class="font-serif text-3xl">Products</h1>
+          <p class="text-sm text-secondary mt-1">Everything here appears on the Lookbook page once it's published.</p>
+        </div>
+        <button id="add-product" class="btn btn-primary"><span class="material-symbols-outlined text-[18px]">add</span>Add product</button>
+      </div>
+
+      <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6"></div>
+
+      <div class="flex flex-col md:flex-row gap-3 mb-4">
+        <div class="relative flex-1">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary">search</span>
+          <input id="filter-search" type="search" class="field pl-10" placeholder="Search products…" aria-label="Search products">
+        </div>
+        <div class="grid grid-cols-2 gap-3 md:flex">
+        <select id="filter-category" class="field md:w-48" aria-label="Filter by category"><option value="all">All categories</option></select>
+        <select id="filter-status" class="field md:w-44" aria-label="Filter by status">
+          <option value="all">Any status</option>
+          <option value="published">Published</option>
+          <option value="draft">Hidden (draft)</option>
+          <option value="featured">Featured</option>
+        </select>
+        </div>
+      </div>
+
+      <div class="plist">
+        <div class="plist-head label-caps text-secondary" aria-hidden="true">
+          <span></span><span>Product</span><span>Category</span><span class="text-right">Price</span><span class="flex justify-between"><span>Live</span><span>Actions</span></span>
+        </div>
+        <div id="product-list"></div>
+        <div id="product-empty" hidden class="py-16 px-6 text-center">
+          <span class="material-symbols-outlined text-primary text-[32px]">checkroom</span>
+          <h3 class="font-serif text-xl mt-2" id="product-empty-title">No products yet</h3>
+          <p class="text-sm text-secondary mt-1" id="product-empty-body">Add your first piece and it will appear on the website.</p>
+        </div>
+      </div>
+      <!-- Floating add button for tablets & phones (header button scrolls away) -->
+      <button id="fab-add" type="button" class="fab lg:hidden" aria-label="Add product"><span class="material-symbols-outlined">add</span></button>
+    </section>
+
+    <!-- ---------- CATEGORIES ---------- -->
+    <section id="panel-categories" hidden>
+      <div class="mb-6">
+        <h1 class="font-serif text-3xl">Categories</h1>
+        <p class="text-sm text-secondary mt-1">These become the tabs on the Lookbook page. Use the arrows to change their order.</p>
+      </div>
+      <form id="category-form" class="flex gap-3 mb-4 max-w-xl">
+        <input id="category-name" class="field" placeholder="New category, e.g. Accessories" maxlength="40">
+        <button class="btn btn-primary shrink-0" type="submit"><span class="material-symbols-outlined text-[18px]">add</span>Add</button>
+      </form>
+      <div id="category-list" class="bg-white border border-linen-stone max-w-xl"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ PRODUCT DRAWER ============ -->
+<div id="drawer" class="drawer fixed inset-0 z-40" hidden aria-modal="true" role="dialog" aria-labelledby="drawer-title">
+  <div class="drawer-backdrop absolute inset-0 bg-noir-text/40" data-close></div>
+  <div class="drawer-panel absolute right-0 top-0 h-full w-full md:max-w-2xl lg:max-w-xl bg-linen-canvas flex flex-col shadow-2xl">
+    <div class="flex items-center justify-between px-5 sm:px-7 h-16 border-b border-linen-stone bg-white shrink-0">
+      <h2 id="drawer-title" class="font-serif text-xl">Add product</h2>
+      <button class="icon-btn" data-close aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+    </div>
+
+    <form id="product-form" class="flex-1 overflow-y-auto px-5 sm:px-7 py-6 space-y-8" novalidate>
+      <!-- Photos -->
+      <fieldset>
+        <legend class="label-caps text-secondary mb-3">Photos</legend>
+        <div id="photo-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
+        <label id="dropzone" class="dropzone flex flex-col items-center justify-center gap-1 border border-dashed border-[#c9c0b4] bg-white py-7 px-4 text-center cursor-pointer transition-colors">
+          <span class="material-symbols-outlined text-primary text-[28px]">add_photo_alternate</span>
+          <span class="text-sm"><strong class="font-medium">Choose photos</strong> or drag them here</span>
+          <span class="text-xs text-secondary">The first photo is the cover. Use the arrows (or drag) to reorder. Photos are resized automatically.</span>
+          <input id="photo-input" type="file" accept="image/*" multiple class="sr-only">
+        </label>
+        <p class="field-error text-xs text-error mt-2" data-for="images" hidden></p>
+      </fieldset>
+
+      <!-- Basics -->
+      <fieldset class="space-y-4">
+        <legend class="label-caps text-secondary mb-3">Basics</legend>
+        <label class="block">
+          <span class="text-sm font-medium block mb-1.5">Product name</span>
+          <input id="f-name" class="field" maxlength="80" placeholder="e.g. Naomi Ruffle Sleeve Top">
+          <p class="field-error text-xs text-error mt-1" data-for="name" hidden></p>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium block mb-1.5">Price</span>
+          <div class="relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-secondary">Rs</span>
+            <input id="f-price" class="field pl-10" type="number" inputmode="numeric" min="0" step="50" placeholder="6900">
+          </div>
+          <p class="field-error text-xs text-error mt-1" data-for="price" hidden></p>
+        </label>
+        <div>
+          <span class="text-sm font-medium block mb-1.5">Category</span>
+          <div id="f-category" class="seg" role="group" aria-label="Category"></div>
+          <p class="field-error text-xs text-error mt-1" data-for="category" hidden></p>
+        </div>
+      </fieldset>
+
+      <!-- Sizes -->
+      <fieldset>
+        <legend class="label-caps text-secondary mb-1">Sizes</legend>
+        <p class="text-xs text-secondary mb-3">Customers pick one of these on the product page. "Custom fit" is always offered too. Leave all off for made-to-measure only.</p>
+        <div class="space-y-2.5">
+          <div class="flex flex-wrap items-center gap-2" id="f-sizes-adult"></div>
+          <div class="flex flex-wrap items-center gap-2" id="f-sizes-kids"></div>
+          <div class="flex flex-wrap items-center gap-2" id="f-sizes-custom"></div>
+        </div>
+        <div class="flex gap-2 mt-3">
+          <input id="new-size" class="field !py-2 max-w-[220px]" placeholder="Other size, e.g. Free size" maxlength="20">
+          <button type="button" id="add-size" class="btn btn-ghost !py-2">Add size</button>
+        </div>
+      </fieldset>
+
+      <!-- Details -->
+      <fieldset class="space-y-4">
+        <legend class="label-caps text-secondary mb-3">Details</legend>
+        <label class="block">
+          <span class="text-sm font-medium block mb-1.5">Short line <span class="font-normal text-secondary">(shown under the name)</span></span>
+          <input id="f-note" class="field" maxlength="90" placeholder="e.g. 100% Pure Linen • Flutter Sleeves">
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium block mb-1.5">Description <span class="font-normal text-secondary">(optional, shown in quick view)</span></span>
+          <textarea id="f-description" class="field min-h-[96px] resize-y" maxlength="600" placeholder="Fabric, fit, care notes…"></textarea>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium block mb-1.5">Fabric</span>
+          <input id="f-fabric" class="field" list="fabric-options" maxlength="60" placeholder="e.g. 100% Pure Linen">
+          <datalist id="fabric-options"></datalist>
+        </label>
+      </fieldset>
+
+      <!-- Tags -->
+      <fieldset>
+        <legend class="label-caps text-secondary mb-1">Style tags</legend>
+        <p class="text-xs text-secondary mb-3">Shown as the "Style" filter on the Lookbook.</p>
+        <div id="f-tags" class="flex flex-wrap gap-2"></div>
+        <div class="flex gap-2 mt-3">
+          <input id="new-tag" class="field !py-2 max-w-[220px]" placeholder="New tag" maxlength="30">
+          <button type="button" id="add-tag" class="btn btn-ghost !py-2">Add tag</button>
+        </div>
+      </fieldset>
+
+      <!-- Colours -->
+      <fieldset>
+        <legend class="label-caps text-secondary mb-3">Colours available</legend>
+        <div id="f-colors" class="space-y-2"></div>
+        <button type="button" id="add-color" class="mt-3 text-sm text-primary hover:underline inline-flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">add</span>Add colour</button>
+      </fieldset>
+
+      <!-- Visibility -->
+      <fieldset class="space-y-3 pb-4">
+        <legend class="label-caps text-secondary mb-3">Visibility</legend>
+        <div class="flex items-center justify-between gap-4 bg-white border border-linen-stone p-4">
+          <div><div class="text-sm font-medium">Published</div><div class="text-xs text-secondary">Visible on the website</div></div>
+          <button type="button" id="f-published" class="switch" role="switch" aria-checked="true" aria-label="Published"></button>
+        </div>
+        <div class="flex items-center justify-between gap-4 bg-white border border-linen-stone p-4">
+          <div><div class="text-sm font-medium">Featured on home page</div><div class="text-xs text-secondary">Shows in "New Arrivals" (the first 4 are used)</div></div>
+          <button type="button" id="f-featured" class="switch" role="switch" aria-checked="false" aria-label="Featured"></button>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="drawer-footer flex items-center justify-end gap-3 px-5 sm:px-7 pt-4 border-t border-linen-stone bg-white shrink-0">
+      <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button type="submit" form="product-form" id="save-product" class="btn btn-primary min-w-[140px]">Save product</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONFIRM DIALOG ============ -->
+<div id="confirm" class="fixed inset-0 z-50 flex items-center justify-center p-4" hidden role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+  <div class="absolute inset-0 bg-noir-text/40" data-cancel></div>
+  <div class="relative bg-white w-full max-w-sm p-6 border border-linen-stone">
+    <h3 id="confirm-title" class="font-serif text-xl"></h3>
+    <p id="confirm-body" class="text-sm text-secondary mt-2"></p>
+    <div class="flex justify-end gap-3 mt-6">
+      <button class="btn btn-ghost" data-cancel>Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ IDLE WARNING ============ -->
+<div id="idle-warning" class="fixed inset-0 z-[55] flex items-center justify-center p-4" hidden role="alertdialog" aria-modal="true" aria-labelledby="idle-title" aria-describedby="idle-body">
+  <div class="absolute inset-0 bg-noir-text/50"></div>
+  <div class="relative bg-white w-full max-w-sm p-6 border border-linen-stone text-center">
+    <span class="material-symbols-outlined text-primary text-[32px]">lock_clock</span>
+    <h3 id="idle-title" class="font-serif text-xl mt-1">Still there?</h3>
+    <p id="idle-body" class="text-sm text-secondary mt-2">For security you'll be signed out in <strong id="idle-countdown" class="text-noir-text tabular-nums">60</strong> seconds.</p>
+    <div class="grid grid-cols-2 gap-3 mt-6">
+      <button class="btn btn-ghost" id="idle-signout">Sign out</button>
+      <button class="btn btn-primary" id="idle-stay">Stay signed in</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOASTS ============ -->
+<div id="toasts" class="fixed bottom-4 right-4 left-4 sm:left-auto z-[60] flex flex-col items-end gap-2 pointer-events-none" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script>window.EEMA_AUTH_STORAGE = 'session'; // admin login lasts only while this tab is open</script>
+<script src="js/supabase-client.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

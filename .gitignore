@@ -1,0 +1,19 @@
+# Local Supabase settings (project URL + key). Copy js/supabase-config.example.js to create it.
+# The deploy workflow generates this file from GitHub repository secrets.
+eema-fashion-website/js/supabase-config.js
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Tooling & OS clutter
+node_modules/
+.claude/
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini

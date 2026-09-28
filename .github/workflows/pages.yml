@@ -3,13 +3,17 @@ name: Deploy EEMA Fashion website
 on:
   push:
     branches:
-      - initial-dev
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -20,6 +24,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # js/supabase-config.js is git-ignored; build it from repository secrets
+      # (Settings → Secrets and variables → Actions → SUPABASE_URL, SUPABASE_ANON_KEY).
+      - name: Create Supabase config from secrets
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::Add the SUPABASE_URL and SUPABASE_ANON_KEY repository secrets, then re-run this workflow."
+            exit 1
+          fi
+          cd eema-fashion-website/js
+          sed -e "s|https://YOUR-PROJECT-REF.supabase.co|${SUPABASE_URL}|" \
+              -e "s|YOUR-ANON-PUBLIC-KEY|${SUPABASE_ANON_KEY}|" \
+              supabase-config.example.js > supabase-config.js
+          if grep -q "YOUR-" supabase-config.js; then
+            echo "::error::Config placeholders were not replaced."
+            exit 1
+          fi
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
