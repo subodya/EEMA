@@ -1,0 +1,32 @@
+# Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/)
+# GitHub Pages ignores this file.
+
+# Security headers for every page
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# CSS and JS are content-versioned on deploy (?v=hash), so they can be cached for a year
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Icons change rarely
+/favicon.ico
+  Cache-Control: public, max-age=604800
+/*.png
+  Cache-Control: public, max-age=604800
+/site.webmanifest
+  Cache-Control: public, max-age=86400
+
+# Admin panel: never cached, never indexed
+/admin
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+/admin.html
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow

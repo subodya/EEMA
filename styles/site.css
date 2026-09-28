@@ -1,0 +1,4 @@
+/* Tailwind entry for the public website. Compiled to eema-fashion-website/css/site.css (git-ignored, built on deploy). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

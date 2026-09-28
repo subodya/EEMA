@@ -1,0 +1,4 @@
+/* Tailwind entry for the admin panel. Compiled to eema-fashion-website/css/admin.css (git-ignored, built on deploy). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

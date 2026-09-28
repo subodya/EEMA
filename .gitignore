@@ -2,6 +2,9 @@
 # The deploy workflow generates this file from GitHub repository secrets.
 eema-fashion-website/js/supabase-config.js
 
+# Build output (compiled on deploy by `npm run build:ci`)
+eema-fashion-website/css/
+
 # Environment / secrets
 .env
 .env.*

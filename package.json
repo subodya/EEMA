@@ -1,0 +1,21 @@
+{
+  "name": "eema-fashion-website",
+  "private": true,
+  "description": "EEMA Fashion website: static pages + Supabase. Builds the Tailwind CSS and the Supabase config for deployment.",
+  "scripts": {
+    "build:config": "node scripts/write-config.mjs",
+    "build:css": "node scripts/build-css.mjs",
+    "build": "npm run build:config && npm run build:css",
+    "build:ci": "npm run build && node scripts/version-assets.mjs",
+    "dev": "tailwindcss -c tailwind.site.config.js -i styles/site.css -o eema-fashion-website/css/site.css --watch",
+    "dev:admin": "tailwindcss -c tailwind.admin.config.js -i styles/admin.css -o eema-fashion-website/css/admin.css --watch"
+  },
+  "devDependencies": {
+    "cssnano": "7.0.6",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.17"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

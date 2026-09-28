@@ -15,16 +15,17 @@ The header and footer nav links on every page now point to the real files above 
 
 ## How to run it
 
-No build step — it's plain HTML + the Tailwind CDN (JIT compiled in the browser), exactly like the original Stitch export.
+Plain HTML pages styled with a **pre-built Tailwind stylesheet**: `css/site.css` for the public pages, `css/admin.css` for the admin. The stylesheets are generated, not hand-edited. Build them from the repository root (one folder up):
 
-1. Open this folder in VS Code.
-2. Install the **Live Server** extension (or any static server).
-3. Right-click `index.html` → "Open with Live Server" (or run `npx serve .` from a terminal).
-4. Requires an internet connection — it loads Tailwind, Google Fonts (Playfair Display + Inter), Material Symbols, and all product photography from Google's `lh3.googleusercontent.com` CDN (the same image URLs Stitch generated). If you want the site fully self-hosted, download those images and swap the `src`/`srcset` URLs for local paths in `/assets/images`.
+1. `npm install` (once), then `npm run build`. Or run `npm run dev` to rebuild automatically while editing.
+2. Open this folder in VS Code with the **Live Server** extension, or run `npx serve eema-fashion-website` from the repo root.
+3. Requires an internet connection for Google Fonts, Material Symbols, Supabase and the product photos.
+
+Design tokens (colours, type scale, spacing) live in `tailwind.site.config.js` at the repo root, mirroring `docs/DESIGN.md`. Deployment (Cloudflare Pages, domain, Supabase keep-alive) is described in `DEPLOYMENT.md` at the repo root.
 
 ## Notes on fidelity
 
-- Layout, spacing, type scale, and the full color system come straight from the Stitch `DESIGN.md` tokens (see `docs/DESIGN.md`), wired into `tailwind.config` in each file's `<head>`.
+- Layout, spacing, type scale, and the full color system come straight from the Stitch `DESIGN.md` tokens (see `docs/DESIGN.md`), defined once in `tailwind.site.config.js`.
 - All copy, product cards, WhatsApp deep-links, prices, and interactive JS (capsule switcher, quick-preview modal, bespoke order builder, measurement unit toggle, accordion FAQ, scroll reveals) are unchanged from the original export.
 - The only edits made were: fixing the cross-page navigation (`data-path` → real `href`), removing a stray inline `cursor: grabbing` style left over from the Stitch editor, giving each page a distinct `<title>`, and guarding one scroll-listener against a missing element so no console errors are thrown on the home page.
 - WhatsApp number used throughout: `+94 77 905 2928`. Search-and-replace `94779052928` across the files (and `WHATSAPP_NUMBER` in the config) if it changes.
