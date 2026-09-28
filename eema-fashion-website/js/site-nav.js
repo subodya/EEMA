@@ -1,6 +1,15 @@
 // EEMA Fashion — shared site header behaviour (used on every public page).
 // Handles: mobile menu, search panel, scroll elevation. Markup lives in each page's #site-header.
 (function () {
+  // Phones: the floating "Chat with our stylist" pill shrinks to its round WhatsApp icon
+  // so it never covers page content.
+  if (!document.getElementById('eema-float-chat-css')) {
+    const st = document.createElement('style');
+    st.id = 'eema-float-chat-css';
+    st.textContent = '@media (max-width: 767px) { body > aside.fixed.bottom-6 { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); } body > aside.fixed.bottom-6 > a { padding: 8px !important; } body > aside.fixed.bottom-6 > a > span:first-child { display: none !important; } body > aside.fixed.bottom-6 > a > span:last-child { width: 40px; height: 40px; margin: 0; } }';
+    document.head.appendChild(st);
+  }
+
   const header = document.getElementById('site-header');
   if (!header) return;
 

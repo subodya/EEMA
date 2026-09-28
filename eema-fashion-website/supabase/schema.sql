@@ -29,6 +29,7 @@ create table if not exists public.products (
   images       text[] not null default '{}',  -- public URLs, first = cover
   is_published boolean not null default true,
   is_featured  boolean not null default false,
+  in_stock     boolean not null default true,     -- false = shown on site as "Out of stock"
   sort_order   int not null default 0,
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now()
@@ -36,6 +37,7 @@ create table if not exists public.products (
 
 -- Added after the first release; keeps older databases in step when schema.sql is re-run
 alter table public.products add column if not exists sizes text[] not null default '{}';
+alter table public.products add column if not exists in_stock boolean not null default true;
 
 create index if not exists products_category_idx  on public.products (category_id);
 create index if not exists products_published_idx on public.products (is_published, sort_order);

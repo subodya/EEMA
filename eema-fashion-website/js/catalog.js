@@ -37,9 +37,14 @@
     return /^#[0-9a-f]{3,8}$/i.test(hex || '') ? hex : '#e4e2de';
   }
 
+  // Products without the in_stock column (migration 003 not run) count as in stock.
+  const isOutOfStock = (p) => p && p.in_stock === false;
+
   function whatsappUrl(product) {
     const color = (product.colors && product.colors[0] && product.colors[0].name) || '';
-    const msg = `Hello EEMA Fashion, I would like to order the ${product.name}${color ? ' in ' + color : ''} (${formatPrice(product.price)})`;
+    const msg = isOutOfStock(product)
+      ? `Hello EEMA Fashion, the ${product.name} is showing as out of stock. Could you let me know when it's available again${color ? ' in ' + color : ''}? (${formatPrice(product.price)})`
+      : `Hello EEMA Fashion, I would like to order the ${product.name}${color ? ' in ' + color : ''} (${formatPrice(product.price)})`;
     return `https://wa.me/${cfg.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   }
 
@@ -49,18 +54,26 @@
 
   // ---------- data ----------
 
-  const PRODUCT_FIELDS = 'id,name,slug,short_note,description,price,tags,fabric,colors,sizes,images,is_featured,category_id,category:categories(id,name,slug)';
+  const PRODUCT_FIELDS = 'id,name,slug,short_note,description,price,tags,fabric,colors,sizes,in_stock,images,is_featured,category_id,created_at,category:categories(id,name,slug)';
+  // Columns added by later migrations (002 sizes, 003 in_stock). If one is missing in the
+  // database, the query is retried without it so the site keeps working.
+  const OPTIONAL_FIELDS = ['sizes', 'in_stock'];
 
-  // Runs a products query; if the `sizes` column hasn't been added yet
-  // (supabase/migrations/002_product_sizes.sql not run), retries without it.
   async function queryProducts(build) {
-    let res = await build(PRODUCT_FIELDS);
-    if (res.error && /sizes/i.test(res.error.message || '')) {
-      res = await build(PRODUCT_FIELDS.replace(',sizes', ''));
+    let fields = PRODUCT_FIELDS;
+    let res = await build(fields);
+    for (let i = 0; res.error && i < OPTIONAL_FIELDS.length; i++) {
+      const missing = OPTIONAL_FIELDS.find((f) => fields.includes(',' + f) && new RegExp('\\b' + f + '\\b').test(res.error.message || ''));
+      if (!missing) break;
+      fields = fields.replace(',' + missing, '');
+      res = await build(fields);
     }
     if (res.error) throw res.error;
     return res.data;
   }
+
+  // In-stock pieces first; keeps the admin's ordering within each group (sort is stable).
+  const inStockFirst = (list) => list.sort((a, b) => Number(isOutOfStock(a)) - Number(isOutOfStock(b)));
 
   async function fetchProductBySlug(slug) {
     if (!window.sb) throw new Error('Supabase not configured');
@@ -88,62 +101,257 @@
       if (limit) q = q.limit(limit);
       return q;
     });
-    return data || [];
+    return inStockFirst(data || []);
   }
+
+  // ---------- card styles (injected once, shared by every page that shows products) ----------
+
+  const CARD_CSS = `
+  /* Editorial product card */
+  .eema-card { display: flex; flex-direction: column; min-width: 0; }
+  .ec-media { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: #F5F1EA; }
+  .ec-link { position: absolute; inset: 0; display: block; }
+  .ec-track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .ec-track::-webkit-scrollbar { display: none; }
+  .ec-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .eema-card:hover .ec-img { transform: scale(1.035); }
+  .ec-noswipe .ec-track { overflow: hidden; }
+  .ec-dots { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: center; gap: 5px; pointer-events: none; z-index: 2; }
+  .ec-dots span { width: 6px; height: 6px; border-radius: 9999px; background: rgba(255,255,255,.55); box-shadow: 0 0 0 1px rgba(26,26,26,.12); transition: width .3s ease, background .3s ease; }
+  .ec-dots span.on { width: 18px; background: #fff; }
+  .ec-tag { position: absolute; top: 12px; left: 12px; z-index: 2; background: rgba(255,255,255,.92); backdrop-filter: blur(4px); padding: 4px 8px; font: 600 10px/1.2 Inter, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #1A1A1A; pointer-events: none; }
+  .ec-veil { position: absolute; inset: 0; z-index: 1; background: rgba(255,255,255,.32); display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .ec-veil span { background: rgba(26,26,26,.9); color: #fff; padding: 8px 14px; font: 600 11px/1 Inter, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+  .ec-actions { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; transform: translateY(calc(100% + 14px)); opacity: 0; transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s ease; }
+  .ec-actions a, .ec-actions button { display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); color: #1A1A1A; font: 600 10.5px/1 Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: background .2s, color .2s; }
+  .ec-actions a:hover { background: #1E5E3A; color: #fff; }
+  .ec-actions button:hover { background: #1A1A1A; color: #fff; }
+  .ec-actions.single { grid-template-columns: 1fr; }
+  .ec-body { padding: 14px 2px 4px; display: flex; flex-direction: column; gap: 4px; }
+  .ec-name { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; line-height: 1.3; color: #1A1A1A; transition: color .2s; }
+  .eema-card:hover .ec-name { color: #960052; }
+  .ec-price { font: 500 13px/1.4 Inter, sans-serif; letter-spacing: .05em; color: #1A1A1A; white-space: nowrap; }
+  .ec-note { font: 400 12px/1.5 Inter, sans-serif; color: #5f5e5e; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .ec-swatches { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .ec-swatches i { width: 10px; height: 10px; border-radius: 9999px; box-shadow: 0 0 0 1px rgba(26,26,26,.18); }
+  .ec-swatches em { font: 400 11px/1 Inter, sans-serif; font-style: normal; color: #5f5e5e; margin-left: 2px; }
+  .ec-stock { font: 500 11px/1.4 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8C154E; margin-top: 2px; }
+  .ec-wa-fab { display: none; }
+  .is-out-of-stock .ec-img { filter: saturate(.35); }
+  .is-out-of-stock .ec-price { color: #5f5e5e; }
+
+  /* Desktop (mouse): actions slide up on hover */
+  @media (hover: hover) and (pointer: fine) {
+    .eema-card:hover .ec-actions, .eema-card:focus-within .ec-actions { transform: none; opacity: 1; }
+    .eema-card:hover .ec-dots { bottom: 60px; }
+    .ec-track { overflow: hidden; }
+  }
+  /* Touch: no hover bar; a small WhatsApp button on the photo instead */
+  @media (hover: none), (pointer: coarse) {
+    .ec-actions { display: none; }
+    .ec-wa-fab { display: flex; position: absolute; right: 8px; bottom: 8px; z-index: 3; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 9999px; background: rgba(255,255,255,.94); color: #1E5E3A; box-shadow: 0 2px 10px rgba(26,26,26,.12); }
+    .ec-wa-fab svg { width: 18px; height: 18px; }
+    .ec-noswipe .ec-dots { display: none; }
+  }
+
+  /* Phones: compact cards so two fit side by side */
+  @media (max-width: 639px) {
+    .ec-body > .flex { flex-direction: column; gap: 2px; }
+    .ec-body .ec-price { padding-top: 0; }
+    .ec-name { font-size: 15px; }
+    .ec-note { display: none; }
+    .ec-body { padding-top: 10px; }
+    .ec-tag { top: 8px; left: 8px; font-size: 9px; padding: 3px 6px; }
+    .ec-veil span { padding: 6px 10px; font-size: 9.5px; }
+  }
+
+  /* Lookbook filters: sticky on larger screens only, so phones keep room for the products */
+  @media (max-width: 767px) { #lookbook-filters { position: static; box-shadow: none; } }
+
+  /* Lookbook grid: 2 columns on phones, 3 on tablets, 4 on desktop */
+  #product-grid.eema-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; column-gap: .875rem; row-gap: 2rem; }
+  @media (min-width: 640px) { #product-grid.eema-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; column-gap: 1.25rem; row-gap: 2.5rem; } }
+  @media (min-width: 1024px) { #product-grid.eema-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; column-gap: 1.5rem; row-gap: 3rem; } }
+
+  /* Sliding rows. .eema-rail slides at every size; .eema-rail-mobile slides below 1024px and becomes a 4-column grid above. */
+  .eema-rail, .eema-rail-mobile { --bleed: 1.25rem; }
+  @media (min-width: 768px) { .eema-rail, .eema-rail-mobile { --bleed: 3.5rem; } }
+  .eema-rail { display: flex !important; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-behavior: smooth;
+    margin-inline: calc(var(--bleed) * -1); padding-inline: var(--bleed); scroll-padding-inline: var(--bleed); padding-bottom: 6px; }
+  .eema-rail::-webkit-scrollbar { display: none; }
+  .eema-rail > * { flex: 0 0 72%; scroll-snap-align: start; }
+  @media (min-width: 640px) { .eema-rail > * { flex-basis: calc((100% - 1.5rem) / 2.3); } }
+  @media (min-width: 1024px) { .eema-rail > * { flex-basis: calc((100% - 4.5rem) / 4); } }
+  @media (max-width: 1023px) {
+    .eema-rail-mobile { display: flex !important; gap: .875rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin-inline: calc(var(--bleed) * -1); padding-inline: var(--bleed); scroll-padding-inline: var(--bleed); padding-bottom: 6px; }
+    .eema-rail-mobile::-webkit-scrollbar { display: none; }
+    .eema-rail-mobile > * { flex: 0 0 72%; scroll-snap-align: start; }
+  }
+  @media (min-width: 640px) and (max-width: 1023px) { .eema-rail-mobile > * { flex-basis: calc((100% - .875rem) / 2.3); } }
+  .rail-btn { width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid #EAE4DC; background: #fff; color: #1A1A1A; transition: background .2s, color .2s, opacity .2s; }
+  .rail-btn:hover:not(:disabled) { background: #1A1A1A; color: #fff; }
+  .rail-btn:disabled { opacity: .3; cursor: default; }
+
+  /* Soft fade-up as cards scroll into view */
+  .ec-reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .ec-reveal.is-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .ec-reveal { opacity: 1; transform: none; transition: none; }
+    .ec-img, .ec-actions, .eema-rail { transition: none; scroll-behavior: auto; }
+  }
+  `;
+  (function injectCardCss() {
+    if (document.getElementById('eema-card-css')) return;
+    const style = document.createElement('style');
+    style.id = 'eema-card-css';
+    style.textContent = CARD_CSS;
+    document.head.appendChild(style);
+  })();
 
   // ---------- rendering ----------
 
-  function renderProductCard(p) {
-    const images = p.images || [];
+  const MAX_CARD_IMAGES = 6;
+
+  // Card tag: "Pure Linen" / "Artisanal Batik" when tagged, otherwise the category name.
+  function cardTag(p) {
+    const t = (p.tags || []).find((x) => x === 'pure-linen' || x === 'batik');
+    return t ? tagLabel(t) : (p.category && p.category.name) || '';
+  }
+
+  // options.swipe = false for cards inside sliding rows (so swiping moves the row, not the photos)
+  function renderProductCard(p, options = {}) {
+    const swipe = options.swipe !== false;
+    const images = (p.images || []).slice(0, MAX_CARD_IMAGES);
     const colors = Array.isArray(p.colors) ? p.colors : [];
-    const cover = images[0];
-    const alt = images[1];
     const catSlug = (p.category && p.category.slug) || '';
     const href = esc(productUrl(p));
+    const out = isOutOfStock(p);
+    const tag = cardTag(p);
+    const canQuickView = typeof window.quickPreview === 'function';
 
-    const media = cover
-      ? `<img alt="${esc(p.name)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${esc(cover)}">` +
-        (alt ? `<img alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700" src="${esc(alt)}">` : '')
+    const media = images.length
+      ? `<div class="ec-track">${images.map((src, i) =>
+          `<img class="ec-img" src="${esc(src)}" alt="${i === 0 ? esc(p.name) + (out ? ' (out of stock)' : '') : ''}" ${i ? 'aria-hidden="true"' : ''} loading="lazy" decoding="async" draggable="false">`).join('')}</div>`
       : `<div class="w-full h-full flex items-center justify-center text-secondary/50"><span class="material-symbols-outlined text-[40px]">checkroom</span></div>`;
+    const dots = images.length > 1
+      ? `<div class="ec-dots" aria-hidden="true">${images.map((_, i) => `<span class="${i === 0 ? 'on' : ''}"></span>`).join('')}</div>`
+      : '';
+    const waLabel = out ? 'Ask about restock' : 'Inquire';
 
     const swatches = colors.length
-      ? `<div class="mt-3 flex items-center gap-2">${colors.slice(0, 5).map((c) =>
-          `<span class="w-3 h-3 rounded-full inline-block ring-1 ring-noir-text/20" style="background:${safeHex(c.hex)}" title="${esc(c.name)}"></span>`).join('')}
-          <span class="font-body-sm text-[11px] text-secondary ml-1">${colors.length} Shade${colors.length === 1 ? '' : 's'}</span></div>`
+      ? `<div class="ec-swatches">${colors.slice(0, 5).map((c) => `<i style="background:${safeHex(c.hex)}" title="${esc(c.name)}"></i>`).join('')}${colors.length > 1 ? `<em>${colors.length} shades</em>` : ''}</div>`
       : '';
 
     return `
-<article class="fashion-card group flex flex-col bg-surface-container-lowest transition-all hover:-translate-y-1 hover:shadow-md"
-  data-id="${esc(p.id)}" data-category-slug="${esc(catSlug)}" data-tags="${esc((p.tags || []).join(' '))}"
-  data-colors="${esc(colors.map((c) => c.name).join('|'))}"
+<article class="fashion-card eema-card ec-reveal${out ? ' is-out-of-stock' : ''}${swipe ? '' : ' ec-noswipe'}"
+  data-id="${esc(p.id)}" data-stock="${out ? 'out' : 'in'}" data-category-slug="${esc(catSlug)}" data-tags="${esc((p.tags || []).join(' '))}"
+  data-colors="${esc(colors.map((c) => c.name).join('|'))}" data-price="${Number(p.price) || 0}"
+  data-created="${esc(p.created_at || '')}" data-order="${options.index != null ? options.index : ''}"
   data-search="${esc([p.name, p.short_note, p.fabric, (p.tags || []).join(' '), p.category && p.category.name].join(' ').toLowerCase())}">
-  <div class="relative w-full aspect-[3/4] overflow-hidden bg-linen-elevated">
-    <a href="${href}" class="block w-full h-full" aria-label="View ${esc(p.name)}">${media}</a>
-    ${p.category ? `<span class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 font-label-caps text-[10px] uppercase tracking-widest text-noir-text">${esc(p.category.name)}</span>` : ''}
-    ${typeof window.quickPreview === 'function' ? `<button type="button" aria-label="Quick view ${esc(p.name)}" data-quick-view="${esc(p.id)}" class="absolute bottom-3 right-3 bg-surface-container-lowest/90 backdrop-blur-sm p-2 text-noir-text hover:text-primary transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px]">visibility</span></button>` : ''}
+  <div class="ec-media">
+    <a href="${href}" class="ec-link" aria-label="View ${esc(p.name)}">${media}</a>
+    ${out ? '<div class="ec-veil"><span>Out of stock</span></div>' : ''}
+    ${tag ? `<span class="ec-tag">${esc(tag)}</span>` : ''}
+    ${dots}
+    <div class="ec-actions${canQuickView ? '' : ' single'}">
+      ${canQuickView ? `<button type="button" data-quick-view="${esc(p.id)}" aria-label="Quick view ${esc(p.name)}"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>Quick view</button>` : ''}
+      <a href="${esc(whatsappUrl(p))}" target="_blank" rel="noopener noreferrer" aria-label="${waLabel} about ${esc(p.name)} on WhatsApp">${WA_ICON}${waLabel}</a>
+    </div>
+    <a class="ec-wa-fab" href="${esc(whatsappUrl(p))}" target="_blank" rel="noopener noreferrer" aria-label="${waLabel} about ${esc(p.name)} on WhatsApp">${WA_ICON}</a>
   </div>
-  <div class="p-5 flex flex-col flex-1 justify-between gap-4">
-    <div>
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-headline-sm text-headline-sm text-noir-text font-normal group-hover:text-primary transition-colors"><a href="${href}">${esc(p.name)}</a></h3>
-        <span class="font-price-numeral text-price-numeral text-noir-text whitespace-nowrap">${formatPrice(p.price)}</span>
-      </div>
-      ${p.short_note ? `<p class="font-body-sm text-body-sm text-secondary mt-1">${esc(p.short_note)}</p>` : ''}
-      ${swatches}
+  <div class="ec-body">
+    <div class="flex items-start justify-between gap-3">
+      <h3 class="ec-name"><a href="${href}">${esc(p.name)}</a></h3>
+      <span class="ec-price pt-1">${formatPrice(p.price)}</span>
     </div>
-    <div class="flex flex-col gap-2 pt-3">
-      <a class="w-full py-2.5 bg-noir-text hover:bg-whatsapp-forest text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest text-center flex items-center justify-center gap-2 transition-colors" href="${esc(whatsappUrl(p))}" rel="noopener noreferrer" target="_blank">${WA_ICON}<span>Inquire on WhatsApp</span></a>
-      <a class="w-full py-2 bg-surface-container-high hover:bg-surface-variant text-noir-text font-label-caps text-label-caps uppercase tracking-widest text-center flex items-center justify-center gap-2 transition-colors" href="${esc(cfg.FACEBOOK_URL)}" rel="noopener noreferrer" target="_blank">${FB_ICON}<span>Message on Facebook</span></a>
-    </div>
+    ${p.short_note ? `<p class="ec-note">${esc(p.short_note)}</p>` : ''}
+    ${swatches}
+    ${out ? '<p class="ec-stock">Out of stock · ask about restock</p>' : ''}
   </div>
 </article>`;
   }
 
+  // ---------- card photo browsing: mouse position on desktop, swipe on touch ----------
+
+  function setCardDots(card, i) {
+    card.querySelectorAll('.ec-dots span').forEach((d, k) => d.classList.toggle('on', k === i));
+  }
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  document.addEventListener('pointermove', (e) => {
+    if (!finePointer.matches || e.pointerType !== 'mouse') return;
+    const media = e.target.closest && e.target.closest('.ec-media');
+    if (!media) return;
+    const track = media.querySelector('.ec-track');
+    const n = track ? track.children.length : 0;
+    if (n < 2) return;
+    const r = media.getBoundingClientRect();
+    const i = Math.min(n - 1, Math.max(0, Math.floor(((e.clientX - r.left) / r.width) * n)));
+    if (track.dataset.i !== String(i)) {
+      track.dataset.i = i;
+      track.scrollTo({ left: i * track.clientWidth, behavior: 'instant' });
+      setCardDots(media.closest('.eema-card'), i);
+    }
+  }, { passive: true });
+
+  document.addEventListener('pointerout', (e) => {
+    const media = e.target.closest && e.target.closest('.ec-media');
+    if (!media || media.contains(e.relatedTarget)) return;
+    const track = media.querySelector('.ec-track');
+    if (track && track.dataset.i && track.dataset.i !== '0') {
+      track.dataset.i = 0;
+      track.scrollTo({ left: 0, behavior: 'instant' });
+      setCardDots(media.closest('.eema-card'), 0);
+    }
+  }, { passive: true });
+
+  // Swipe (touch): keep dots in step with the scrolled photo
+  document.addEventListener('scroll', (e) => {
+    const track = e.target;
+    if (!track.classList || !track.classList.contains('ec-track')) return;
+    const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    if (track.dataset.i !== String(i)) { track.dataset.i = i; setCardDots(track.closest('.eema-card'), i); }
+  }, { passive: true, capture: true });
+
+  // ---------- fade-in as cards enter the viewport ----------
+
+  const revealObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add('is-in'); revealObserver.unobserve(en.target); }
+      }), { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
+    : null;
+  function observeReveal(root) {
+    const cards = root.querySelectorAll('.ec-reveal:not(.is-in)');
+    cards.forEach((c, i) => {
+      c.style.transitionDelay = `${(i % 4) * 70}ms`;
+      if (revealObserver) revealObserver.observe(c); else c.classList.add('is-in');
+    });
+  }
+
+  // ---------- sliding rows: arrow buttons ----------
+
+  function wireRail(rail, prevBtn, nextBtn) {
+    if (!rail) return;
+    const update = () => {
+      const max = rail.scrollWidth - rail.clientWidth - 2;
+      if (prevBtn) prevBtn.disabled = rail.scrollLeft <= 2;
+      if (nextBtn) nextBtn.disabled = rail.scrollLeft >= max;
+    };
+    const step = (dir) => rail.scrollBy({ left: dir * rail.clientWidth * 0.85, behavior: 'smooth' });
+    if (prevBtn) prevBtn.addEventListener('click', () => step(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => step(1));
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+    setTimeout(update, 400);
+  }
+
   function renderSkeletons(n) {
     return Array.from({ length: n }, () => `
-<div class="flex flex-col bg-surface-container-lowest animate-pulse" aria-hidden="true">
+<div class="flex flex-col animate-pulse" aria-hidden="true">
   <div class="w-full aspect-[3/4] bg-linen-elevated"></div>
-  <div class="p-5 space-y-3"><div class="h-5 w-3/4 bg-linen-stone"></div><div class="h-3 w-1/2 bg-linen-elevated"></div><div class="h-9 w-full bg-linen-elevated mt-6"></div></div>
+  <div class="pt-4 space-y-2"><div class="h-4 w-3/4 bg-linen-stone"></div><div class="h-3 w-1/3 bg-linen-elevated"></div></div>
 </div>`).join('');
   }
 
@@ -165,7 +373,16 @@
     const p = productIndex.get(btn.getAttribute('data-quick-view'));
     if (!p) return;
     const color = (p.colors || []).map((c) => c.name).join(' / ') || '—';
-    window.quickPreview(p.name, formatPrice(p.price), color, p.description || p.fabric || '', (p.images || [])[0] || '');
+    const out = isOutOfStock(p);
+    window.quickPreview(p.name, formatPrice(p.price) + (out ? ' · Out of stock' : ''), color, p.description || p.fabric || '', (p.images || [])[0] || '');
+    const modalWa = document.getElementById('modal-whatsapp-link');
+    if (modalWa) {
+      modalWa.href = whatsappUrl(p);
+      const label = [...modalWa.querySelectorAll('span')].pop();
+      if (label) label.textContent = out ? 'Ask about restock' : 'Inquire via WhatsApp';
+    }
+    const modalImg = document.getElementById('modal-img');
+    if (modalImg) modalImg.style.filter = out ? 'saturate(.35)' : '';
 
     // Add a "View full details" link to the existing modal
     const waLink = document.getElementById('modal-whatsapp-link');
@@ -182,9 +399,10 @@
     }
   });
 
-  function mount(grid, products) {
+  function mount(grid, products, options = {}) {
     products.forEach((p) => productIndex.set(p.id, p));
-    grid.innerHTML = products.map(renderProductCard).join('');
+    grid.innerHTML = products.map((p, index) => renderProductCard(p, { ...options, index })).join('');
+    observeReveal(grid);
   }
 
   // ---------- lookbook page ----------
@@ -195,7 +413,27 @@
   const TAB_ON = 'border-noir-text text-noir-text font-medium';
   const TAB_OFF = 'border-transparent text-secondary hover:text-noir-text';
 
-  const state = { category: 'all', tag: 'all', color: 'all', search: '' };
+  const state = { category: 'all', tag: 'all', color: 'all', search: '', sort: 'featured' };
+  const SORTS = {
+    featured: (a, b) => a.order - b.order,
+    newest: (a, b) => (b.created || '').localeCompare(a.created || '') || a.order - b.order,
+    'price-asc': (a, b) => a.price - b.price || a.order - b.order,
+    'price-desc': (a, b) => b.price - a.price || a.order - b.order
+  };
+
+  // Re-orders the cards in the grid. Out-of-stock pieces always stay after in-stock ones.
+  function applySort() {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+    const cmp = SORTS[state.sort] || SORTS.featured;
+    const cards = [...grid.querySelectorAll('.fashion-card')].map((el) => ({
+      el, out: el.dataset.stock === 'out', price: Number(el.dataset.price) || 0,
+      created: el.dataset.created || '', order: Number(el.dataset.order) || 0
+    }));
+    cards.sort((a, b) => Number(a.out) - Number(b.out) || cmp(a, b)).forEach((c) => grid.appendChild(c.el));
+    const sel = document.getElementById('sort-select');
+    if (sel && sel.value !== state.sort) sel.value = state.sort;
+  }
 
   function setActive(container, value, on, off) {
     container.querySelectorAll('[data-value]').forEach((el) => {
@@ -233,6 +471,7 @@
     const url = new URL(location.href);
     if (state.category === 'all') url.searchParams.delete('category'); else url.searchParams.set('category', state.category);
     if (state.search) url.searchParams.set('search', state.search); else url.searchParams.delete('search');
+    if (state.sort !== 'featured') url.searchParams.set('sort', state.sort); else url.searchParams.delete('sort');
     history.replaceState(null, '', url);
   }
 
@@ -244,7 +483,10 @@
   async function initLookbook() {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
+    grid.classList.add('eema-grid');
     grid.innerHTML = renderSkeletons(8);
+    const sortSelect = document.getElementById('sort-select');
+    if (sortSelect) sortSelect.addEventListener('change', () => { state.sort = sortSelect.value; applySort(); applyFilters(); });
 
     try {
       const [categories, products] = await Promise.all([fetchCategories(), fetchProducts()]);
@@ -295,7 +537,7 @@
       const garmentSelect = document.getElementById('fit-garment');
       if (garmentSelect) {
         garmentSelect.innerHTML = products.map((p) => {
-          const v = `${p.name} (${formatPrice(p.price)})`;
+          const v = `${p.name} (${formatPrice(p.price)})${isOutOfStock(p) ? ' — out of stock, made to order' : ''}`;
           return `<option value="${esc(v)}">${esc(v)}</option>`;
         }).join('');
       }
@@ -303,7 +545,9 @@
       const params = new URL(location.href).searchParams;
       const wanted = params.get('category');
       state.search = (params.get('search') || '').trim();
+      if (SORTS[params.get('sort')]) state.sort = params.get('sort');
       if (wanted && categories.some((c) => c.slug === wanted)) state.category = wanted;
+      applySort();
       applyFilters();
     } catch (err) {
       console.error('[EEMA] Could not load catalog:', err);
@@ -317,7 +561,8 @@
   }
 
   function resetFilters() {
-    state.category = 'all'; state.tag = 'all'; state.color = 'all'; state.search = '';
+    state.category = 'all'; state.tag = 'all'; state.color = 'all'; state.search = ''; state.sort = 'featured';
+    applySort();
     applyFilters();
   }
 
@@ -326,20 +571,66 @@
   async function initFeatured(selector, { limit = 4 } = {}) {
     const grid = document.querySelector(selector);
     if (!grid) return;
+    grid.classList.add('eema-rail-mobile');
     grid.innerHTML = renderSkeletons(limit);
     try {
-      let products = await fetchProducts({ featured: true, limit });
-      if (!products.length) products = await fetchProducts({ limit }); // fall back to newest
+      // Only in-stock pieces on the home page; top up with newest in-stock items if needed.
+      let products = (await fetchProducts({ featured: true, limit: limit * 3 })).filter((p) => !isOutOfStock(p)).slice(0, limit);
+      if (products.length < limit) {
+        const more = (await fetchProducts({ limit: limit * 4 })).filter((p) => !isOutOfStock(p) && !products.some((x) => x.id === p.id));
+        products = products.concat(more).slice(0, limit);
+      }
       if (!products.length) {
         grid.innerHTML = renderMessage('New pieces arriving soon', 'Message our stylist to hear about the next collection first.');
         return;
       }
-      mount(grid, products);
+      mount(grid, products, { swipe: false });
       const count = document.getElementById('featured-count');
       if (count) count.textContent = `${products.length} Design${products.length === 1 ? '' : 's'} Available`;
     } catch (err) {
       console.error('[EEMA] Could not load featured products:', err);
       grid.innerHTML = renderMessage('Collection temporarily unavailable', 'Please refresh, or browse the full lookbook.');
+    }
+  }
+
+  // One sliding row per category ("The Ladies Edit", ...), newest first, in-stock first.
+  async function initCategoryRails(selector, { perRow = 10 } = {}) {
+    const box = document.querySelector(selector);
+    if (!box) return;
+    try {
+      const [categories, products] = await Promise.all([fetchCategories(), fetchProducts()]);
+      const rows = categories
+        .map((c) => ({ c, items: products.filter((p) => p.category_id === c.id).slice(0, perRow) }))
+        .filter((r) => r.items.length);
+      if (!rows.length) { box.hidden = true; return; }
+      box.innerHTML = rows.map(({ c, items }, i) => `
+        <div class="rail-block" data-rail="${esc(c.slug)}">
+          <div class="flex items-end justify-between gap-6 mb-6 md:mb-8">
+            <div class="space-y-2">
+              <div class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">${String(i + 1).padStart(2, '0')} — Shop by category</div>
+              <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-noir-text">The ${esc(c.name)} Edit</h2>
+              <p class="font-body-sm text-body-sm text-secondary">${items.length} piece${items.length === 1 ? '' : 's'} · swipe to explore</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a class="hidden sm:inline-flex items-center gap-1.5 mr-3 font-label-caps text-label-caps uppercase tracking-widest text-noir-text hover:text-primary transition-colors" href="lookbook.html?category=${encodeURIComponent(c.slug)}">View all <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></a>
+              <button type="button" class="rail-btn hidden md:inline-flex" data-dir="prev" aria-label="Previous ${esc(c.name)} pieces"><span class="material-symbols-outlined" aria-hidden="true">west</span></button>
+              <button type="button" class="rail-btn hidden md:inline-flex" data-dir="next" aria-label="More ${esc(c.name)} pieces"><span class="material-symbols-outlined" aria-hidden="true">east</span></button>
+            </div>
+          </div>
+          <div class="eema-rail" role="list" aria-label="${esc(c.name)} pieces"></div>
+          <a class="sm:hidden mt-5 inline-flex items-center gap-1.5 font-label-caps text-label-caps uppercase tracking-widest text-noir-text" href="lookbook.html?category=${encodeURIComponent(c.slug)}">View all ${esc(c.name)} <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></a>
+        </div>`).join('');
+      rows.forEach(({ c, items }) => {
+        const block = box.querySelector(`[data-rail="${CSS.escape(c.slug)}"]`);
+        const rail = block.querySelector('.eema-rail');
+        mount(rail, items, { swipe: false });
+        rail.querySelectorAll('.fashion-card').forEach((el) => el.setAttribute('role', 'listitem'));
+        wireRail(rail, block.querySelector('[data-dir="prev"]'), block.querySelector('[data-dir="next"]'));
+      });
+      box.hidden = false;
+    } catch (err) {
+      console.error('[EEMA] Could not load category rows:', err);
+      box.hidden = true;
     }
   }
 
@@ -357,6 +648,6 @@
     }
   }
 
-  window.EEMA = { WA_ICON, esc, formatPrice, tagLabel, safeHex, productUrl, fetchProductBySlug, renderSkeletons, mount, fetchCategories, fetchProducts, renderProductCard, initLookbook, initFeatured, initCategoryLinks, resetFilters, applyFilters, setSearch };
+  window.EEMA = { WA_ICON, observeReveal, isOutOfStock, whatsappUrl, wireRail, initCategoryRails, esc, formatPrice, tagLabel, safeHex, productUrl, fetchProductBySlug, renderSkeletons, mount, fetchCategories, fetchProducts, renderProductCard, initLookbook, initFeatured, initCategoryLinks, resetFilters, applyFilters, setSearch };
   window.resetFilters = resetFilters; // used by the lookbook "Reset" button
 })();

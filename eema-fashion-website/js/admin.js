@@ -44,22 +44,26 @@
     const icons = { success: 'check_circle', error: 'error', info: 'info' };
     const colors = { success: 'text-whatsapp-forest', error: 'text-error', info: 'text-primary' };
     const el = document.createElement('div');
-    el.className = 'toast pointer-events-auto bg-white border border-linen-stone shadow-lg px-4 py-3 flex items-center gap-3 text-sm max-w-sm';
+    // Toasts never block taps — they often sit over the form's Save button.
+    el.className = 'toast pointer-events-none bg-white border border-linen-stone shadow-lg px-4 py-3 flex items-center gap-3 text-sm max-w-sm';
     el.innerHTML = `<span class="material-symbols-outlined ${colors[type]}">${icons[type]}</span><span>${esc(message)}</span>`;
     $('#toasts').appendChild(el);
     setTimeout(() => { el.style.transition = 'opacity .3s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, type === 'error' ? 5000 : 2800);
   }
 
-  // True when Supabase rejects a write because products.sizes doesn't exist yet.
-  function isMissingSizesColumn(err) {
+  // True when Supabase rejects a write because a column from a later migration doesn't exist yet.
+  function isMissingColumn(err, col) {
     const msg = (err && err.message) || '';
-    return /sizes/i.test(msg) && /column|schema cache/i.test(msg);
+    return new RegExp('\\b' + col + '\\b').test(msg) && /column|schema cache/i.test(msg);
   }
+  const MIGRATION_FOR = { sizes: '002_product_sizes.sql', in_stock: '003_product_stock.sql' };
+  const isMissingSizesColumn = (err) => isMissingColumn(err, 'sizes');
 
   function friendlyError(err) {
     const msg = (err && (err.message || err.error_description)) || String(err);
     if (/row-level security|permission denied|not authorized/i.test(msg)) return 'You don\'t have permission to do that. Are you signed in as an admin?';
     if (isMissingSizesColumn(err)) return 'The database needs the sizes update — run supabase/migrations/002_product_sizes.sql in the Supabase SQL Editor.';
+    if (isMissingColumn(err, 'in_stock')) return 'The database needs the stock update — run supabase/migrations/003_product_stock.sql in the Supabase SQL Editor.';
     if (/rate limit|too many/i.test(msg)) return 'Too many attempts. Please wait a few minutes and try again.';
     if (/Failed to fetch|NetworkError/i.test(msg)) return 'Network problem — check your connection and try again.';
     return msg;
@@ -345,7 +349,7 @@
     const p = state.products;
     const stats = [
       ['Total', p.length, 'inventory_2'],
-      ['Published', p.filter((x) => x.is_published).length, 'visibility'],
+      ['Out of stock', p.filter((x) => x.in_stock === false).length, 'remove_shopping_cart'],
       ['Hidden', p.filter((x) => !x.is_published).length, 'visibility_off'],
       ['Featured', p.filter((x) => x.is_featured).length, 'star']
     ];
@@ -366,6 +370,8 @@
       (status === 'all' ||
         (status === 'published' && p.is_published) ||
         (status === 'draft' && !p.is_published) ||
+        (status === 'in-stock' && p.in_stock !== false) ||
+        (status === 'out-of-stock' && p.in_stock === false) ||
         (status === 'featured' && p.is_featured)));
   }
 
@@ -380,16 +386,18 @@
     $('#product-list').innerHTML = list.map((p) => {
       const cover = (p.images || [])[0];
       const cat = esc(categoryName(p.category_id));
-      const liveTitle = p.is_published ? 'Live on website — tap to hide' : 'Hidden — tap to publish';
+      const inStock = p.in_stock !== false;
+      const stockTitle = inStock ? 'In stock — tap to mark out of stock' : 'Out of stock — tap to mark back in stock';
       // One markup, three layouts (see .product-row CSS in admin.html):
       // phone = stacked card, tablet = 2-column cards, desktop (≥1024px) = table row.
       return `
-      <div class="product-row ${p.is_published ? '' : 'is-hidden'}" data-id="${esc(p.id)}">
+      <div class="product-row ${p.is_published ? '' : 'is-hidden'} ${inStock ? '' : 'is-out'}" data-id="${esc(p.id)}">
         <button class="pr-thumb bg-linen-elevated overflow-hidden" data-action="edit" aria-label="Edit ${esc(p.name)}">
           ${cover ? `<img src="${esc(cover)}" alt="" loading="lazy" class="w-full h-full object-cover">` : '<span class="material-symbols-outlined text-[#c9c0b4]">image</span>'}
         </button>
         <div class="pr-info min-w-0">
           <button class="pr-name text-left font-medium hover:text-primary transition-colors" data-action="edit">${esc(p.name)}</button>
+          ${p.is_published ? '' : '<span class="pr-flag inline-flex items-center gap-1 text-[11px] text-secondary bg-linen-elevated px-1.5 py-0.5 mt-1"><span class="material-symbols-outlined text-[13px]">visibility_off</span>Hidden from website</span>'}
           <div class="pr-note text-xs text-secondary">${esc(p.short_note || '')}</div>
           <div class="pr-meta flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-xs">
             <span class="px-1.5 py-0.5 bg-linen-elevated">${cat}</span>
@@ -400,9 +408,9 @@
         <div class="pr-cat"><span class="text-xs px-2 py-1 bg-linen-elevated">${cat}</span></div>
         <div class="pr-price text-right text-sm font-medium tabular-nums">${formatPrice(p.price)}</div>
         <div class="pr-actions">
-          <label class="pr-live flex items-center gap-2.5 cursor-pointer" title="${liveTitle}">
-            <button class="switch" role="switch" aria-checked="${p.is_published}" data-action="publish" aria-label="${liveTitle}"></button>
-            <span class="pr-live-label text-xs ${p.is_published ? 'text-whatsapp-forest' : 'text-secondary'}">${p.is_published ? 'Live' : 'Hidden'}</span>
+          <label class="pr-live flex items-center gap-2.5 cursor-pointer" title="${stockTitle}">
+            <button class="switch switch-stock" role="switch" aria-checked="${inStock}" data-action="stock" aria-label="${stockTitle}"></button>
+            <span class="pr-live-label text-xs font-medium ${inStock ? 'text-whatsapp-forest' : 'text-berry-deep'}">${inStock ? 'In stock' : 'Out of stock'}</span>
           </label>
           <div class="pr-buttons flex items-center gap-0.5">
             <button class="icon-btn ${p.is_featured ? '!text-primary' : ''}" data-action="feature" title="${p.is_featured ? 'Featured on home page — tap to remove' : 'Feature on home page'}" aria-label="${p.is_featured ? 'Remove from home page' : 'Feature on home page'}">
@@ -429,8 +437,8 @@
     const action = btn.dataset.action;
 
     if (action === 'edit') openDrawer(product);
-    if (action === 'publish') await quickUpdate(product, { is_published: !product.is_published },
-      product.is_published ? 'Hidden from website' : 'Published to website');
+    if (action === 'stock') await quickUpdate(product, { in_stock: product.in_stock === false },
+      product.in_stock === false ? `"${product.name}" is back in stock` : `"${product.name}" marked out of stock`);
     if (action === 'feature') await quickUpdate(product, { is_featured: !product.is_featured },
       product.is_featured ? 'Removed from home page' : 'Featured on home page');
     if (action === 'delete') await deleteProduct(product);
@@ -704,7 +712,7 @@
   });
   $('#f-colors').addEventListener('click', (e) => { if (e.target.closest('[data-remove-color]')) e.target.closest('.color-row').remove(); });
 
-  $$('#f-published, #f-featured').forEach((sw) => sw.addEventListener('click', () =>
+  $$('#f-in-stock, #f-published, #f-featured').forEach((sw) => sw.addEventListener('click', () =>
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') === 'true' ? 'false' : 'true')));
 
   // ---------- drawer: open / close ----------
@@ -730,6 +738,7 @@
     $('#f-description').value = product ? product.description || '' : '';
     $('#f-fabric').value = product ? product.fabric || '' : '';
     $('#f-published').setAttribute('aria-checked', String(product ? product.is_published : true));
+    $('#f-in-stock').setAttribute('aria-checked', String(product ? product.in_stock !== false : true));
     $('#f-featured').setAttribute('aria-checked', String(product ? product.is_featured : false));
     $('#fabric-options').innerHTML = [...new Set(['100% Pure Linen', 'Artisanal Batik', ...state.products.map((p) => p.fabric).filter(Boolean)])]
       .map((f) => `<option value="${esc(f)}">`).join('');
@@ -851,21 +860,25 @@
       colors,
       images: state.photos.map((p) => p.url),
       is_published: $('#f-published').getAttribute('aria-checked') === 'true',
+      in_stock: $('#f-in-stock').getAttribute('aria-checked') === 'true',
       is_featured: $('#f-featured').getAttribute('aria-checked') === 'true'
     };
 
     const btn = $('#save-product');
     setBusy(btn, true, 'Saving');
     try {
-      // If the `sizes` column hasn't been added yet (migration 002 not run),
+      // If a column from a later migration (sizes, in_stock) isn't in the database yet,
       // retry without it so photos and other edits still save.
-      let sizesSkipped = false;
+      const skipped = [];
       const write = async (build) => {
-        let res = await build(payload);
-        if (res.error && isMissingSizesColumn(res.error)) {
-          const { sizes, ...rest } = payload;
-          sizesSkipped = true;
-          res = await build(rest);
+        let body = { ...payload };
+        let res = await build(body);
+        for (const col of Object.keys(MIGRATION_FOR)) {
+          if (res.error && isMissingColumn(res.error, col)) {
+            delete body[col];
+            skipped.push(col);
+            res = await build(body);
+          }
         }
         if (res.error) throw res.error;
         return res.data;
@@ -888,9 +901,7 @@
       renderProducts();
       renderCategories();
       toast(editing ? 'Changes saved' : `"${saved.name}" added${saved.is_published ? ' to the website' : ' as hidden'}`);
-      if (sizesSkipped) {
-        toast('Saved without sizes. To enable sizes, run supabase/migrations/002_product_sizes.sql in the Supabase SQL Editor.', 'info');
-      }
+      skipped.forEach((col) => toast(`Saved without ${col === 'sizes' ? 'sizes' : 'stock status'}. Run supabase/migrations/${MIGRATION_FOR[col]} in the Supabase SQL Editor to enable it.`, 'info'));
     } catch (err) {
       setBusy(btn, false);
       toast(friendlyError(err), 'error');

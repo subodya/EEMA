@@ -3,6 +3,7 @@
 (function () {
   const cfg = window.EEMA_CONFIG || {};
   const { esc, formatPrice, tagLabel, safeHex, WA_ICON } = window.EEMA;
+  const isOut = (p) => window.EEMA.isOutOfStock(p);
   const $ = (sel, root = document) => root.querySelector(sel);
 
   const ADULT_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -26,7 +27,7 @@
     const images = (p.images || []).length ? p.images : [null];
     const slides = images.map((src, i) => `
       <button type="button" class="pd-slide relative shrink-0 w-full snap-center aspect-[3/4] bg-linen-elevated overflow-hidden cursor-zoom-in" data-index="${i}" aria-label="Open image ${i + 1} full screen">
-        ${src ? `<img src="${esc(src)}" alt="${esc(p.name)}${images.length > 1 ? ` — view ${i + 1}` : ''}" class="w-full h-full object-cover" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`
+        ${src ? `<img src="${esc(src)}" alt="${esc(p.name)}${images.length > 1 ? ` — view ${i + 1}` : ''}" class="w-full h-full object-cover" ${isOut(p) ? 'style="filter:saturate(.4)"' : ''} ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`
               : `<span class="absolute inset-0 flex items-center justify-center text-secondary/40">${ICON('checkroom', 'text-[56px]')}</span>`}
       </button>`).join('');
     const thumbs = images.length > 1 ? images.map((src, i) => `
@@ -39,6 +40,7 @@
         ${multi ? `<div class="flex lg:flex-col gap-2 lg:gap-3 overflow-x-auto lg:overflow-visible scrollbar-none" role="tablist" aria-label="Product images">${thumbs}</div>` : ''}
         <div class="relative flex-1 min-w-0 group">
           <div id="pd-track" class="flex overflow-x-auto snap-x snap-mandatory scrollbar-none scroll-smooth">${slides}</div>
+          ${isOut(p) ? `<span class="absolute top-4 left-4 bg-noir-text/90 text-surface-container-lowest px-3.5 py-2 font-label-caps text-label-caps uppercase tracking-[0.2em] pointer-events-none">Out of stock</span>` : ''}
           ${multi ? `
           <button type="button" data-step="-1" aria-label="Previous image" class="pd-arrow hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 items-center justify-center bg-surface-container-lowest/90 backdrop-blur-sm text-noir-text opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary">${ICON('west')}</button>
           <button type="button" data-step="1" aria-label="Next image" class="pd-arrow hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 items-center justify-center bg-surface-container-lowest/90 backdrop-blur-sm text-noir-text opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary">${ICON('east')}</button>
@@ -128,10 +130,16 @@
         <div class="space-y-3">
           ${eyebrow ? `<div class="flex flex-wrap items-center gap-2 font-label-caps text-label-caps uppercase tracking-widest text-primary">${eyebrow}</div>` : ''}
           <h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-noir-text">${esc(p.name)}</h1>
-          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-            <span class="font-price-numeral text-[20px] leading-7 tracking-wide text-noir-text">${formatPrice(p.price)}</span>
-            <span class="font-body-sm text-body-sm text-secondary">Tailored to order in Colombo</span>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span class="font-price-numeral text-[20px] leading-7 tracking-wide ${isOut(p) ? 'text-secondary' : 'text-noir-text'}">${formatPrice(p.price)}</span>
+            ${isOut(p)
+              ? '<span class="inline-flex items-center gap-1.5 bg-berry-soft text-berry-deep px-2.5 py-1 font-label-caps text-label-caps uppercase tracking-widest"><span class="w-1.5 h-1.5 rounded-full bg-berry-deep"></span>Out of stock</span>'
+              : '<span class="inline-flex items-center gap-1.5 font-body-sm text-body-sm text-secondary"><span class="w-1.5 h-1.5 rounded-full bg-whatsapp-forest"></span>In stock · Tailored to order in Colombo</span>'}
           </div>
+          ${isOut(p) ? `<div class="flex gap-3 items-start border border-primary-container/25 bg-berry-soft/50 p-4">
+            ${ICON('inventory_2', 'text-primary text-[20px] mt-0.5')}
+            <p class="font-body-sm text-body-sm text-charcoal-body">This piece is <strong class="font-medium text-noir-text">currently out of stock</strong>. Message us and we'll let you know as soon as it's back, or ask about having one made to your measurements.</p>
+          </div>` : ''}
           ${p.short_note ? `<p class="font-body-lg text-body-lg text-secondary">${esc(p.short_note)}</p>` : ''}
         </div>
 
@@ -143,7 +151,7 @@
         <div class="space-y-2.5" id="pd-cta">
           <a id="pd-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-4 bg-noir-text hover:bg-whatsapp-forest text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest flex items-center justify-center gap-2.5 transition-colors">
             ${WA_ICON}
-            Inquire on WhatsApp
+            ${isOut(p) ? 'Ask about restock' : 'Inquire on WhatsApp'}
           </a>
           <div class="grid grid-cols-2 gap-2.5">
             <a href="${esc(cfg.FACEBOOK_URL)}" target="_blank" rel="noopener noreferrer" class="py-3 border border-linen-stone hover:border-noir-text text-noir-text font-label-caps text-label-caps uppercase tracking-widest flex items-center justify-center gap-2 transition-colors">Facebook</a>
@@ -161,7 +169,7 @@
           ${accordion('Description', description + (details ? `<ul class="space-y-1 pt-2">${details}</ul>` : ''), true)}
           ${accordion('Fabric &amp; Care', `<p>${esc(careText(p))}</p>`)}
           ${accordion('Fit &amp; Tailoring', `<p>Choose a standard size, or select <strong class="text-noir-text font-medium">Custom fit</strong> and our master cutter will tailor the piece to your bust, waist, hip and length measurements.</p><p>Bespoke pieces include complimentary alterations. <a href="atelier.html" class="text-primary underline underline-offset-2">Visit the Custom Atelier</a></p>`)}
-          ${accordion('Delivery &amp; Exchanges', `<p><span class="text-noir-text">Islandwide Sri Lanka:</span> dispatched by courier in 2–4 business days, complimentary on orders over Rs 10,000.</p><p><span class="text-noir-text">Worldwide:</span> express air freight in 7–10 business days.</p><p>Ready-to-wear pieces can be exchanged for another size within 7 days if unworn. Bank transfer and cash on delivery accepted. <a href="our-story.html#how-to-order" class="text-primary underline underline-offset-2">Full ordering details</a></p>`)}
+          ${accordion('Delivery &amp; Exchanges', `<p><span class="text-noir-text">Islandwide Sri Lanka:</span> dispatched by courier in 2–4 business days, complimentary on orders over Rs 10,000.</p><p><span class="text-noir-text">Worldwide:</span> express air freight in 7–10 business days.</p><p>Ready-to-wear pieces can be exchanged for another size within 7 days if unworn. Bank transfer and cash on delivery accepted. <a href="returns.html" class="text-primary underline underline-offset-2">Returns &amp; exchanges</a> · <a href="our-story.html#how-to-order" class="text-primary underline underline-offset-2">Ordering details</a></p>`)}
         </div>
       </div>`;
   }
@@ -170,7 +178,9 @@
 
   function whatsappHref() {
     const p = state.product;
-    const lines = [`Hello EEMA Fashion, I would like to order the *${p.name}*.`];
+    const lines = [isOut(p)
+      ? `Hello EEMA Fashion, the *${p.name}* is showing as out of stock. Please let me know when it's available again.`
+      : `Hello EEMA Fashion, I would like to order the *${p.name}*.`];
     if (state.color) lines.push(`• Colour: ${state.color}`);
     if (state.size) lines.push(`• Size: ${state.size}${state.size === 'Custom fit' ? ' (I will share my measurements)' : ''}`);
     lines.push(`• Price: ${formatPrice(p.price)}`);
@@ -187,7 +197,7 @@
   }
 
   function needsSize() {
-    return (state.product.sizes || []).length > 0 && !state.size;
+    return !isOut(state.product) && (state.product.sizes || []).length > 0 && !state.size;
   }
 
   function guardSize(e) {
@@ -374,7 +384,7 @@
     ld.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: desc,
       image: p.images || [], brand: { '@type': 'Brand', name: 'EEMA Fashion' },
-      offers: { '@type': 'Offer', priceCurrency: 'LKR', price: p.price, availability: 'https://schema.org/InStock', url: location.href }
+      offers: { '@type': 'Offer', priceCurrency: 'LKR', price: p.price, availability: isOut(p) ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: location.href }
     });
     document.head.appendChild(ld);
   }
@@ -392,7 +402,8 @@
       }
       items = items.slice(0, 4);
       if (!items.length) { section.hidden = true; return; }
-      EEMA.mount(grid, items);
+      grid.classList.add('eema-rail-mobile');
+      EEMA.mount(grid, items, { swipe: false });
     } catch (err) {
       console.warn('[EEMA] Related products unavailable:', err);
       section.hidden = true;
@@ -445,7 +456,8 @@
 
     // Sticky mobile bar
     $('#pd-sticky-name').textContent = p.name;
-    $('#pd-sticky-price').textContent = formatPrice(p.price);
+    $('#pd-sticky-price').textContent = formatPrice(p.price) + (isOut(p) ? ' · Out of stock' : '');
+    if (isOut(p)) $('#pd-sticky-whatsapp').textContent = 'Ask about restock';
 
     bindGallery();
     bindLightbox();

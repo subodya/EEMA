@@ -1,4 +1,10 @@
-<!DOCTYPE html><html class="scroll-smooth" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Lookbook &amp; Capsules | EEMA Fashion</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Lookbook &amp; Capsules | EEMA Fashion</title>
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="EEMA">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#FBF9F5"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
   @media (max-width: 767px) {
     body {
@@ -163,64 +169,28 @@
 </div>
 <!-- ============ /SITE HEADER ============ -->
 <main class="w-full bg-surface"><div class="flex flex-col w-full">
-<!-- Announcement & Editorial Intent Banner -->
-<section class="w-full bg-linen-elevated px-margin-mobile md:px-margin py-8">
-<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6">
-<div class="space-y-2 max-w-3xl">
-<div class="flex items-center gap-3">
-<span class="w-2 h-2 rounded-full bg-whatsapp-forest inline-block"></span>
-<span class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">Artisanal Sri Lankan Atelier</span>
-<span class="text-secondary opacity-40">/</span>
-<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary">Volume 2026</span>
+<!-- Page intro -->
+<section class="w-full px-margin-mobile md:px-margin pt-10 md:pt-14 pb-6 md:pb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-3">
+<div class="font-label-caps text-label-caps uppercase tracking-[0.25em] text-primary">Collection 2026</div>
+<h1 class="font-display-hero-mobile text-display-hero-mobile md:font-display-hero md:text-display-hero text-noir-text">The Lookbook</h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-xl">Pure linen and batik, ready to wear or made to measure.</p>
 </div>
-<h1 class="font-display-hero text-headline-lg md:text-display-hero text-noir-text tracking-tight font-normal">
-          The Curated Catalog
-        </h1>
-<p class="font-body-lg text-body-lg text-secondary max-w-2xl font-light">
-          Explore our ready-to-tailor collections in Pure Linen, Heritage Batik, and Relaxed Silhouettes. All designs are crafted in limited batches or custom-tailored to order in Colombo.
-        </p>
+<div class="flex flex-wrap items-center gap-3 shrink-0">
+<div class="inline-flex border border-stone-200/80 p-1">
+<button class="px-4 py-2 font-label-caps text-label-caps uppercase tracking-widest transition-all bg-noir-text text-surface-container-lowest" id="btn-view-grid" onclick="switchCatalogView('grid')">Grid</button>
+<button class="px-4 py-2 font-label-caps text-label-caps uppercase tracking-widest transition-all text-secondary hover:text-noir-text" id="btn-view-lookbook" onclick="switchCatalogView('lookbook')">Editorial</button>
 </div>
-<!-- Mode Selector & Atelier Service Status -->
-<div class="flex flex-wrap items-center gap-4 shrink-0">
-<div class="inline-flex bg-surface-container-high p-1">
-<button class="px-4 py-2 font-label-caps text-label-caps uppercase tracking-widest transition-all bg-noir-text text-surface-container-lowest" id="btn-view-grid" onclick="switchCatalogView('grid')">
-            Catalog Grid
-          </button>
-<button class="px-4 py-2 font-label-caps text-label-caps uppercase tracking-widest transition-all text-secondary hover:text-noir-text" id="btn-view-lookbook" onclick="switchCatalogView('lookbook')">
-            Editorial View
-          </button>
-</div>
-<button class="px-4 py-2.5 bg-surface-container-lowest text-noir-text font-label-caps text-label-caps uppercase tracking-widest flex items-center gap-2 hover:bg-berry-soft transition-colors shadow-sm" onclick="toggleSizeDrawer(true)">
-<span class="material-symbols-outlined text-[16px] text-primary">straighten</span>
-<span class="">Size &amp; Tailoring Guide</span>
-</button>
-</div>
-</div>
-<!-- Quick Stats Bar -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6">
-<div class="bg-surface p-4 flex flex-col justify-between">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Craft standard</span>
-<span class="font-headline-sm text-headline-sm text-noir-text mt-1">100% Pure Linen</span>
-</div>
-<div class="bg-surface p-4 flex flex-col justify-between">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Delivery Promise</span>
-<span class="font-headline-sm text-headline-sm text-noir-text mt-1">Global &amp; Islandwide</span>
-</div>
-<div class="bg-surface p-4 flex flex-col justify-between">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Bespoke Option</span>
-<span class="font-headline-sm text-headline-sm text-noir-text mt-1">Made to Measure</span>
-</div>
-<div class="bg-surface p-4 flex flex-col justify-between">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Atelier Response</span>
-<span class="font-headline-sm text-headline-sm text-whatsapp-forest mt-1">Within 15 Mins</span>
+<button class="px-4 py-2.5 border border-stone-200/80 text-noir-text font-label-caps text-label-caps uppercase tracking-widest flex items-center gap-2 hover:border-noir-text transition-colors" onclick="toggleSizeDrawer(true)"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">straighten</span>Size guide</button>
 </div>
 </div>
 </section>
 <!-- Filter & Category Navigation (tabs & chips are built from Supabase by js/catalog.js) -->
-<section class="sticky z-30 bg-surface/95 backdrop-blur-md px-margin-mobile md:px-margin py-4 shadow-sm top-20"><div class="flex flex-col gap-3 border-b border-surface-container-high pb-3">
+<section id="lookbook-filters" class="sticky z-30 bg-surface/95 backdrop-blur-md px-margin-mobile md:px-margin py-4 shadow-sm top-20"><div class="flex flex-col gap-3 border-b border-surface-container-high pb-3">
 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
 <div class="flex items-center gap-6 overflow-x-auto pb-1 scrollbar-none font-label-caps text-label-caps uppercase tracking-widest max-w-full" id="category-tabs" role="group" aria-label="Category"><button type="button" class="cat-pill pb-2 border-b-2 border-noir-text text-noir-text font-medium whitespace-nowrap" data-value="all">All Silhouettes</button></div>
-<div class="flex items-center gap-4 text-body-sm text-secondary shrink-0"><span class="font-body-sm text-body-sm text-secondary" id="product-counter" aria-live="polite">Loading collection…</span><button type="button" class="text-primary hover:underline font-label-caps text-label-caps uppercase tracking-wider text-[11px]" onclick="resetFilters()">Reset</button></div>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-body-sm text-secondary shrink-0"><span class="font-body-sm text-body-sm text-secondary" id="product-counter" aria-live="polite">Loading collection…</span><label class="inline-flex items-center gap-2"><span class="font-label-caps text-label-caps uppercase tracking-wider text-secondary">Sort</span><select id="sort-select" class="appearance-none bg-transparent border border-stone-200/80 pl-3 pr-8 py-1.5 font-body-sm text-body-sm text-noir-text focus:outline-none focus:border-noir-text cursor-pointer" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22><path d=%22M1 1l4 4 4-4%22 stroke=%22%231A1A1A%22 fill=%22none%22 stroke-width=%221.2%22/></svg>');background-repeat:no-repeat;background-position:right 10px center"><option value="featured">Featured</option><option value="newest">Newest</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option></select></label><button type="button" class="text-primary hover:underline font-label-caps text-label-caps uppercase tracking-wider text-[11px]" onclick="resetFilters()">Reset</button></div>
 </div>
 <div class="flex flex-col gap-2.5">
 <div class="flex items-center gap-2 min-w-0"><span class="font-label-caps text-label-caps uppercase tracking-wider text-secondary shrink-0">Style:</span><div class="flex items-center gap-1.5 overflow-x-auto md:overflow-visible md:flex-wrap scrollbar-none" id="tag-chips" role="group" aria-label="Style"></div></div>
@@ -524,7 +494,7 @@
     
     window.open(`https://wa.me/94779052928?text=${message}`, '_blank');
   }
-</script></main><aside class="fixed bottom-6 right-6 z-40 flex items-center gap-2"><a class="group flex items-center bg-noir-text text-surface-container-lowest pl-4 pr-3 py-3 shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:bg-whatsapp-forest transition-all" href="https://wa.me/94779052928?text=Hello%20EEMA%20Atelier%2C%20I%20would%20like%20to%20consult%20with%20a%20stylist" rel="noopener noreferrer" target="_blank"><span class="font-label-caps text-label-caps tracking-widest uppercase text-surface-container-lowest mr-3">Chat with our Stylist</span><span class="w-7 h-7 bg-whatsapp-forest group-hover:bg-noir-text flex items-center justify-center transition-colors shrink-0"><svg class="w-4 h-4 fill-surface-container-lowest" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg></span></a></aside><footer class="w-full bg-linen-elevated pt-space-3xl pb-space-xl border-t border-stone-200">
+</script></main><aside class="fixed bottom-6 right-6 z-40 flex items-center gap-2"><a aria-label="Chat with our stylist on WhatsApp" class="group flex items-center bg-noir-text text-surface-container-lowest pl-4 pr-3 py-3 shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:bg-whatsapp-forest transition-all" href="https://wa.me/94779052928?text=Hello%20EEMA%20Atelier%2C%20I%20would%20like%20to%20consult%20with%20a%20stylist" rel="noopener noreferrer" target="_blank"><span class="font-label-caps text-label-caps tracking-widest uppercase text-surface-container-lowest mr-3">Chat with our Stylist</span><span class="w-7 h-7 bg-whatsapp-forest group-hover:bg-noir-text flex items-center justify-center transition-colors shrink-0"><svg class="w-4 h-4 fill-surface-container-lowest" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg></span></a></aside><footer class="w-full bg-linen-elevated pt-space-3xl pb-space-xl border-t border-stone-200">
 <div class="w-full px-margin-mobile md:px-margin max-w-7xl mx-auto">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-gutter pb-space-2xl">
 <div class="lg:col-span-4 flex flex-col justify-between pr-0 lg:pr-space-xl">
@@ -562,7 +532,7 @@
 <li class=""><a class="hover:text-noir-text transition-colors" href="https://wa.me/94779052928" rel="noopener noreferrer" target="_blank">How to Order via WhatsApp</a></li>
 <li class=""><a class="hover:text-noir-text transition-colors" data-path="custom-atelier" href="atelier.html">Sizing &amp; Custom Measurements</a></li>
 <li class=""><a class="hover:text-noir-text transition-colors" data-path="our-story" href="our-story.html">Linen &amp; Batik Fabric Care</a></li>
-<li class=""><a class="hover:text-noir-text transition-colors" data-path="inquire-and-contact" href="our-story.html#how-to-order">Delivery &amp; Tailoring Timeline</a></li>
+<li class=""><a class="hover:text-noir-text transition-colors" data-path="inquire-and-contact" href="our-story.html#how-to-order">Delivery &amp; Tailoring Timeline</a></li><li class=""><a class="hover:text-noir-text transition-colors" href="returns.html">Returns &amp; Exchanges</a></li>
 <li class=""><a class="hover:text-noir-text transition-colors" href="https://www.facebook.com/people/Eema-Fashion/61553131572724/" rel="noopener noreferrer" target="_blank">Facebook Studio Updates</a></li>
 </ul>
 </div>
@@ -589,7 +559,7 @@
 <span class="">Curated Showcase &amp; Bespoke Order Catalog.</span>
 </div>
 <div class="flex items-center gap-space-lg font-label-caps text-label-caps uppercase tracking-widest">
-<a class="hover:text-noir-text transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-noir-text transition-colors" href="returns.html">Returns</a><a class="hover:text-noir-text transition-colors" href="#">Privacy Policy</a>
 <a class="hover:text-noir-text transition-colors" href="#">Order Terms</a>
 <a class="hover:text-noir-text transition-colors" href="#">Bespoke Agreement</a>
 </div>

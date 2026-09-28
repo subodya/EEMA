@@ -67,6 +67,25 @@ Products are no longer hard-coded. The Lookbook grid (`lookbook.html`) and the h
 
 > **Already set up Supabase before the product page was added?** Run `supabase/migrations/002_product_sizes.sql` once in the SQL Editor. It adds the `sizes` column and gives existing Ladies products XS–XL. Until you run it, the site keeps working, but no size picker appears.
 
+> **Stock status:** run `supabase/migrations/003_product_stock.sql` once in the SQL Editor to enable the **In stock / Out of stock** switch.
+
+### Product cards, sliders & sorting
+- **Cards:** product cards are editorial and minimal: photo, name, price and colour dots.
+  - **On a computer:** moving the mouse across a photo steps through that product's photos (up to 6), and a Quick view / Inquire bar slides up.
+  - **On phones:** swipe the photo to browse; a small WhatsApp button sits on it. Dots show which photo is showing.
+- **Home page:** after *New Arrivals*, there's one sliding row per category ("The Ladies Edit", …), built from the categories in the admin. New categories get a row automatically.
+- **Phone rows:** *New Arrivals* and *You may also like* slide sideways on phones and tablets, and become a 4-column grid on desktop.
+- **Lookbook:** 2 columns on phones, 3 on tablets, 4 on desktop, plus a **Sort** menu (Featured, Newest, price low→high, high→low). The sort is kept in the link (`?sort=price-asc`). Out-of-stock pieces always stay last.
+- **Styles:** card and slider styles live in `js/catalog.js` (injected once per page).
+
+### Out of stock
+- **Where to set it:** each product in the admin list has an **In stock / Out of stock** switch. The same switch is in the product form under *Availability & visibility*.
+- **Card treatment:** out-of-stock products stay on the website but are clearly marked. The photo is muted, an "Out of stock" label sits over it, and a note appears under the name.
+- **Button:** "Inquire on WhatsApp" becomes **"Ask about restock"**, which sends a "let me know when it's back" message.
+- **Product page:** shows an "Out of stock" badge and an explanation. Customers can still pick the colour and size they'd like, and a size is optional.
+- **Ordering:** sold-out pieces move to the end of the Lookbook and are never shown in the home page's New Arrivals.
+- **Hiding completely:** to remove a product from the website entirely, turn off **Published** in the product form instead.
+
 ### Admin sign-in & sessions
 
 - **Tab-only login:** the admin login is kept only for the open tab (sessionStorage). Closing the tab or browser signs you out.
@@ -110,6 +129,9 @@ eema-fashion-website/
 ├── atelier.html
 ├── our-story.html
 ├── product.html            ← product detail page (product.html?p=slug)
+├── returns.html            ← returns & exchanges policy (linked in every footer)
+├── favicon.ico, favicon-96x96.png, apple-touch-icon.png,
+│   web-app-manifest-*.png, site.webmanifest ← site icons (tabs, iPhone/Android home screen)
 ├── admin.html              ← product admin panel (login required)
 ├── js/
 │   ├── site-nav.js         ← shared header: mobile menu, search, scroll shadow

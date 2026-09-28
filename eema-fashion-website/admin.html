@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Studio | EEMA Fashion</title>
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="EEMA">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#FBF9F5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
@@ -81,7 +87,7 @@ tailwind.config = { theme: { extend: {
   }
   @media (min-width: 1024px) {
     .plist { background: #fff; border: 1px solid #EAE4DC; }
-    .plist-head, .product-row { grid-template-columns: 64px minmax(0, 1fr) 110px 100px 250px; }
+    .plist-head, .product-row { grid-template-columns: 64px minmax(0, 1fr) 100px 96px 310px; }
     .plist-head { display: grid; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #EAE4DC; }
     #product-list { gap: 0; }
     .product-row { grid-template-areas: none; gap: 16px; align-items: center; padding: 12px 16px; border: 0; border-bottom: 1px solid #EAE4DC; }
@@ -90,7 +96,8 @@ tailwind.config = { theme: { extend: {
     .pr-thumb, .pr-info, .pr-actions { grid-area: auto; }
     .pr-thumb { width: 64px; }
     .pr-name, .pr-note { -webkit-line-clamp: 1; }
-    .product-row .pr-meta, .product-row .pr-live-label { display: none; }
+    .product-row .pr-meta { display: none; }
+    .pr-live-label { min-width: 76px; }
     .pr-cat, .pr-price { display: block; }
     .pr-actions { border-top: 0; padding-top: 0; }
   }
@@ -127,6 +134,9 @@ tailwind.config = { theme: { extend: {
   /* drawer + app respect notches / home indicator */
   .drawer-footer { padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
   .app-header { padding-top: env(safe-area-inset-top); }
+  .switch-stock { background: #8C154E; }
+  .switch-stock[aria-checked="true"] { background: #1E5E3A; }
+  .product-row.is-out .pr-thumb img { filter: saturate(.3); }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -217,13 +227,15 @@ tailwind.config = { theme: { extend: {
           <option value="published">Published</option>
           <option value="draft">Hidden (draft)</option>
           <option value="featured">Featured</option>
+          <option value="in-stock">In stock</option>
+          <option value="out-of-stock">Out of stock</option>
         </select>
         </div>
       </div>
 
       <div class="plist">
         <div class="plist-head label-caps text-secondary" aria-hidden="true">
-          <span></span><span>Product</span><span>Category</span><span class="text-right">Price</span><span class="flex justify-between"><span>Live</span><span>Actions</span></span>
+          <span></span><span>Product</span><span>Category</span><span class="text-right">Price</span><span class="flex justify-between"><span>Stock</span><span>Actions</span></span>
         </div>
         <div id="product-list"></div>
         <div id="product-empty" hidden class="py-16 px-6 text-center">
@@ -350,9 +362,13 @@ tailwind.config = { theme: { extend: {
 
       <!-- Visibility -->
       <fieldset class="space-y-3 pb-4">
-        <legend class="label-caps text-secondary mb-3">Visibility</legend>
+        <legend class="label-caps text-secondary mb-3">Availability &amp; visibility</legend>
         <div class="flex items-center justify-between gap-4 bg-white border border-linen-stone p-4">
-          <div><div class="text-sm font-medium">Published</div><div class="text-xs text-secondary">Visible on the website</div></div>
+          <div><div class="text-sm font-medium">In stock</div><div class="text-xs text-secondary">Turn off to show "Out of stock" on the website. The piece stays visible, with an "Ask about restock" button.</div></div>
+          <button type="button" id="f-in-stock" class="switch switch-stock" role="switch" aria-checked="true" aria-label="In stock"></button>
+        </div>
+        <div class="flex items-center justify-between gap-4 bg-white border border-linen-stone p-4">
+          <div><div class="text-sm font-medium">Published</div><div class="text-xs text-secondary">Turn off to hide the product from the website completely</div></div>
           <button type="button" id="f-published" class="switch" role="switch" aria-checked="true" aria-label="Published"></button>
         </div>
         <div class="flex items-center justify-between gap-4 bg-white border border-linen-stone p-4">
