@@ -1,5 +1,5 @@
 # Local Supabase settings (project URL + key). Copy js/supabase-config.example.js to create it.
-# The deploy workflow generates this file from GitHub repository secrets.
+# The Vercel build generates this file from the project's environment variables.
 eema-fashion-website/js/supabase-config.js
 
 # Build output (compiled on deploy by `npm run build:ci`)

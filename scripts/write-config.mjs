@@ -1,7 +1,7 @@
 // Creates eema-fashion-website/js/supabase-config.js from the committed template
 // (supabase-config.example.js) and the SUPABASE_URL / SUPABASE_ANON_KEY environment variables.
 //
-// - On a deploy (Cloudflare Pages, GitHub Actions) the variables are required.
+// - On a deploy (Vercel, GitHub Actions) the variables are required.
 // - Locally, if they aren't set, an existing supabase-config.js is left untouched.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -14,7 +14,7 @@ const target = join(jsDir, 'supabase-config.js');
 
 const url = (process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
 const key = (process.env.SUPABASE_ANON_KEY || '').trim();
-const isDeploy = Boolean(process.env.CF_PAGES || process.env.GITHUB_ACTIONS || process.env.CI);
+const isDeploy = Boolean(process.env.VERCEL ||process.env.GITHUB_ACTIONS || process.env.CI);
 
 if (!url || !key) {
   if (isDeploy) {

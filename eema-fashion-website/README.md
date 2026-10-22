@@ -21,7 +21,7 @@ Plain HTML pages styled with a **pre-built Tailwind stylesheet**: `css/site.css`
 2. Open this folder in VS Code with the **Live Server** extension, or run `npx serve eema-fashion-website` from the repo root.
 3. Requires an internet connection for Google Fonts, Material Symbols, Supabase and the product photos.
 
-Design tokens (colours, type scale, spacing) live in `tailwind.site.config.js` at the repo root, mirroring `docs/DESIGN.md`. Deployment (Cloudflare Pages, domain, Supabase keep-alive) is described in `DEPLOYMENT.md` at the repo root.
+Design tokens (colours, type scale, spacing) live in `tailwind.site.config.js` at the repo root, mirroring `docs/DESIGN.md`. Deployment (Vercel, domain, Supabase keep-alive) is described in `DEPLOYMENT.md` at the repo root.
 
 ## Notes on fidelity
 
@@ -52,7 +52,7 @@ Products are no longer hard-coded. The Lookbook grid (`lookbook.html`) and the h
    Repeat this for every extra person who should have access.
 5. Go to **Project Settings → API** and copy the *Project URL* and the *anon public* key:
    - **Local development:** copy `js/supabase-config.example.js` to `js/supabase-config.js` and paste the values in. That file is git-ignored, so it's never committed.
-   - **Live site (GitHub Pages):** in the GitHub repo go to **Settings → Secrets and variables → Actions → New repository secret**. Add `SUPABASE_URL` and `SUPABASE_ANON_KEY`. The deploy workflow builds the config from them on every push to `main`.
+   - **Live site (Vercel):** in the Vercel project go to **Settings → Environment Variables** and add `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Vercel builds the config from them on every push to `main`. Add the same two as GitHub repository secrets for the Supabase keep-alive workflow (see `DEPLOYMENT.md`).
 
    The anon key is meant to be public, because Row Level Security blocks visitors from writing. **Never** put the `service_role` key in this project.
 

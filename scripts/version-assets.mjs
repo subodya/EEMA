@@ -1,5 +1,5 @@
 // Deploy-time cache busting. Adds ?v=<content hash> to every local css/ and js/ reference in the
-// site's HTML files, so browsers can cache those files for a year (see eema-fashion-website/_headers)
+// site's HTML files, so browsers can cache those files for a year (see vercel.json)
 // and still pick up a new version the moment it changes. Run only on the deploy build (npm run build:ci),
 // never on your working copy, so the source HTML stays clean.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
