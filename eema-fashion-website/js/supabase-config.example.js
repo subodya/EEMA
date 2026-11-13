@@ -9,7 +9,7 @@ window.EEMA_CONFIG = {
   SUPABASE_ANON_KEY: 'YOUR-ANON-PUBLIC-KEY',
   STORAGE_BUCKET: 'product-images',
   WHATSAPP_NUMBER: '94779052928',
-  FACEBOOK_URL: 'https://www.facebook.com/people/Eema-Fashion/61553131572724/',
+  FACEBOOK_URL: 'https://www.facebook.com/share/19sJzzjEqu/',
 
   // Admin panel session limits
   ADMIN_IDLE_MINUTES: 20,      // sign out after this long with no taps/typing (a 1-minute warning shows first)
