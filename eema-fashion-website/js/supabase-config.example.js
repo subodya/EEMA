@@ -1,4 +1,4 @@
-// EEMA Fashion — Supabase connection settings (TEMPLATE).
+// Chamathkara Lankan Fashion — Supabase connection settings (TEMPLATE).
 // Copy this file to js/supabase-config.js and fill in the values from
 // Supabase Dashboard → Project Settings → API. js/supabase-config.js is git-ignored.
 // On GitHub Pages, the deploy workflow creates it from the repository secrets

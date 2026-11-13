@@ -1,5 +1,5 @@
 -- =====================================================================
--- EEMA Fashion — seed data
+-- Chamathkara Lankan Fashion — seed data
 -- Run AFTER schema.sql. Adds the 3 starting categories and the 10 products
 -- that were previously hard-coded in lookbook.html (all under Ladies).
 -- =====================================================================

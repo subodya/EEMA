@@ -1,7 +1,7 @@
 {
   "name": "eema-fashion-website",
   "private": true,
-  "description": "EEMA Fashion website: static pages + Supabase. Builds the Tailwind CSS and the Supabase config for deployment.",
+  "description": "Chamathkara Lankan Fashion website: static pages + Supabase. Builds the Tailwind CSS and the Supabase config for deployment.",
   "scripts": {
     "build:config": "node scripts/write-config.mjs",
     "build:css": "node scripts/build-css.mjs",

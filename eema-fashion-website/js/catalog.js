@@ -1,4 +1,4 @@
-// EEMA Fashion — public product catalog (reads from Supabase).
+// Chamathkara Lankan Fashion — public product catalog (reads from Supabase).
 // Requires: supabase-js CDN → js/supabase-config.js → js/supabase-client.js → this file.
 // Used by lookbook.html (full filterable grid) and index.html (featured grid).
 (function () {
@@ -43,8 +43,8 @@
   function whatsappUrl(product) {
     const color = (product.colors && product.colors[0] && product.colors[0].name) || '';
     const msg = isOutOfStock(product)
-      ? `Hello EEMA Fashion, the ${product.name} is showing as out of stock. Could you let me know when it's available again${color ? ' in ' + color : ''}? (${formatPrice(product.price)})`
-      : `Hello EEMA Fashion, I would like to order the ${product.name}${color ? ' in ' + color : ''} (${formatPrice(product.price)})`;
+      ? `Hello Chamathkara Lankan Fashion, the ${product.name} is showing as out of stock. Could you let me know when it's available again${color ? ' in ' + color : ''}? (${formatPrice(product.price)})`
+      : `Hello Chamathkara Lankan Fashion, I would like to order the ${product.name}${color ? ' in ' + color : ''} (${formatPrice(product.price)})`;
     return `https://wa.me/${cfg.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   }
 

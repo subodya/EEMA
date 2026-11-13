@@ -1,5 +1,5 @@
 -- =====================================================================
--- EEMA Fashion — product catalog schema
+-- Chamathkara Lankan Fashion — product catalog schema
 -- Run once in Supabase Dashboard → SQL Editor (then run seed.sql).
 -- Safe to re-run: uses IF NOT EXISTS / OR REPLACE / DROP POLICY IF EXISTS.
 -- =====================================================================

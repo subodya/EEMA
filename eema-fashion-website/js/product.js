@@ -1,4 +1,4 @@
-// EEMA Fashion — product detail page (product.html?p=<slug>).
+// Chamathkara Lankan Fashion — product detail page (product.html?p=<slug>).
 // Requires: supabase-js CDN → supabase-config.js → supabase-client.js → catalog.js → this file.
 (function () {
   const cfg = window.EEMA_CONFIG || {};
@@ -179,8 +179,8 @@
   function whatsappHref() {
     const p = state.product;
     const lines = [isOut(p)
-      ? `Hello EEMA Fashion, the *${p.name}* is showing as out of stock. Please let me know when it's available again.`
-      : `Hello EEMA Fashion, I would like to order the *${p.name}*.`];
+      ? `Hello Chamathkara Lankan Fashion, the *${p.name}* is showing as out of stock. Please let me know when it's available again.`
+      : `Hello Chamathkara Lankan Fashion, I would like to order the *${p.name}*.`];
     if (state.color) lines.push(`• Colour: ${state.color}`);
     if (state.size) lines.push(`• Size: ${state.size}${state.size === 'Custom fit' ? ' (I will share my measurements)' : ''}`);
     lines.push(`• Price: ${formatPrice(p.price)}`);
@@ -342,7 +342,7 @@
     });
 
     $('#pd-share').addEventListener('click', async () => {
-      const data = { title: `${state.product.name} | EEMA Fashion`, url: location.href };
+      const data = { title: `${state.product.name} | Chamathkara Lankan Fashion`, url: location.href };
       const label = $('#pd-share span:last-child');
       try {
         if (navigator.share) { await navigator.share(data); return; }
@@ -367,8 +367,8 @@
   }
 
   function setMeta(p) {
-    document.title = `${p.name} | EEMA Fashion`;
-    const desc = [p.short_note, p.description].filter(Boolean).join(' — ') || `${p.name} by EEMA Fashion, Colombo.`;
+    document.title = `${p.name} | Chamathkara Lankan Fashion`;
+    const desc = [p.short_note, p.description].filter(Boolean).join(' — ') || `${p.name} by Chamathkara Lankan Fashion, Colombo.`;
     const setTag = (attr, key, val) => {
       let m = document.head.querySelector(`meta[${attr}="${key}"]`);
       if (!m) { m = document.createElement('meta'); m.setAttribute(attr, key); document.head.appendChild(m); }
@@ -383,7 +383,7 @@
     ld.type = 'application/ld+json';
     ld.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: desc,
-      image: p.images || [], brand: { '@type': 'Brand', name: 'EEMA Fashion' },
+      image: p.images || [], brand: { '@type': 'Brand', name: 'Chamathkara Lankan Fashion' },
       offers: { '@type': 'Offer', priceCurrency: 'LKR', price: p.price, availability: isOut(p) ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: location.href }
     });
     document.head.appendChild(ld);
@@ -422,7 +422,7 @@
         </div>
       </div>`;
     $('#pd-breadcrumb-current').textContent = 'Not found';
-    document.title = 'Piece not found | EEMA Fashion';
+    document.title = 'Piece not found | Chamathkara Lankan Fashion';
   }
 
   async function init() {

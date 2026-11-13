@@ -1,6 +1,6 @@
-# EEMA Fashion — Website Export
+# Chamathkara Lankan Fashion — Website Export
 
-A 4-page static replica of the EEMA Fashion Google Stitch screens, wired together into a working site.
+A 4-page static replica of the Chamathkara Lankan Fashion Google Stitch screens, wired together into a working site.
 
 ## Pages
 

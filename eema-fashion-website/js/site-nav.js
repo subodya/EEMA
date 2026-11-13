@@ -1,4 +1,4 @@
-// EEMA Fashion — shared site header behaviour (used on every public page).
+// Chamathkara Lankan Fashion — shared site header behaviour (used on every public page).
 // Handles: mobile menu, search panel, scroll elevation. Markup lives in each page's #site-header.
 (function () {
   // Phones: the floating "Chat with our stylist" pill shrinks to its round WhatsApp icon

@@ -1,4 +1,4 @@
-// EEMA Fashion — admin panel (admin.html).
+// Chamathkara Lankan Fashion — admin panel (admin.html).
 // Auth: Supabase email/password + membership in the `admins` table.
 // Security is enforced server-side by RLS in supabase/schema.sql; this file is only the UI.
 (function () {

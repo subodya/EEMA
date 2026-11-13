@@ -1,4 +1,4 @@
-# Deploying EEMA Fashion on Vercel
+# Deploying Chamathkara Lankan Fashion on Vercel
 
 The site is static HTML/CSS/JS. Supabase (database, admin logins, product photos) stays on Supabase.
 Vercel builds the site from this GitHub repo on every push to `main`, and builds a preview for every other branch and pull request.
