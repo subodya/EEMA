@@ -126,7 +126,7 @@ html.hd-locked { overflow: hidden; }
   .site-hd, .site-hd *, .site-hd *::before, .site-hd *::after { animation: none !important; transition: none !important; }
 }
 
-/* ---------- Private Tailoring: order form (atelier.html) ---------- */
+/* ---------- Private Tailoring: order form (tailoring.html) ---------- */
 .mt-order { padding: clamp(56px, 8vw, 96px) 1.25rem; background: #F5F1EA; scroll-margin-top: var(--hd-h); }
 .mt-wrap { max-width: 760px; margin: 0 auto; }
 .mt-head { text-align: center; margin-bottom: clamp(28px, 5vw, 44px); }

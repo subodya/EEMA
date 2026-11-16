@@ -1,7 +1,7 @@
 -- =====================================================================
 -- Chamathkara Lankan Fashion — seed data
 -- Run AFTER schema.sql. Adds the 3 starting categories and the 10 products
--- that were previously hard-coded in lookbook.html (all under Ladies).
+-- that were previously hard-coded in lookbook.html (now collections.html) (all under Ladies).
 -- =====================================================================
 
 insert into public.categories (name, slug, sort_order) values

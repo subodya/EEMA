@@ -5,9 +5,9 @@ module.exports = {
   // Every file that contains class names — including classes written inside JavaScript templates.
   content: [
     './eema-fashion-website/index.html',
-    './eema-fashion-website/lookbook.html',
+    './eema-fashion-website/collections.html',
     './eema-fashion-website/product.html',
-    './eema-fashion-website/atelier.html',
+    './eema-fashion-website/tailoring.html',
     './eema-fashion-website/our-story.html',
     './eema-fashion-website/how-to-order.html',
     './eema-fashion-website/returns.html',
