@@ -7,8 +7,8 @@ A 4-page static replica of the Chamathkara Lankan Fashion Google Stitch screens,
 | File            | Screen                                 | Nav label            |
 |------------------|-----------------------------------------|-----------------------|
 | `index.html`     | Home showcase (hero, capsules, story)   | HOME                  |
-| `lookbook.html`  | Collections / Lookbook catalog          | LOOKBOOK & CAPSULES   |
-| `atelier.html`   | Custom Atelier / Made-to-Measure builder| CUSTOM ATELIER        |
+| `/collections`  | Collections / Lookbook catalog          | LOOKBOOK & CAPSULES   |
+| `tailoring`   | Custom Atelier / Made-to-Measure builder| CUSTOM ATELIER        |
 | `our-story.html` | Our Story (the brand story only)       | OUR STORY             |
 | `how-to-order.html` | How to order, size guide, delivery & payment, returns summary | (footer: How to order) |
 
@@ -38,7 +38,7 @@ Every public page (`index`, `lookbook`, `atelier`, `our-story`, `product`) uses 
 
 ## Product management (Supabase + admin panel)
 
-Products are no longer hard-coded. The Lookbook grid (`lookbook.html`) and the home page "New Arrivals" (`index.html#collection-grid`) load from a Supabase database, and owners manage everything at **`/admin.html`**. That page isn't linked from the site, so bookmark it.
+Products are no longer hard-coded. The Lookbook grid (`/collections`) and the home page "New Arrivals" (`index.html#collection-grid`) load from a Supabase database, and owners manage everything at **`/admin.html`**. That page isn't linked from the site, so bookmark it.
 
 ### One-time setup (about 10 minutes)
 
@@ -118,7 +118,7 @@ Sizes are set per product in the admin form (Adult / Kids presets or your own). 
 ### How the public pages use it
 
 - Lookbook category tabs, the *Style* chips (from product tags) and the *Tone* chips (the most common colours) are all built from the data.
-- Deep links work: `lookbook.html?category=gents`, and the header search goes to `lookbook.html?search=linen`.
+- Deep links work: `/collections?category=gents`, and the header search goes to `/collections?search=linen`.
 - WhatsApp inquiry links and the quick-view modal are generated per product. The made-to-measure garment list is filled from the catalog.
 - Only *Published* products are visible to visitors (enforced in the database, not only in the page).
 
@@ -127,8 +127,8 @@ Sizes are set per product in the admin form (Adult / Kids presets or your own). 
 ```
 eema-fashion-website/
 ├── index.html
-├── lookbook.html
-├── atelier.html
+├── collections
+├── tailoring
 ├── our-story.html
 ├── product.html            ← product detail page (product.html?p=slug)
 ├── returns.html            ← returns & exchanges policy (linked in every footer)

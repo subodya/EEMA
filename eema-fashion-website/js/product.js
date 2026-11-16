@@ -1,4 +1,4 @@
-// Chamathkara Lankan Fashion — product detail page (product.html?p=<slug>).
+// Chamathkara Lankan Fashion — product detail page (product?p=<slug>).
 // Requires: supabase-js CDN → supabase-config.js → supabase-client.js → catalog.js → this file.
 (function () {
   const cfg = window.EEMA_CONFIG || {};
@@ -77,7 +77,7 @@
           ${ICON('straighten', 'text-primary text-[20px] mt-0.5')}
           <div>
             <div class="font-label-caps text-label-caps uppercase tracking-widest text-noir-text">Made to your measurements</div>
-            <p class="font-body-sm text-body-sm text-secondary mt-1">Share your measurements with our stylist and this piece will be cut and tailored to fit you. <a href="atelier.html" class="text-primary underline underline-offset-2">How to measure</a></p>
+            <p class="font-body-sm text-body-sm text-secondary mt-1">Share your measurements with our stylist and this piece will be cut and tailored to fit you. <a href="/tailoring" class="text-primary underline underline-offset-2">How to measure</a></p>
           </div>
         </div>`;
     }
@@ -112,7 +112,7 @@
   function infoHtml(p) {
     const cat = p.category;
     const eyebrow = [
-      cat ? `<a href="lookbook.html?category=${encodeURIComponent(cat.slug)}" class="hover:text-noir-text transition-colors">${esc(cat.name)}</a>` : '',
+      cat ? `<a href="/collections?category=${encodeURIComponent(cat.slug)}" class="hover:text-noir-text transition-colors">${esc(cat.name)}</a>` : '',
       ...(p.tags || []).filter((t) => t !== 'tailored').slice(0, 2).map((t) => `<span>${esc(tagLabel(t))}</span>`)
     ].filter(Boolean).join('<span class="text-linen-stone">/</span>');
 
@@ -168,8 +168,8 @@
         <div class="border-t border-linen-stone">
           ${accordion('Description', description + (details ? `<ul class="space-y-1 pt-2">${details}</ul>` : ''), true)}
           ${accordion('Fabric &amp; Care', `<p>${esc(careText(p))}</p>`)}
-          ${accordion('Fit &amp; Tailoring', `<p>Choose a standard size, or select <strong class="text-noir-text font-medium">Custom fit</strong> and our master cutter will tailor the piece to your bust, waist, hip and length measurements.</p><p>Bespoke pieces include complimentary alterations. <a href="atelier.html" class="text-primary underline underline-offset-2">Explore Private Tailoring</a></p>`)}
-          ${accordion('Delivery &amp; Exchanges', `<p><span class="text-noir-text">Islandwide:</span> delivered by courier in 2–4 business days, free on orders over Rs 10,000.</p><p>Ready-to-wear pieces can be exchanged for another size within 7 days if unworn. Bank transfer and cash on delivery accepted. <a href="returns.html" class="text-primary underline underline-offset-2">Returns &amp; exchanges</a> · <a href="how-to-order.html" class="text-primary underline underline-offset-2">Ordering details</a></p>`)}
+          ${accordion('Fit &amp; Tailoring', `<p>Choose a standard size, or select <strong class="text-noir-text font-medium">Custom fit</strong> and our master cutter will tailor the piece to your bust, waist, hip and length measurements.</p><p>Bespoke pieces include complimentary alterations. <a href="/tailoring" class="text-primary underline underline-offset-2">Explore Private Tailoring</a></p>`)}
+          ${accordion('Delivery &amp; Exchanges', `<p><span class="text-noir-text">Islandwide:</span> delivered by courier in 2–4 business days, free on orders over Rs 10,000.</p><p>Ready-to-wear pieces can be exchanged for another size within 7 days if unworn. Bank transfer and cash on delivery accepted. <a href="/returns" class="text-primary underline underline-offset-2">Returns &amp; exchanges</a> · <a href="/how-to-order" class="text-primary underline underline-offset-2">Ordering details</a></p>`)}
         </div>
       </div>`;
   }
@@ -453,7 +453,7 @@
         <h1 class="font-headline-md text-headline-md text-noir-text">This piece isn't available</h1>
         <p class="font-body-md text-body-md text-secondary">It may have sold out or been retired from the collection. Explore the current lookbook, or ask our stylist about something similar.</p>
         <div class="flex flex-wrap justify-center gap-3 pt-2">
-          <a href="lookbook.html" class="px-6 py-3 bg-noir-text hover:bg-primary text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest transition-colors">Browse the collection</a>
+          <a href="/collections" class="px-6 py-3 bg-noir-text hover:bg-primary text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest transition-colors">Browse the collection</a>
           <a href="https://wa.me/${esc(cfg.WHATSAPP_NUMBER)}" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-noir-text text-noir-text font-label-caps text-label-caps uppercase tracking-widest hover:bg-noir-text hover:text-surface-container-lowest transition-colors">Ask our stylist</a>
         </div>
       </div>`;
@@ -479,7 +479,7 @@
     if (p.category) {
       const crumbCat = $('#pd-breadcrumb-cat');
       crumbCat.textContent = p.category.name;
-      crumbCat.href = `lookbook.html?category=${encodeURIComponent(p.category.slug)}`;
+      crumbCat.href = `/collections?category=${encodeURIComponent(p.category.slug)}`;
       crumbCat.parentElement.hidden = false;
     }
     $('#pd-breadcrumb-current').textContent = p.name;

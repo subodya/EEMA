@@ -417,7 +417,7 @@
             <button class="icon-btn ${p.is_featured ? '!text-primary' : ''}" data-action="feature" title="${p.is_featured ? 'Featured on home page — tap to remove' : 'Feature on home page'}" aria-label="${p.is_featured ? 'Remove from home page' : 'Feature on home page'}">
               <span class="material-symbols-outlined" style="font-variation-settings:'FILL' ${p.is_featured ? 1 : 0}">star</span>
             </button>
-            <a class="icon-btn" href="product.html?p=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener" title="${p.is_published ? 'View on website' : 'Hidden — publish to view on website'}" aria-label="View on website"><span class="material-symbols-outlined">open_in_new</span></a>
+            <a class="icon-btn" href="/product?p=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener" title="${p.is_published ? 'View on website' : 'Hidden — publish to view on website'}" aria-label="View on website"><span class="material-symbols-outlined">open_in_new</span></a>
             <button class="icon-btn" data-action="edit" title="Edit" aria-label="Edit ${esc(p.name)}"><span class="material-symbols-outlined">edit</span></button>
             <button class="icon-btn hover:!text-error" data-action="delete" title="Delete" aria-label="Delete ${esc(p.name)}"><span class="material-symbols-outlined">delete</span></button>
           </div>

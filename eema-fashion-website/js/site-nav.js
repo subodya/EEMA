@@ -75,7 +75,7 @@
         if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-      location.href = q ? 'lookbook.html?search=' + encodeURIComponent(q) : 'lookbook.html';
+      location.href = q ? '/collections?search=' + encodeURIComponent(q) : '/collections';
     });
   }
 

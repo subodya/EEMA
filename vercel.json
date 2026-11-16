@@ -5,6 +5,10 @@
   "buildCommand": "npm run build:ci",
   "outputDirectory": "eema-fashion-website",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/lookbook(\\.html)?", "destination": "/collections", "permanent": true },
+    { "source": "/atelier(\\.html)?", "destination": "/tailoring", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

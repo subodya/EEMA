@@ -1,6 +1,6 @@
 // Chamathkara Lankan Fashion — public product catalog (reads from Supabase).
 // Requires: supabase-js CDN → js/supabase-config.js → js/supabase-client.js → this file.
-// Used by lookbook.html (full filterable grid) and index.html (featured grid).
+// Used by collections (full filterable grid) and index.html (featured grid).
 (function () {
   const cfg = window.EEMA_CONFIG || {};
 
@@ -53,7 +53,7 @@
   }
 
   function productUrl(p) {
-    return 'product.html?p=' + encodeURIComponent(p.slug);
+    return '/product?p=' + encodeURIComponent(p.slug);
   }
 
   // ---------- data ----------
@@ -602,13 +602,13 @@
               <p class="font-body-sm text-body-sm text-secondary">${items.length} piece${items.length === 1 ? '' : 's'} · swipe to explore</p>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-              <a class="hidden sm:inline-flex items-center gap-1.5 mr-3 font-label-caps text-label-caps uppercase tracking-widest text-noir-text hover:text-primary transition-colors" href="lookbook.html?category=${encodeURIComponent(c.slug)}">View all <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></a>
+              <a class="hidden sm:inline-flex items-center gap-1.5 mr-3 font-label-caps text-label-caps uppercase tracking-widest text-noir-text hover:text-primary transition-colors" href="/collections?category=${encodeURIComponent(c.slug)}">View all <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></a>
               <button type="button" class="rail-btn hidden md:inline-flex" data-dir="prev" aria-label="Previous ${esc(c.name)} pieces"><span class="material-symbols-outlined" aria-hidden="true">west</span></button>
               <button type="button" class="rail-btn hidden md:inline-flex" data-dir="next" aria-label="More ${esc(c.name)} pieces"><span class="material-symbols-outlined" aria-hidden="true">east</span></button>
             </div>
           </div>
           <div class="eema-rail" role="list" aria-label="${esc(c.name)} pieces"></div>
-          <a class="sm:hidden mt-5 inline-flex items-center gap-1.5 font-label-caps text-label-caps uppercase tracking-widest text-noir-text" href="lookbook.html?category=${encodeURIComponent(c.slug)}">View all ${esc(c.name)} <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></a>
+          <a class="sm:hidden mt-5 inline-flex items-center gap-1.5 font-label-caps text-label-caps uppercase tracking-widest text-noir-text" href="/collections?category=${encodeURIComponent(c.slug)}">View all ${esc(c.name)} <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></a>
         </div>`).join('');
       rows.forEach(({ c, items }) => {
         const block = box.querySelector(`[data-rail="${CSS.escape(c.slug)}"]`);
@@ -631,8 +631,8 @@
       const categories = await fetchCategories();
       if (!categories.length) return;
       const cls = box.getAttribute('data-link-class') || '';
-      box.innerHTML = `<a class="${esc(cls)}" href="lookbook.html">All Collections</a>` +
-        categories.map((c) => `<a class="${esc(cls)}" href="lookbook.html?category=${encodeURIComponent(c.slug)}">${esc(c.name)}</a>`).join('');
+      box.innerHTML = `<a class="${esc(cls)}" href="/collections">All Collections</a>` +
+        categories.map((c) => `<a class="${esc(cls)}" href="/collections?category=${encodeURIComponent(c.slug)}">${esc(c.name)}</a>`).join('');
     } catch (err) {
       console.warn('[EEMA] Category links kept as static fallback:', err);
     }
