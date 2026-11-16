@@ -243,7 +243,8 @@
 </div>
 </div>
 <!-- SIZING & CUSTOM MEASUREMENT DRAWER -->
-<aside class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-surface p-4 sm:p-6 md:p-8 shadow-2xl transform translate-x-full transition-transform duration-300 overflow-y-auto" id="size-drawer">
+<div class="fixed inset-0 z-[70] bg-noir-text/50 backdrop-blur-sm hidden" id="size-drawer-backdrop" onclick="toggleSizeDrawer(false)"></div>
+<aside aria-hidden="true" class="fixed inset-y-0 right-0 z-[70] w-full max-w-md bg-surface p-4 sm:p-6 md:p-8 shadow-2xl transform translate-x-full transition-transform duration-300 overflow-y-auto" id="size-drawer">
 <div class="flex items-center justify-between pb-4 md:pb-6 border-b border-surface-container-highest">
 <div>
 <div class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Sizing</div>
@@ -321,12 +322,13 @@
 
   function toggleSizeDrawer(open) {
     const drawer = document.getElementById('size-drawer');
-    if (open) {
-      drawer.classList.remove('translate-x-full');
-    } else {
-      drawer.classList.add('translate-x-full');
-    }
+    const backdrop = document.getElementById('size-drawer-backdrop');
+    drawer.classList.toggle('translate-x-full', !open);
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    backdrop.classList.toggle('hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
   }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleSizeDrawer(false); });
 
   function quickPreview(title, price, color, fabric, imgSrc) {
     document.getElementById('modal-title').textContent = title;
