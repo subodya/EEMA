@@ -9,7 +9,8 @@ A 4-page static replica of the Chamathkara Lankan Fashion Google Stitch screens,
 | `index.html`     | Home showcase (hero, capsules, story)   | HOME                  |
 | `lookbook.html`  | Collections / Lookbook catalog          | LOOKBOOK & CAPSULES   |
 | `atelier.html`   | Custom Atelier / Made-to-Measure builder| CUSTOM ATELIER        |
-| `our-story.html` | Our Story / How to Order / Inquiries    | HOW TO ORDER          |
+| `our-story.html` | Our Story (the brand story only)       | OUR STORY             |
+| `how-to-order.html` | How to order, size guide, delivery & payment, returns summary | (footer: How to order) |
 
 The header and footer nav links on every page now point to the real files above (they were all placeholder `#` links in the original Stitch export). The "ARTISANAL CRAFT" link points to the heritage/batik section on the home page (`index.html#heritage-story`) since no separate screen was provided for it — swap in a dedicated page later if you build one.
 

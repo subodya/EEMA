@@ -9,6 +9,7 @@ module.exports = {
     './eema-fashion-website/product.html',
     './eema-fashion-website/atelier.html',
     './eema-fashion-website/our-story.html',
+    './eema-fashion-website/how-to-order.html',
     './eema-fashion-website/returns.html',
     './eema-fashion-website/js/catalog.js',
     './eema-fashion-website/js/product.js',

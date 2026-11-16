@@ -27,12 +27,12 @@
     const images = (p.images || []).length ? p.images : [null];
     const slides = images.map((src, i) => `
       <button type="button" class="pd-slide relative shrink-0 w-full snap-center aspect-[3/4] bg-linen-elevated overflow-hidden cursor-zoom-in" data-index="${i}" aria-label="Open image ${i + 1} full screen">
-        ${src ? `<img src="${esc(src)}" alt="${esc(p.name)}${images.length > 1 ? ` — view ${i + 1}` : ''}" class="w-full h-full object-cover" ${isOut(p) ? 'style="filter:saturate(.4)"' : ''} ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`
+        ${src ? `<img src="${esc(src)}" alt="${esc(p.name)}${images.length > 1 ? ` — view ${i + 1}` : ''}" class="w-full h-full object-cover object-[center_15%]" ${isOut(p) ? 'style="filter:saturate(.4)"' : ''} ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`
               : `<span class="absolute inset-0 flex items-center justify-center text-secondary/40">${ICON('checkroom', 'text-[56px]')}</span>`}
       </button>`).join('');
     const thumbs = images.length > 1 ? images.map((src, i) => `
       <button type="button" class="pd-thumb shrink-0 w-16 lg:w-20 aspect-[3/4] bg-linen-elevated overflow-hidden border border-transparent transition-all opacity-60 hover:opacity-100" data-index="${i}" aria-label="Show image ${i + 1}">
-        <img src="${esc(src)}" alt="" loading="lazy" class="w-full h-full object-cover">
+        <img src="${esc(src)}" alt="" loading="lazy" class="w-full h-full object-cover object-[center_15%]">
       </button>`).join('') : '';
     const multi = images.length > 1;
     return `
@@ -118,7 +118,7 @@
 
     const description = p.description
       ? `<p>${esc(p.description)}</p>`
-      : `<p>${esc(p.short_note || 'A considered piece from our Colombo atelier.')}</p>`;
+      : `<p>${esc(p.short_note || 'Made by hand in our Colombo studio.')}</p>`;
     const details = [
       p.fabric && `<li><span class="text-noir-text">Fabric:</span> ${esc(p.fabric)}</li>`,
       (p.colors || []).length && `<li><span class="text-noir-text">Available in:</span> ${esc(p.colors.map((c) => c.name).join(', '))}</li>`,
@@ -126,7 +126,7 @@
     ].filter(Boolean).join('');
 
     return `
-      <div class="lg:sticky lg:top-28 space-y-7">
+      <div class="lg:sticky lg:top-36 space-y-7">
         <div class="space-y-3">
           ${eyebrow ? `<div class="flex flex-wrap items-center gap-2 font-label-caps text-label-caps uppercase tracking-widest text-primary">${eyebrow}</div>` : ''}
           <h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-noir-text">${esc(p.name)}</h1>
@@ -151,7 +151,7 @@
         <div class="space-y-2.5" id="pd-cta">
           <a id="pd-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-4 bg-noir-text hover:bg-whatsapp-forest text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest flex items-center justify-center gap-2.5 transition-colors">
             ${WA_ICON}
-            ${isOut(p) ? 'Ask about restock' : 'Inquire on WhatsApp'}
+            ${isOut(p) ? 'Ask about restock' : 'Order on WhatsApp'}
           </a>
           <div class="grid grid-cols-2 gap-2.5">
             <a href="${esc(cfg.FACEBOOK_URL)}" target="_blank" rel="noopener noreferrer" class="py-3 border border-linen-stone hover:border-noir-text text-noir-text font-label-caps text-label-caps uppercase tracking-widest flex items-center justify-center gap-2 transition-colors">Facebook</a>
@@ -161,15 +161,15 @@
 
         <ul class="grid grid-cols-3 gap-3 text-center">
           <li class="flex flex-col items-center gap-1.5 bg-surface-container-low px-2 py-3">${ICON('verified', 'text-whatsapp-forest text-[20px]')}<span class="font-body-sm text-[11px] leading-4 text-secondary">Hand-finished in Colombo</span></li>
-          <li class="flex flex-col items-center gap-1.5 bg-surface-container-low px-2 py-3">${ICON('local_shipping', 'text-whatsapp-forest text-[20px]')}<span class="font-body-sm text-[11px] leading-4 text-secondary">Islandwide &amp; worldwide</span></li>
+          <li class="flex flex-col items-center gap-1.5 bg-surface-container-low px-2 py-3">${ICON('local_shipping', 'text-whatsapp-forest text-[20px]')}<span class="font-body-sm text-[11px] leading-4 text-secondary">Islandwide delivery</span></li>
           <li class="flex flex-col items-center gap-1.5 bg-surface-container-low px-2 py-3">${ICON('schedule', 'text-whatsapp-forest text-[20px]')}<span class="font-body-sm text-[11px] leading-4 text-secondary">Stylist replies within 15 mins</span></li>
         </ul>
 
         <div class="border-t border-linen-stone">
           ${accordion('Description', description + (details ? `<ul class="space-y-1 pt-2">${details}</ul>` : ''), true)}
           ${accordion('Fabric &amp; Care', `<p>${esc(careText(p))}</p>`)}
-          ${accordion('Fit &amp; Tailoring', `<p>Choose a standard size, or select <strong class="text-noir-text font-medium">Custom fit</strong> and our master cutter will tailor the piece to your bust, waist, hip and length measurements.</p><p>Bespoke pieces include complimentary alterations. <a href="atelier.html" class="text-primary underline underline-offset-2">Visit the Custom Atelier</a></p>`)}
-          ${accordion('Delivery &amp; Exchanges', `<p><span class="text-noir-text">Islandwide Sri Lanka:</span> dispatched by courier in 2–4 business days, complimentary on orders over Rs 10,000.</p><p><span class="text-noir-text">Worldwide:</span> express air freight in 7–10 business days.</p><p>Ready-to-wear pieces can be exchanged for another size within 7 days if unworn. Bank transfer and cash on delivery accepted. <a href="returns.html" class="text-primary underline underline-offset-2">Returns &amp; exchanges</a> · <a href="our-story.html#how-to-order" class="text-primary underline underline-offset-2">Ordering details</a></p>`)}
+          ${accordion('Fit &amp; Tailoring', `<p>Choose a standard size, or select <strong class="text-noir-text font-medium">Custom fit</strong> and our master cutter will tailor the piece to your bust, waist, hip and length measurements.</p><p>Bespoke pieces include complimentary alterations. <a href="atelier.html" class="text-primary underline underline-offset-2">Explore Private Tailoring</a></p>`)}
+          ${accordion('Delivery &amp; Exchanges', `<p><span class="text-noir-text">Islandwide:</span> delivered by courier in 2–4 business days, free on orders over Rs 10,000.</p><p>Ready-to-wear pieces can be exchanged for another size within 7 days if unworn. Bank transfer and cash on delivery accepted. <a href="returns.html" class="text-primary underline underline-offset-2">Returns &amp; exchanges</a> · <a href="how-to-order.html" class="text-primary underline underline-offset-2">Ordering details</a></p>`)}
         </div>
       </div>`;
   }
@@ -249,7 +249,37 @@
       const slide = e.target.closest('.pd-slide');
       if (slide && (state.product.images || []).length) openLightbox(+slide.dataset.index);
     });
+    bindHoverZoom(track);
     updateGalleryUi();
+  }
+
+  // The floating WhatsApp button would sit on top of the product details, which already have
+  // their own WhatsApp button, so it stays hidden until the details scroll out of view.
+  function tuckFloatingChat() {
+    const fab = document.querySelector('.wa-float');
+    const root = $('#pd-root');
+    if (!fab || !root || !('IntersectionObserver' in window)) return;
+    fab.classList.add('is-tucked');
+    new IntersectionObserver(([en]) => fab.classList.toggle('is-tucked', en.isIntersecting), { threshold: 0 }).observe(root);
+  }
+
+  // Desktop: hovering a photo zooms in where the cursor is (styles in styles/site.css)
+  function bindHoverZoom(track) {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const aim = (slide, e) => {
+      const r = slide.getBoundingClientRect();
+      const img = slide.querySelector('img');
+      if (!img) return;
+      img.style.setProperty('--zx', `${((e.clientX - r.left) / r.width) * 100}%`);
+      img.style.setProperty('--zy', `${((e.clientY - r.top) / r.height) * 100}%`);
+    };
+    track.querySelectorAll('.pd-slide').forEach((slide) => {
+      if (!slide.querySelector('img')) return;
+      slide.addEventListener('mouseenter', (e) => { aim(slide, e); slide.classList.add('is-zoomed'); });
+      slide.addEventListener('mousemove', (e) => aim(slide, e));
+      slide.addEventListener('mouseleave', () => slide.classList.remove('is-zoomed'));
+    });
   }
 
   // Lightbox
@@ -295,8 +325,14 @@
   function closeSizeGuide() { const g = $('#pd-size-guide'); if (g && !g.hidden) { g.hidden = true; document.body.style.overflow = ''; } }
 
   function bindOptions() {
-    document.querySelectorAll('.pd-swatch').forEach((b) => b.addEventListener('click', () => {
+    // One photo per colour (same count, in the same order): picking a colour shows its photo.
+    const colorCount = (state.product.colors || []).length;
+    const photoPerColor = colorCount > 1 && colorCount === (state.product.images || []).length;
+    let firstPick = true;
+    document.querySelectorAll('.pd-swatch').forEach((b, idx) => b.addEventListener('click', () => {
       state.color = b.dataset.color;
+      if (photoPerColor) goToImage(idx, { smooth: !firstPick });
+      firstPick = false;
       document.querySelectorAll('.pd-swatch').forEach((x) => {
         const on = x === b;
         x.setAttribute('aria-checked', String(on));
@@ -417,7 +453,7 @@
         <h1 class="font-headline-md text-headline-md text-noir-text">This piece isn't available</h1>
         <p class="font-body-md text-body-md text-secondary">It may have sold out or been retired from the collection. Explore the current lookbook, or ask our stylist about something similar.</p>
         <div class="flex flex-wrap justify-center gap-3 pt-2">
-          <a href="lookbook.html" class="px-6 py-3 bg-noir-text hover:bg-primary text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest transition-colors">Browse the lookbook</a>
+          <a href="lookbook.html" class="px-6 py-3 bg-noir-text hover:bg-primary text-surface-container-lowest font-label-caps text-label-caps uppercase tracking-widest transition-colors">Browse the collection</a>
           <a href="https://wa.me/${esc(cfg.WHATSAPP_NUMBER)}" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-noir-text text-noir-text font-label-caps text-label-caps uppercase tracking-widest hover:bg-noir-text hover:text-surface-container-lowest transition-colors">Ask our stylist</a>
         </div>
       </div>`;
@@ -449,7 +485,7 @@
     $('#pd-breadcrumb-current').textContent = p.name;
 
     $('#pd-root').innerHTML = `
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20">
+      <div class="pd-enter grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20">
         <div class="lg:col-span-7">${galleryHtml(p)}</div>
         <div class="lg:col-span-5">${infoHtml(p)}</div>
       </div>`;
@@ -461,6 +497,7 @@
 
     bindGallery();
     bindLightbox();
+    tuckFloatingChat();
     bindOptions();
     bindStickyBar();
     refreshCta();

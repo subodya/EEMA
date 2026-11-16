@@ -7,12 +7,16 @@
   // Known tag slugs → display labels. Unknown tags are title-cased automatically.
   const TAG_LABELS = {
     'pure-linen': 'Pure Linen',
-    'batik': 'Artisanal Batik',
-    'coords': 'Co-Ords & Sets',
     'dresses': 'Dresses',
+    'frocks': 'Frocks',
+    'tie-dye': 'Tie-Dye',
+    'batik': 'Batik',
+    'coords': 'Co-Ords & Sets',
     'tailored': 'Tailored'
   };
-  const TAG_ORDER = Object.keys(TAG_LABELS);
+
+  // Style filter on the collections page: always this list, in this order (tag slugs from the admin panel).
+  const STYLE_FILTERS = ['pure-linen', 'dresses', 'frocks', 'tie-dye', 'batik'];
 
   const WA_ICON = '<svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>';
   const FB_ICON = '<svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>';
@@ -113,8 +117,8 @@
   .ec-link { position: absolute; inset: 0; display: block; }
   .ec-track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
   .ec-track::-webkit-scrollbar { display: none; }
-  .ec-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
-  .eema-card:hover .ec-img { transform: scale(1.035); }
+  .ec-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; scroll-snap-align: start; transition: transform 1.4s cubic-bezier(.2,.85,.2,1); }
+  .eema-card:hover .ec-img { transform: scale(1.07); }
   .ec-noswipe .ec-track { overflow: hidden; }
   .ec-dots { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: center; gap: 5px; pointer-events: none; z-index: 2; }
   .ec-dots span { width: 6px; height: 6px; border-radius: 9999px; background: rgba(255,255,255,.55); box-shadow: 0 0 0 1px rgba(26,26,26,.12); transition: width .3s ease, background .3s ease; }
@@ -123,9 +127,12 @@
   .ec-veil { position: absolute; inset: 0; z-index: 1; background: rgba(255,255,255,.32); display: flex; align-items: center; justify-content: center; pointer-events: none; }
   .ec-veil span { background: rgba(26,26,26,.9); color: #fff; padding: 8px 14px; font: 600 11px/1 Inter, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
   .ec-actions { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; transform: translateY(calc(100% + 14px)); opacity: 0; transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s ease; }
-  .ec-actions a, .ec-actions button { display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); color: #1A1A1A; font: 600 10.5px/1 Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: background .2s, color .2s; }
-  .ec-actions a:hover { background: #1E5E3A; color: #fff; }
-  .ec-actions button:hover { background: #1A1A1A; color: #fff; }
+  .ec-actions a, .ec-actions button { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); color: #1A1A1A; font: 600 10.5px/1 Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: color .45s cubic-bezier(.2,.85,.2,1); }
+  /* Buttons fill from the left on hover */
+  .ec-actions a::before, .ec-actions button::before { content: ''; position: absolute; inset: 0; z-index: -1; background: #1A1A1A; transform: scaleX(0); transform-origin: left; transition: transform .55s cubic-bezier(.2,.85,.2,1); }
+  .ec-actions a::before { background: #1E5E3A; }
+  .ec-actions a:hover, .ec-actions button:hover { color: #fff; }
+  .ec-actions a:hover::before, .ec-actions button:hover::before { transform: none; }
   .ec-actions.single { grid-template-columns: 1fr; }
   .ec-body { padding: 14px 2px 4px; display: flex; flex-direction: column; gap: 4px; }
   .ec-name { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; line-height: 1.3; color: #1A1A1A; transition: color .2s; }
@@ -194,10 +201,17 @@
   .rail-btn:disabled { opacity: .3; cursor: default; }
 
   /* Soft fade-up as cards scroll into view */
-  .ec-reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .ec-reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease var(--d, 0s), transform .8s cubic-bezier(.2,.7,.2,1) var(--d, 0s); }
   .ec-reveal.is-in { opacity: 1; transform: none; }
+  /* Product photos wipe up into view, one card after another */
+  .eema-card.ec-reveal { transform: none; transition: opacity .9s ease var(--d, 0s); }
+  .eema-card.ec-reveal .ec-media { clip-path: inset(100% 0 0 0); transition: clip-path 1.3s cubic-bezier(.77,0,.18,1) var(--d, 0s); }
+  .eema-card.ec-reveal.is-in .ec-media { clip-path: inset(0 0 0 0); }
+  .eema-card.ec-reveal .ec-body { opacity: 0; transform: translateY(10px); transition: opacity .8s ease calc(var(--d, 0s) + .35s), transform .8s cubic-bezier(.2,.85,.2,1) calc(var(--d, 0s) + .35s); }
+  .eema-card.ec-reveal.is-in .ec-body { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
-    .ec-reveal { opacity: 1; transform: none; transition: none; }
+    .ec-reveal, .eema-card.ec-reveal .ec-body { opacity: 1; transform: none; transition: none; }
+    .eema-card.ec-reveal .ec-media { clip-path: none; transition: none; }
     .ec-img, .ec-actions, .eema-rail { transition: none; scroll-behavior: auto; }
   }
   `;
@@ -237,7 +251,7 @@
     const dots = images.length > 1
       ? `<div class="ec-dots" aria-hidden="true">${images.map((_, i) => `<span class="${i === 0 ? 'on' : ''}"></span>`).join('')}</div>`
       : '';
-    const waLabel = out ? 'Ask about restock' : 'Inquire';
+    const waLabel = out ? 'Ask about restock' : 'Order';
 
     const swatches = colors.length
       ? `<div class="ec-swatches">${colors.slice(0, 5).map((c) => `<i style="background:${safeHex(c.hex)}" title="${esc(c.name)}"></i>`).join('')}${colors.length > 1 ? `<em>${colors.length} shades</em>` : ''}</div>`
@@ -324,7 +338,7 @@
   function observeReveal(root) {
     const cards = root.querySelectorAll('.ec-reveal:not(.is-in)');
     cards.forEach((c, i) => {
-      c.style.transitionDelay = `${(i % 4) * 70}ms`;
+      c.style.setProperty('--d', `${(i % 4) * 90}ms`);
       if (revealObserver) revealObserver.observe(c); else c.classList.add('is-in');
     });
   }
@@ -379,7 +393,7 @@
     if (modalWa) {
       modalWa.href = whatsappUrl(p);
       const label = [...modalWa.querySelectorAll('span')].pop();
-      if (label) label.textContent = out ? 'Ask about restock' : 'Inquire via WhatsApp';
+      if (label) label.textContent = out ? 'Ask about restock' : 'Order on WhatsApp';
     }
     const modalImg = document.getElementById('modal-img');
     if (modalImg) modalImg.style.filter = out ? 'saturate(.35)' : '';
@@ -413,7 +427,7 @@
   const TAB_ON = 'border-noir-text text-noir-text font-medium';
   const TAB_OFF = 'border-transparent text-secondary hover:text-noir-text';
 
-  const state = { category: 'all', tag: 'all', color: 'all', search: '', sort: 'featured' };
+  const state = { category: 'all', tag: 'all', search: '', sort: 'featured' };
   const SORTS = {
     featured: (a, b) => a.order - b.order,
     newest: (a, b) => (b.created || '').localeCompare(a.created || '') || a.order - b.order,
@@ -448,25 +462,21 @@
     document.querySelectorAll('#product-grid .fashion-card').forEach((card) => {
       const cat = card.getAttribute('data-category-slug');
       const tags = (card.getAttribute('data-tags') || '').split(' ');
-      const colors = (card.getAttribute('data-colors') || '').split('|');
       const show = (state.category === 'all' || cat === state.category) &&
                    (state.tag === 'all' || tags.includes(state.tag)) &&
-                   (state.color === 'all' || colors.includes(state.color)) &&
                    (!state.search || (card.getAttribute('data-search') || '').includes(state.search.toLowerCase()));
       card.style.display = show ? 'flex' : 'none';
       if (show) visible++;
     });
     const counter = document.getElementById('product-counter');
-    if (counter) counter.textContent = `Showing ${visible} silhouette${visible === 1 ? '' : 's'}` + (state.search ? ` for “${state.search}”` : '');
+    if (counter) counter.textContent = `Showing ${visible} piece${visible === 1 ? '' : 's'}` + (state.search ? ` for “${state.search}”` : '');
     const empty = document.getElementById('filter-empty');
     if (empty) empty.hidden = visible > 0 || !document.querySelector('#product-grid .fashion-card');
 
     const tabs = document.getElementById('category-tabs');
     const tagBox = document.getElementById('tag-chips');
-    const toneBox = document.getElementById('tone-chips');
     if (tabs) setActive(tabs, state.category, TAB_ON, TAB_OFF);
     if (tagBox) setActive(tagBox, state.tag, CHIP_ON, CHIP_OFF);
-    if (toneBox) setActive(toneBox, state.color, CHIP_ON, CHIP_OFF);
 
     const url = new URL(location.href);
     if (state.category === 'all') url.searchParams.delete('category'); else url.searchParams.set('category', state.category);
@@ -494,40 +504,20 @@
       // Category tabs (from DB, so new categories show up automatically)
       const tabs = document.getElementById('category-tabs');
       if (tabs) {
-        tabs.innerHTML = buttonsHtml([['all', 'All Silhouettes'], ...categories.map((c) => [c.slug, c.name])],
+        tabs.innerHTML = buttonsHtml([['all', 'All'], ...categories.map((c) => [c.slug, c.name])],
           'cat-pill pb-2 border-b-2 transition-colors whitespace-nowrap', TAB_OFF);
         tabs.onclick = (e) => { const b = e.target.closest('[data-value]'); if (b) { state.category = b.dataset.value; applyFilters(); } };
       }
 
-      // Style tags (from products)
-      const tagSet = new Set(products.flatMap((p) => p.tags || []));
-      const tags = [...tagSet].sort((a, b) => {
-        const ia = TAG_ORDER.indexOf(a), ib = TAG_ORDER.indexOf(b);
-        return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
-      });
+      // Style chips: a fixed list, so the filter reads the same whatever is in stock
       const tagBox = document.getElementById('tag-chips');
       if (tagBox) {
-        tagBox.innerHTML = buttonsHtml([['all', 'All'], ...tags.map((t) => [t, tagLabel(t)])], CHIP_BASE, CHIP_OFF);
+        tagBox.innerHTML = buttonsHtml([['all', 'All'], ...STYLE_FILTERS.map((t) => [t, tagLabel(t)])], CHIP_BASE, CHIP_OFF);
         tagBox.onclick = (e) => { const b = e.target.closest('[data-value]'); if (b) { state.tag = b.dataset.value; applyFilters(); } };
       }
 
-      // Tone chips — the 6 most common colour names across products
-      const colorCount = new Map();
-      products.forEach((p) => (p.colors || []).forEach((c) => {
-        const cur = colorCount.get(c.name) || { n: 0, hex: c.hex };
-        cur.n++; colorCount.set(c.name, cur);
-      }));
-      const topColors = [...colorCount.entries()].sort((a, b) => b[1].n - a[1].n).slice(0, 6);
-      const toneBox = document.getElementById('tone-chips');
-      if (toneBox) {
-        toneBox.innerHTML = `<button type="button" data-value="all" class="${CHIP_BASE} ${CHIP_OFF}">All</button>` +
-          topColors.map(([name, { hex }]) =>
-            `<button type="button" data-value="${esc(name)}" class="${CHIP_BASE} ${CHIP_OFF} inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full ring-1 ring-noir-text/20" style="background:${safeHex(hex)}"></span>${esc(name)}</button>`).join('');
-        toneBox.onclick = (e) => { const b = e.target.closest('[data-value]'); if (b) { state.color = b.dataset.value; applyFilters(); } };
-      }
-
       if (!products.length) {
-        grid.innerHTML = renderMessage('New pieces arriving soon', 'Our atelier is preparing the next collection. Message our stylist to hear about it first.');
+        grid.innerHTML = renderMessage('New pieces arriving soon', 'We are preparing the next collection. Message us to hear about it first.');
         return;
       }
 
@@ -561,7 +551,7 @@
   }
 
   function resetFilters() {
-    state.category = 'all'; state.tag = 'all'; state.color = 'all'; state.search = ''; state.sort = 'featured';
+    state.category = 'all'; state.tag = 'all'; state.search = ''; state.sort = 'featured';
     applySort();
     applyFilters();
   }

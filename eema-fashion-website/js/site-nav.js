@@ -1,13 +1,21 @@
 // Chamathkara Lankan Fashion — shared site header behaviour (used on every public page).
 // Handles: mobile menu, search panel, scroll elevation. Markup lives in each page's #site-header.
 (function () {
-  // Phones: the floating "Chat with our stylist" pill shrinks to its round WhatsApp icon
-  // so it never covers page content.
-  if (!document.getElementById('eema-float-chat-css')) {
-    const st = document.createElement('style');
-    st.id = 'eema-float-chat-css';
-    st.textContent = '@media (max-width: 767px) { body > aside.fixed.bottom-6 { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); } body > aside.fixed.bottom-6 > a { padding: 8px !important; } body > aside.fixed.bottom-6 > a > span:first-child { display: none !important; } body > aside.fixed.bottom-6 > a > span:last-child { width: 40px; height: 40px; margin: 0; } }';
-    document.head.appendChild(st);
+  // Floating WhatsApp button: when the footer's bottom row scrolls into view, lift the button
+  // so it sits just above that row instead of covering it.
+  const waFloat = document.querySelector('.wa-float');
+  const footBase = document.querySelector('.eema-footer .ft-base');
+  if (waFloat && footBase) {
+    let ticking = false;
+    const place = () => {
+      ticking = false;
+      const overlap = window.innerHeight - footBase.getBoundingClientRect().top;
+      waFloat.style.setProperty('--wa-lift', Math.max(0, Math.round(overlap - 8)) + 'px');
+    };
+    const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    place();
   }
 
   const header = document.getElementById('site-header');
@@ -27,12 +35,17 @@
     menuBtn.setAttribute('aria-expanded', String(open));
     menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     header.classList.toggle('menu-open', open);
-    if (open) setSearch(false);
+    // The menu fills the screen below the header, so the page behind it must not scroll
+    document.documentElement.classList.toggle('hd-locked', open);
+    if (open) {
+      header.style.setProperty('--hd-bottom', Math.round(header.getBoundingClientRect().bottom) + 'px');
+      setSearch(false);
+    }
   }
   if (menuBtn && drawer) {
     menuBtn.addEventListener('click', () => setMenu(drawer.hidden));
     drawer.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth >= 1280) setMenu(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth >= 1024 && !drawer.hidden) setMenu(false); });
   }
 
   // ---------- search ----------
@@ -72,8 +85,8 @@
     if (drawer && !drawer.hidden) { setMenu(false); menuBtn.focus(); }
   });
 
-  // ---------- scroll elevation ----------
-  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
+  // ---------- scroll: condensed header + shadow once the announcement bar has scrolled away ----------
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 60);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 })();

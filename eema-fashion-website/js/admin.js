@@ -4,8 +4,9 @@
 (function () {
   const cfg = window.EEMA_CONFIG || {};
   const BUCKET = cfg.STORAGE_BUCKET || 'product-images';
-  const PRESET_TAGS = ['pure-linen', 'batik', 'coords', 'dresses', 'tailored'];
-  const TAG_LABELS = { 'pure-linen': 'Pure Linen', 'batik': 'Artisanal Batik', 'coords': 'Co-Ords & Sets', 'dresses': 'Dresses', 'tailored': 'Tailored' };
+  // The first five are the style filters on the collections page (see STYLE_FILTERS in catalog.js).
+  const PRESET_TAGS = ['pure-linen', 'dresses', 'frocks', 'tie-dye', 'batik', 'coords', 'tailored'];
+  const TAG_LABELS = { 'pure-linen': 'Pure Linen', 'dresses': 'Dresses', 'frocks': 'Frocks', 'tie-dye': 'Tie-Dye', 'batik': 'Batik', 'coords': 'Co-Ords & Sets', 'tailored': 'Tailored' };
   const MAX_IMAGE_EDGE = 1600;
   const SIZES_ADULT = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   const SIZES_KIDS = ['2-3Y', '4-5Y', '6-7Y', '8-9Y', '10-11Y', '12-13Y'];
